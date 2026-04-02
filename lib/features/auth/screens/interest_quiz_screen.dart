@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/localization/app_localizations.dart';
+
 class InterestQuizScreen extends StatefulWidget {
   const InterestQuizScreen({super.key});
 
@@ -16,10 +18,6 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
     'Design',
     'Engineering',
     'Education',
-    'Law',
-    'Marketing',
-    'Finance',
-    'Architecture',
   ];
 
   final Set<String> selected = {};
@@ -36,22 +34,22 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Қызығушылықтар')),
+      appBar: AppBar(title: Text(loc.quizTitle)),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Text(
-              'Саған не қызық?',
-              style: theme.textTheme.headlineSmall,
+              loc.quizTitle,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 10),
             Text(
-              'Бірнеше бағыт таңда',
-              style: theme.textTheme.bodyMedium,
+              loc.quizSubtitle,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 24),
             Expanded(
@@ -59,11 +57,9 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
                 spacing: 10,
                 runSpacing: 10,
                 children: interests.map((item) {
-                  final isSelected = selected.contains(item);
-
                   return ChoiceChip(
                     label: Text(item),
-                    selected: isSelected,
+                    selected: selected.contains(item),
                     onSelected: (_) => toggleInterest(item),
                   );
                 }).toList(),
@@ -73,9 +69,9 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  context.go('/profile-setup');
+                  context.go('/main');
                 },
-                child: const Text('Далее'),
+                child: Text(loc.continueText),
               ),
             ),
           ],

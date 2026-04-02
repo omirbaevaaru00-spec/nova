@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 import 'home_screen.dart';
@@ -14,10 +15,10 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _index = 0;
 
-  final _screens = const [
-    HomeScreen(),
-    SearchScreen(),
-    ProfileScreen(),
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const SearchScreen(),
+    const ProfileScreen(),
   ];
 
   @override
