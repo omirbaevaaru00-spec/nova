@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:stiky/core/theme/app_theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/router/app_router.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: AppRouter.router,
-
+          theme: AppTheme.light,
           // 🔥 МІНЕ ОСЫ МАҢЫЗДЫ
           locale: localeController.locale,
           supportedLocales: AppLocalizations.supportedLocales,
