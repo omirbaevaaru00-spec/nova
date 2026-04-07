@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'core/router/app_router.dart';
 import 'core/localization/app_localizations.dart';
@@ -11,10 +12,7 @@ final LocaleController localeController = LocaleController();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(
-    url: 'https://gigtapeeazaqscdzaenc.supabase.co',
-    anonKey: 'sb_publishable_zefv06fMQrUVEHWRy_-0Qg_oAt4OmMc',
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
 }
@@ -30,8 +28,6 @@ class MyApp extends StatelessWidget {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: AppRouter.router,
-
-          // 🔥 МІНЕ ОСЫ МАҢЫЗДЫ
           locale: localeController.locale,
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: const [
