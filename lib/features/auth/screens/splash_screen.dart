@@ -21,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
@@ -60,29 +59,39 @@ class _SplashScreenState extends State<SplashScreen>
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor: const Color(0xFF2B2B2B),
-        body: FadeTransition(
-          opacity: _fadeIn,
-          child: Center(
-            child: Image.asset(
-              'assets/images/nova_logo.png',
-              width: 160,
-              fit: BoxFit.contain,
-              // PNG фиолетовый — делаем белым для тёмного фона
-              color: Colors.white,
-              colorBlendMode: BlendMode.srcIn,
-              errorBuilder: (context, error, stackTrace) {
-                // Fallback если ассет не найден
-                return const Text(
-                  'NOVA',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 42,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 4,
-                  ),
-                );
-              },
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF4C6EF5),
+                Color(0xFF3B5BDB),
+                Color(0xFF2F4AC7),
+              ],
+            ),
+          ),
+          child: FadeTransition(
+            opacity: _fadeIn,
+            child: Center(
+              child: Image.asset(
+                'assets/images/nova_logo.png',
+                width: 160,
+                fit: BoxFit.contain,
+                color: Colors.white,
+                colorBlendMode: BlendMode.srcIn,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Text(
+                    'NOVA',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 42,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 4,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),
