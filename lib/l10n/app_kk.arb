@@ -1,0 +1,28 @@
+{
+  "@@locale": "kk",
+
+  "welcomeTitle": "ҚОШ КЕЛДІҢ",
+  "welcomeSubtitle": "Университеттерді тап,\nбағдарламаларды зертте\nжәне болашағыңды таңда.",
+  "continueText": "Жалғастыру",
+  "chooseLanguage": "Тілді таңдаңыз",
+  "russian": "Русский",
+  "kazakh": "Қазақша",
+
+  "quizTitle": "Саған не қызық\nекенін таңда",
+  "quizSubtitle": "Біз лентаны сенің мақсаттарыңа,\nқызығушылықтарыңа сай баптаймыз",
+  "quizSelected": "Таңдалды",
+  "quizSkip": "Өткізіп жібер",
+  "quizNext": "Әрі қарай",
+
+  "interestIT": "АТ және технологиялар",
+  "interestMedicine": "Медицина",
+  "interestBusiness": "Бизнес және экономика",
+  "interestGrants": "Гранттар",
+  "interestDesign": "Дизайн және шығармашылық",
+  "interestLaw": "Заңтану",
+  "interestPedagogy": "Педагогика",
+  "interestEngineering": "Инженерия",
+  "interestBachelor": "Бакалавриат",
+  "interestCollege": "Колледж",
+  "interestMaster": "Магистратура"
+}

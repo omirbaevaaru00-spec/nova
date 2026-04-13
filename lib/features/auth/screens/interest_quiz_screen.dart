@@ -1,58 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
- 
+
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../core/router/route_names.dart';
- 
+
 class InterestQuizScreen extends StatefulWidget {
   const InterestQuizScreen({super.key});
- 
+
   @override
   State<InterestQuizScreen> createState() => _InterestQuizScreenState();
 }
- 
+
 class _InterestQuizScreenState extends State<InterestQuizScreen> {
-  static const _interests = [
-    ('IT и технологии',     '💻'),
-    ('Медицина',            '🩺'),
-    ('Бизнес и экономика',  '📊'),
-    ('Гранты',              '🎓'),
-    ('Дизайн и креатив',    '🎨'),
-    ('Юриспруденция',       '⚖️'),
-    ('Педагогика',          '📚'),
-    ('Инженерия',           '⚙️'),
-    ('Бакалавриат',         '🏫'),
-    ('Колледж',             '🏢'),
-    ('Магистратура',        '🎯'),
-  ];
- 
-  final Set<String> _selected = {};
- 
-  void _toggle(String interest) {
+  final Set<int> _selected = {};
+
+  void _toggle(int index) {
     HapticFeedback.selectionClick();
     setState(() {
-      _selected.contains(interest)
-          ? _selected.remove(interest)
-          : _selected.add(interest);
+      _selected.contains(index)
+          ? _selected.remove(index)
+          : _selected.add(index);
     });
   }
- 
-  /// Rule-based: сохраняем выбранные интересы и переходим на главную.
-  /// Если пропустили — пустой список, лента показывает всё подряд.
+
   void _proceed() {
     HapticFeedback.lightImpact();
-    // TODO: сохранить _selected в UserRepository / SharedPreferences
+    // TODO: сохранить выбранные интересы в UserRepository
     context.go(RouteNames.home);
   }
- 
+
   void _skip() {
     HapticFeedback.selectionClick();
-    // Пропуск — рекомендации по умолчанию (все направления)
     context.go(RouteNames.home);
   }
- 
+
+  /// Список интересов берётся из локализации — реагирует на смену языка.
+  List<(String, String)> _interests(AppLocalizations l10n) => [
+    (l10n.interestIT,          '💻'),
+    (l10n.interestMedicine,    '🩺'),
+    (l10n.interestBusiness,    '📊'),
+    (l10n.interestGrants,      '🎓'),
+    (l10n.interestDesign,      '🎨'),
+    (l10n.interestLaw,         '⚖️'),
+    (l10n.interestPedagogy,    '📚'),
+    (l10n.interestEngineering, '⚙️'),
+    (l10n.interestBachelor,    '🏫'),
+    (l10n.interestCollege,     '🏢'),
+    (l10n.interestMaster,      '🎯'),
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final interests = _interests(l10n);
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -78,7 +80,6 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Назад
                       GestureDetector(
                         onTap: () => context.pop(),
                         child: Container(
@@ -95,13 +96,10 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
                           ),
                         ),
                       ),
- 
                       const SizedBox(height: 28),
- 
-                      // Заголовок
-                      const Text(
-                        'Выбери, что тебе\nинтересно',
-                        style: TextStyle(
+                      Text(
+                        l10n.quizTitle,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 30,
                           fontWeight: FontWeight.w800,
@@ -109,12 +107,9 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
                           letterSpacing: -0.5,
                         ),
                       ),
- 
                       const SizedBox(height: 10),
- 
-                      // Подзаголовок
                       Text(
-                        'Мы настроим ленту под твои цели, интересы\nи планы на будущее',
+                        l10n.quizSubtitle,
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.65),
                           fontSize: 14,
@@ -122,12 +117,11 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
- 
                       const SizedBox(height: 28),
                     ],
                   ),
                 ),
- 
+
                 // ── Чипы интересов ─────────────────────────────
                 Expanded(
                   child: SingleChildScrollView(
@@ -135,26 +129,25 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
                     child: Wrap(
                       spacing: 10,
                       runSpacing: 10,
-                      children: _interests.map((item) {
-                        final label = item.$1;
-                        final isSelected = _selected.contains(label);
+                      children: List.generate(interests.length, (i) {
+                        final (label, emoji) = interests[i];
                         return _InterestChip(
-                          label: label,
-                          isSelected: isSelected,
-                          onTap: () => _toggle(label),
+                          label: '$emoji  $label',
+                          isSelected: _selected.contains(i),
+                          onTap: () => _toggle(i),
                         );
-                      }).toList(),
+                      }),
                     ),
                   ),
                 ),
- 
+
                 // ── Счётчик выбранных ──────────────────────────
                 if (_selected.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Center(
                       child: Text(
-                        'Выбрано: ${_selected.length}',
+                        '${l10n.quizSelected}: ${_selected.length}',
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.5),
                           fontSize: 12,
@@ -163,26 +156,24 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
                       ),
                     ),
                   ),
- 
+
                 // ── Кнопки внизу ───────────────────────────────
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
                   child: Row(
                     children: [
-                      // Пропустить
                       Expanded(
                         child: _BottomButton(
-                          label: 'Пропустить',
+                          label: l10n.quizSkip,
                           color: Colors.white.withOpacity(0.15),
                           textColor: Colors.white,
                           onTap: _skip,
                         ),
                       ),
                       const SizedBox(width: 10),
-                      // Далее
                       Expanded(
                         child: _BottomButton(
-                          label: 'Далее',
+                          label: l10n.quizNext,
                           color: const Color(0xFF2ECC9A),
                           textColor: Colors.white,
                           onTap: _proceed,
@@ -199,22 +190,18 @@ class _InterestQuizScreenState extends State<InterestQuizScreen> {
     );
   }
 }
- 
-// ─────────────────────────────────────────────
-// Чип интереса
-// ─────────────────────────────────────────────
- 
+
 class _InterestChip extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
- 
+
   const _InterestChip({
     required this.label,
     required this.isSelected,
     required this.onTap,
   });
- 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -247,31 +234,27 @@ class _InterestChip extends StatelessWidget {
     );
   }
 }
- 
-// ─────────────────────────────────────────────
-// Нижняя кнопка
-// ─────────────────────────────────────────────
- 
+
 class _BottomButton extends StatefulWidget {
   final String label;
   final Color color;
   final Color textColor;
   final VoidCallback onTap;
- 
+
   const _BottomButton({
     required this.label,
     required this.color,
     required this.textColor,
     required this.onTap,
   });
- 
+
   @override
   State<_BottomButton> createState() => _BottomButtonState();
 }
- 
+
 class _BottomButtonState extends State<_BottomButton> {
   bool _pressed = false;
- 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

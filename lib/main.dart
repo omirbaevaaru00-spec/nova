@@ -4,12 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import 'core/router/app_router.dart';
-import 'core/localization/app_localizations.dart';
 import 'core/localization/locale_controller.dart';
+import 'l10n/generated/app_localizations.dart'; // ← новый импорт
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await LocaleController.instance.init();
   runApp(const MyApp());
 }
 
@@ -25,13 +26,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routerConfig: AppRouter.router,
           locale: LocaleController.instance.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
         );
       },
     );

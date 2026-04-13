@@ -25,7 +25,7 @@ class AppRouter {
 
   static final GoRouter router = GoRouter(
     // Сплэш всегда первый — он сам решает куда идти
-    initialLocation: RouteNames.splash,
+    initialLocation: RouteNames.welcome,
 
     routes: [
       // ── Сплэш ─────────────────────────────────────────────

@@ -23,6 +23,8 @@ dependencies:
     # Управление состоянием
   bloc: ^9.2.0 # Бизнес-логика приложения (паттерн BLoC)
   flutter_bloc: ^9.1.1 # Виджеты для связи BLoC с интерфейсом
+   
+
 
   flutter_svg: ^2.2.3 # Отображение SVG-картинок и иконок
   cached_network_image: ^3.4.1 # Загрузка и кэширование картинок из интернета
@@ -44,11 +46,13 @@ dev_dependencies:
     # Генерация иконки и сплэш-экрана
   flutter_native_splash: ^2.4.7 # Экран загрузки при запуске приложения
   flutter_launcher_icons: ^0.14.4 # Генерация иконки приложения для Android и iOS
+  mocktail: ^1.0.4
 
 flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+  generate: true
 
   # ── App Icon ────────────────────────────────────
 flutter_launcher_icons:

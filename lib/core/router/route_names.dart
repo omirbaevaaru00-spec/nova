@@ -3,11 +3,11 @@ class RouteNames {
   RouteNames._();
 
   // ── Сплэш ─────────────────────────────────────────────────
-  static const String splash            = '/';
+  static const String welcome             = '/';
 
   // ── Онбординг (язык выбирается на WelcomeScreen) ──────────
-  static const String welcome           = '/welcome';
-  static const String interestQuiz      = '/interest-quiz';
+  // static const String splash           = '/welcome';
+  static const String interestQuiz      = '/quiz';
 
   // ── Авторизация (по требованию) ───────────────────────────
   static const String login             = '/login';

@@ -1,0 +1,59 @@
+{
+  "@@locale": "ru",
+
+  "welcomeTitle": "WELCOME",
+  "@welcomeTitle": { "description": "Заголовок на экране приветствия" },
+
+  "welcomeSubtitle": "Find universities, explore programs\nand choose your future.",
+  "@welcomeSubtitle": { "description": "Подзаголовок на экране приветствия" },
+
+  "continueText": "Продолжить",
+  "@continueText": { "description": "Кнопка продолжить" },
+
+  "chooseLanguage": "Выберите язык",
+  "@chooseLanguage": { "description": "Заголовок выбора языка" },
+
+  "russian": "Русский",
+  "@russian": { "description": "Опция русского языка" },
+
+  "kazakh": "Қазақша",
+  "@kazakh": { "description": "Опция казахского языка" },
+
+  "quizTitle": "Выбери, что тебе\nинтересно",
+  "@quizTitle": { "description": "Заголовок экрана интересов" },
+
+  "quizSubtitle": "Мы настроим ленту под твои цели, интересы\nи планы на будущее",
+  "@quizSubtitle": { "description": "Подзаголовок экрана интересов" },
+
+  "quizSelected": "Выбрано",
+  "@quizSelected": { "description": "Счётчик выбранных интересов" },
+
+  "quizSkip": "Пропустить",
+  "@quizSkip": { "description": "Кнопка пропустить" },
+
+  "quizNext": "Далее",
+  "@quizNext": { "description": "Кнопка далее" },
+
+  "interestIT": "IT и технологии",
+  "@interestIT": {},
+  "interestMedicine": "Медицина",
+  "@interestMedicine": {},
+  "interestBusiness": "Бизнес и экономика",
+  "@interestBusiness": {},
+  "interestGrants": "Гранты",
+  "@interestGrants": {},
+  "interestDesign": "Дизайн и креатив",
+  "@interestDesign": {},
+  "interestLaw": "Юриспруденция",
+  "@interestLaw": {},
+  "interestPedagogy": "Педагогика",
+  "@interestPedagogy": {},
+  "interestEngineering": "Инженерия",
+  "@interestEngineering": {},
+  "interestBachelor": "Бакалавриат",
+  "@interestBachelor": {},
+  "interestCollege": "Колледж",
+  "@interestCollege": {},
+  "interestMaster": "Магистратура",
+  "@interestMaster": {}
+}
