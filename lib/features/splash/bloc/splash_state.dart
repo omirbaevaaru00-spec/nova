@@ -1,27 +1,9 @@
-import 'package:equatable/equatable.dart';
+abstract class SplashState {}
 
-enum SplashStatus {
-  initial,
-  loading,
-  authenticated,
-  unauthenticated,
-}
+class SplashStateInitial extends SplashState {}
 
-class SplashState extends Equatable {
-  const SplashState({
-    this.status = SplashStatus.initial,
-  });
+class SplashStateShouldOnboarding extends SplashState {}
 
-  final SplashStatus status;
+class SplashStateAlreadyOnboarded extends SplashState {}
 
-  SplashState copyWith({
-    SplashStatus? status,
-  }) {
-    return SplashState(
-      status: status ?? this.status,
-    );
-  }
 
-  @override
-  List<Object?> get props => [status];
-}

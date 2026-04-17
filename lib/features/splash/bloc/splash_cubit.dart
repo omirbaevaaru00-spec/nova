@@ -1,52 +1,40 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:stiky/data/auth/auth_repository.dart';
+import 'package:stiky/data/onboarding/onboardnig_repository.dart';
 
 import 'splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
-  SplashCubit({
-    required AuthRepository authRepository,
-  })  : _authRepository = authRepository,
-        super(const SplashState());
+  SplashCubit({required OnboardnigRepository onboardnigRepository})
+    : _onboardnigRepository = onboardnigRepository,
+      super(SplashStateInitial());
 
-  final AuthRepository _authRepository;
+  final OnboardnigRepository _onboardnigRepository;
   final _logger = Logger();
 
   static const _minSplashDuration = Duration(milliseconds: 1800);
 
-  Future<void> checkAuth() async {
-    emit(state.copyWith(status: SplashStatus.loading));
+  Future<void> checkAuth() async {}
 
-    final stopwatch = Stopwatch()..start();
-
+  Future<void> checkOnboarding() async {
     try {
-      final isAuthenticated = await _authRepository.isAuthenticated();
+      final stopwatch = Stopwatch()..start();
+
+      final alreadyOnboarded = await _onboardnigRepository.alreadyOnboarded();
 
       final elapsed = stopwatch.elapsed;
       if (elapsed < _minSplashDuration) {
-        await Future<void>.delayed(_minSplashDuration - elapsed);
+        await Future.delayed(_minSplashDuration - elapsed);
       }
 
-      emit(
-        state.copyWith(
-          status: isAuthenticated
-              ? SplashStatus.authenticated
-              : SplashStatus.unauthenticated,
-        ),
-      );
+      if (alreadyOnboarded) {
+        emit(SplashStateAlreadyOnboarded());
+      } else {
+        emit(SplashStateShouldOnboarding());
+      }
     } catch (e, st) {
-      _logger.e(
-        'Splash auth check error',
-        error: e,
-        stackTrace: st,
-      );
-
-      emit(
-        state.copyWith(
-          status: SplashStatus.unauthenticated,
-        ),
-      );
+      _logger.e('checkOnboarding failed', error: e, stackTrace: st);
     }
   }
 }
