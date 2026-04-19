@@ -83,4 +83,5 @@ class DefaultFirebaseOptions {
     authDomain: 'nova-87b9a.firebaseapp.com',
     storageBucket: 'nova-87b9a.firebasestorage.app',
   );
+
 }

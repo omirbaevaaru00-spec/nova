@@ -6,7 +6,6 @@ import '../../features/auth/screens/interest_quiz_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
 import '../../features/auth/screens/forgot_password_screen.dart';
-import '../../features/auth/screens/profile_setup_screen.dart';
 import '../../features/home/screens/main_navigation_screen.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/home/screens/search_screen.dart';
@@ -16,9 +15,10 @@ import '../../features/home/screens/saved_searches_screen.dart';
 import '../../features/home/screens/news_feed_screen.dart';
 import '../../features/home/screens/notifications_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
-import '../../features/profile/screens/help_center_screen.dart';
+import '../../features/profile/screens/profile_entry_screen.dart';
 import '../../features/university/screens/university_detail_screen.dart';
 import '../../features/splash/ui/splash_page.dart';
+import '../../features/profile/screens/profile_settings_screen.dart';
 import 'route_names.dart';
 
 class AppRouter {
@@ -59,15 +59,10 @@ class AppRouter {
         path: RouteNames.forgotPassword,
         builder: (context, state) => const ForgotPasswordScreen(),
       ),
-      GoRoute(
-        path: RouteNames.profileSetup,
-        builder: (context, state) => const ProfileSetupScreen(),
-      ),
 
       // ── Основная оболочка с BottomNav ──────────────────────
       ShellRoute(
-        builder: (context, state, child) =>
-            MainNavigationScreen(child: child),
+        builder: (context, state, child) => MainNavigationScreen(child: child),
         routes: [
           GoRoute(
             path: RouteNames.home,
@@ -89,7 +84,7 @@ class AppRouter {
         path: '/university/:id',
         builder: (context, state) {
           final id = state.pathParameters['id'] ?? '';
-          return UniversityDetailScreen(id : id);
+          return UniversityDetailScreen(id: id);
         },
       ),
       // GoRoute(
@@ -110,11 +105,22 @@ class AppRouter {
       ),
       GoRoute(
         path: RouteNames.helpCenter,
-        builder: (context, state) => const HelpCenterScreen(),
+        builder: (context, state) => const ProfileEntryScreen(),
       ),
       GoRoute(
         path: RouteNames.search,
         builder: (context, state) => const SearchScreen(),
+      ),
+      GoRoute(
+        path: '/profile',
+        name: 'profile',
+        builder: (context, state) => const ProfileEntryScreen(),
+      ),
+
+      GoRoute(
+        path: '/profile-settings',
+        name: 'profile-settings',
+        builder: (context, state) => const SettingsScreen(),
       ),
     ],
 

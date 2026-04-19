@@ -1,4 +1,3 @@
-/// Константы маршрутов NOVA.
 class RouteNames {
   RouteNames._();
 
@@ -19,6 +18,9 @@ class RouteNames {
   static const String home = '/main/home';
   static const String notifications = '/main/notifications';
   static const String profile = '/main/profile';
+
+  // ── Профиль ───────────────────────────────────────────────
+  static const String profileSettings = '/profile-settings';
 
   // ── Детальные экраны ──────────────────────────────────────
   static const String search = '/search';

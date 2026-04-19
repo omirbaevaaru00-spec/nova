@@ -645,4 +645,3 @@ class _ProceedButtonState extends State<_ProceedButton> {
     );
   }
 }
- 
