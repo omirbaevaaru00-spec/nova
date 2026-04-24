@@ -81,7 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             icon: CupertinoIcons.person,
             iconColor: const Color(0xFF6366F1),
             title: 'Редактировать',
-            subtitle: 'Имя / Фамилия',
+            subtitle: 'ник',
             onTap: () => _showEditNameDialog(context),
           ),
           const SizedBox(height: 10),
@@ -111,7 +111,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             icon: CupertinoIcons.doc_checkmark,
             iconColor: const Color(0xFFFF9500),
             title: 'Пройти опрос по интересам',
-            onTap: () => context.push('/survey'),
+            onTap: () => context.push('/quiz'),
           ),
           const SizedBox(height: 10),
 

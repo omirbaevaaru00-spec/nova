@@ -1,62 +1,1042 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:go_router/go_router.dart';
+// import 'package:image_picker/image_picker.dart';
+
+// import '../../../widgets/favorites_notifier.dart';
+// import '../../../widgets/university_model.dart';
+
+// class ProfileScreen extends StatefulWidget {
+//   const ProfileScreen({super.key});
+
+//   @override
+//   State<ProfileScreen> createState() => _ProfileScreenState();
+// }
+
+// class _ProfileScreenState extends State<ProfileScreen> {
+//   Map<String, dynamic>? _userData;
+//   bool _loading = true;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _loadUserData();
+//     FavoritesNotifier.instance.load();
+//   }
+
+//   Future<void> _loadUserData() async {
+//     final uid = FirebaseAuth.instance.currentUser?.uid;
+//     if (uid == null) return;
+//     try {
+//       final doc = await FirebaseFirestore.instance
+//           .collection('users')
+//           .doc(uid)
+//           .get();
+//       if (mounted) {
+//         setState(() {
+//           _userData = doc.data();
+//           _loading = false;
+//         });
+//       }
+//     } catch (_) {
+//       if (mounted) setState(() => _loading = false);
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final user = FirebaseAuth.instance.currentUser;
+
+//     if (user == null) {
+//       WidgetsBinding.instance.addPostFrameCallback((_) {
+//         context.go('/register');
+//       });
+//       return const Scaffold(
+//         body: Center(child: CircularProgressIndicator()),
+//       );
+//     }
+
+//     if (_loading) {
+//       return const Scaffold(
+//         backgroundColor: Color(0xFFF2F2F7),
+//         body: Center(child: CircularProgressIndicator()),
+//       );
+//     }
+
+//     final name = _userData?['name'] ?? user.displayName ?? 'Пользователь';
+//     final city = _userData?['city'] ?? '';
+//     final gpa = _userData?['gpa'];
+//     final ielts = _userData?['ielts'];
+//     final ent = _userData?['ent'];
+//     final photoUrl = user.photoURL;
+
+//     return Scaffold(
+//       backgroundColor: const Color(0xFFF2F2F7),
+//       body: CustomScrollView(
+//         slivers: [
+//           // ── Закреплённый AppBar ──────────────────────────
+//           SliverAppBar(
+//             backgroundColor: const Color(0xFFF2F2F7),
+//             elevation: 0,
+//             pinned: true,
+//             automaticallyImplyLeading: false,
+//             toolbarHeight: 56,
+//             leading: GestureDetector(
+//               onTap: () {
+//                 if (context.canPop()) context.pop();
+//               },
+//               child: const Icon(
+//                 Icons.arrow_back_rounded,
+//                 color: Color(0xFF1C1C1E),
+//               ),
+//             ),
+//             actions: [
+//               GestureDetector(
+//                 onTap: () => context.push('/profile-settings'),
+//                 child: const Padding(
+//                   padding: EdgeInsets.only(right: 16),
+//                   child: Icon(
+//                     Icons.settings_outlined,
+//                     color: Color(0xFF1C1C1E),
+//                     size: 24,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+
+//           SliverToBoxAdapter(
+//             child: Column(
+//               children: [
+//                 const SizedBox(height: 8),
+
+//                 // ── Аватар ───────────────────────────────
+//                 _AvatarWidget(photoUrl: photoUrl, name: name),
+
+//                 const SizedBox(height: 12),
+
+//                 // ── Имя ──────────────────────────────────
+//                 Text(
+//                   name,
+//                   style: const TextStyle(
+//                     fontSize: 20,
+//                     fontWeight: FontWeight.w700,
+//                     color: Color(0xFF1C1C1E),
+//                   ),
+//                 ),
+
+//                 // ── Город ────────────────────────────────
+//                 if (city.isNotEmpty) ...[
+//                   const SizedBox(height: 2),
+//                   Text(
+//                     city,
+//                     style: const TextStyle(
+//                       fontSize: 14,
+//                       color: Color(0xFF8E8E93),
+//                     ),
+//                   ),
+//                 ],
+
+//                 const SizedBox(height: 16),
+
+//                 // ── Баллы ────────────────────────────────
+//                 _ScoresRow(gpa: gpa, ielts: ielts, ent: ent),
+
+//                 const SizedBox(height: 24),
+
+//                 // ── Избранные ────────────────────────────
+//                 _FavoritesSection(),
+
+//                 const SizedBox(height: 40),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // ─── Аватар ──────────────────────────────────────────────────
+// class _AvatarWidget extends StatelessWidget {
+//   final String? photoUrl;
+//   final String name;
+
+//   const _AvatarWidget({required this.photoUrl, required this.name});
+
+//   void _showPhotoOptions(BuildContext context) {
+//     showCupertinoModalPopup(
+//       context: context,
+//       builder: (_) => CupertinoActionSheet(
+//         title: const Text('Фото профиля'),
+//         actions: [
+//           CupertinoActionSheetAction(
+//             onPressed: () async {
+//               Navigator.pop(context);
+//               await ImagePicker().pickImage(source: ImageSource.camera);
+//               // TODO: загрузи в Firebase Storage
+//             },
+//             child: const Text('Сделать фото'),
+//           ),
+//           CupertinoActionSheetAction(
+//             onPressed: () async {
+//               Navigator.pop(context);
+//               await ImagePicker().pickImage(source: ImageSource.gallery);
+//               // TODO: загрузи в Firebase Storage
+//             },
+//             child: const Text('Выбрать из галереи'),
+//           ),
+//         ],
+//         cancelButton: CupertinoActionSheetAction(
+//           isDestructiveAction: true,
+//           onPressed: () => Navigator.pop(context),
+//           child: const Text('Отмена'),
+//         ),
+//       ),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () => _showPhotoOptions(context),
+//       child: Stack(
+//         children: [
+//           Container(
+//             width: 96,
+//             height: 96,
+//             decoration: BoxDecoration(
+//               shape: BoxShape.circle,
+//               color: const Color(0xFFF4A8A8),
+//               image: photoUrl != null
+//                   ? DecorationImage(
+//                       image: NetworkImage(photoUrl!),
+//                       fit: BoxFit.cover,
+//                     )
+//                   : null,
+//             ),
+//             child: photoUrl == null
+//                 ? const Icon(
+//                     CupertinoIcons.person_fill,
+//                     color: Colors.white,
+//                     size: 48,
+//                   )
+//                 : null,
+//           ),
+//           Positioned(
+//             bottom: 2,
+//             right: 2,
+//             child: Container(
+//               width: 26,
+//               height: 26,
+//               decoration: BoxDecoration(
+//                 color: const Color(0xFF6366F1),
+//                 shape: BoxShape.circle,
+//                 border: Border.all(
+//                   color: const Color(0xFFF2F2F7),
+//                   width: 2,
+//                 ),
+//               ),
+//               child: const Icon(Icons.add, color: Colors.white, size: 14),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // ─── Строка баллов ───────────────────────────────────────────
+// class _ScoresRow extends StatelessWidget {
+//   final dynamic gpa;
+//   final dynamic ielts;
+//   final dynamic ent;
+
+//   const _ScoresRow({this.gpa, this.ielts, this.ent});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       margin: const EdgeInsets.symmetric(horizontal: 20),
+//       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(50),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.black.withOpacity(0.04),
+//             blurRadius: 10,
+//             offset: const Offset(0, 2),
+//           ),
+//         ],
+//       ),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children: [
+//           Text(
+//             'gpa : ${gpa ?? '—'}',
+//             style: const TextStyle(
+//               fontSize: 13,
+//               fontWeight: FontWeight.w500,
+//               color: Color(0xFF1C1C1E),
+//             ),
+//           ),
+//           const Text(
+//             ':',
+//             style: TextStyle(color: Color(0xFF8E8E93)),
+//           ),
+//           Text(
+//             'ielts : ${ielts ?? '—'}',
+//             style: const TextStyle(
+//               fontSize: 13,
+//               fontWeight: FontWeight.w500,
+//               color: Color(0xFF1C1C1E),
+//             ),
+//           ),
+//           const Text(
+//             ':',
+//             style: TextStyle(color: Color(0xFF8E8E93)),
+//           ),
+//           Text(
+//             'ент : ${ent ?? '—'}',
+//             style: const TextStyle(
+//               fontSize: 13,
+//               fontWeight: FontWeight.w500,
+//               color: Color(0xFF1C1C1E),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // ─── Секция избранных ────────────────────────────────────────
+// class _FavoritesSection extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return ValueListenableBuilder<Set<String>>(
+//       valueListenable: FavoritesNotifier.instance,
+//       builder: (_, favoriteIds, __) {
+//         final favs = kazakhUniversities
+//             .where((u) => favoriteIds.contains(u.id))
+//             .toList();
+
+//         return Column(
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           children: [
+//             const Text(
+//               'избранные',
+//               style: TextStyle(
+//                 fontSize: 16,
+//                 fontWeight: FontWeight.w700,
+//                 color: Color(0xFF1C1C1E),
+//               ),
+//             ),
+//             const SizedBox(height: 12),
+//             if (favs.isEmpty)
+//               Padding(
+//                 padding: const EdgeInsets.symmetric(vertical: 32),
+//                 child: Column(
+//                   children: const [
+//                     Icon(
+//                       Icons.favorite_border_rounded,
+//                       color: Color(0xFFCCCCCC),
+//                       size: 48,
+//                     ),
+//                     SizedBox(height: 12),
+//                     Text(
+//                       'Нет избранных университетов',
+//                       style: TextStyle(
+//                         color: Color(0xFF8E8E93),
+//                         fontSize: 14,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               )
+//             else
+//               GridView.builder(
+//                 shrinkWrap: true,
+//                 physics: const NeverScrollableScrollPhysics(),
+//                 padding: const EdgeInsets.symmetric(horizontal: 20),
+//                 gridDelegate:
+//                     const SliverGridDelegateWithFixedCrossAxisCount(
+//                   crossAxisCount: 2,
+//                   crossAxisSpacing: 12,
+//                   mainAxisSpacing: 12,
+//                   childAspectRatio: 0.82,
+//                 ),
+//                 itemCount: favs.length,
+//                 itemBuilder: (context, i) => _FavCard(university: favs[i]),
+//               ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
+
+// // ─── Карточка избранного ─────────────────────────────────────
+// class _FavCard extends StatelessWidget {
+//   final University university;
+//   const _FavCard({required this.university});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () =>
+//           context.push('/university/${university.id}', extra: university),
+//       child: Container(
+//         decoration: BoxDecoration(
+//           color: Colors.white,
+//           borderRadius: BorderRadius.circular(16),
+//           boxShadow: [
+//             BoxShadow(
+//               color: Colors.black.withOpacity(0.05),
+//               blurRadius: 10,
+//               offset: const Offset(0, 3),
+//             ),
+//           ],
+//         ),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             // Фото
+//             ClipRRect(
+//               borderRadius:
+//                   const BorderRadius.vertical(top: Radius.circular(16)),
+//               child: Image.network(
+//                 university.imageUrl,
+//                 height: 110,
+//                 width: double.infinity,
+//                 fit: BoxFit.cover,
+//                 errorBuilder: (_, __, ___) => Container(
+//                   height: 110,
+//                   color: const Color(0xFFF0EEF8),
+//                   child: const Icon(
+//                     Icons.school_outlined,
+//                     color: Color(0xFF3B3B8E),
+//                     size: 36,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             // Логотип + название
+//             Padding(
+//               padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+//               child: Row(
+//                 children: [
+//                   // Логотип
+//                   Container(
+//                     width: 28,
+//                     height: 28,
+//                     decoration: BoxDecoration(
+//                       shape: BoxShape.circle,
+//                       color: const Color(0xFFF0EEF8),
+//                       border: Border.all(
+//                         color: const Color(0xFFE0DDEF),
+//                         width: 1,
+//                       ),
+//                     ),
+//                     child: ClipOval(
+//                       child: university.logoUrl.isNotEmpty
+//                           ? Image.network(
+//                               university.logoUrl,
+//                               fit: BoxFit.cover,
+//                               errorBuilder: (_, __, ___) => Center(
+//                                 child: Text(
+//                                   university.name[0],
+//                                   style: const TextStyle(
+//                                     fontSize: 12,
+//                                     fontWeight: FontWeight.w700,
+//                                     color: Color(0xFF3B3B8E),
+//                                   ),
+//                                 ),
+//                               ),
+//                             )
+//                           : Center(
+//                               child: Text(
+//                                 university.name[0],
+//                                 style: const TextStyle(
+//                                   fontSize: 12,
+//                                   fontWeight: FontWeight.w700,
+//                                   color: Color(0xFF3B3B8E),
+//                                 ),
+//                               ),
+//                             ),
+//                     ),
+//                   ),
+//                   const SizedBox(width: 6),
+//                   Expanded(
+//                     child: Text(
+//                       university.name,
+//                       style: const TextStyle(
+//                         fontSize: 11,
+//                         fontWeight: FontWeight.w600,
+//                         color: Color(0xFF1C1C1E),
+//                       ),
+//                       maxLines: 2,
+//                       overflow: TextOverflow.ellipsis,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:go_router/go_router.dart';
+// import 'package:image_picker/image_picker.dart';
+
+// import '../../../widgets/favorites_notifier.dart';
+// import '../../../widgets/university_model.dart';
+
+// class ProfileScreen extends StatefulWidget {
+//   const ProfileScreen({super.key});
+
+//   @override
+//   State<ProfileScreen> createState() => _ProfileScreenState();
+// }
+
+// class _ProfileScreenState extends State<ProfileScreen> {
+//   Map<String, dynamic>? _userData;
+//   bool _loading = true;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _loadUserData();
+//     FavoritesNotifier.instance.load();
+//   }
+
+//   Future<void> _loadUserData() async {
+//     final uid = FirebaseAuth.instance.currentUser?.uid;
+//     if (uid == null) return;
+//     try {
+//       final doc = await FirebaseFirestore.instance
+//           .collection('users')
+//           .doc(uid)
+//           .get();
+//       if (mounted) {
+//         setState(() {
+//           _userData = doc.data();
+//           _loading = false;
+//         });
+//       }
+//     } catch (_) {
+//       if (mounted) setState(() => _loading = false);
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final user = FirebaseAuth.instance.currentUser;
+
+//     if (user == null) {
+//       WidgetsBinding.instance.addPostFrameCallback((_) {
+//         context.go('/register');
+//       });
+//       return const Scaffold(
+//         body: Center(child: CircularProgressIndicator()),
+//       );
+//     }
+
+//     if (_loading) {
+//       return const Scaffold(
+//         backgroundColor: Color(0xFFF2F2F7),
+//         body: Center(child: CircularProgressIndicator()),
+//       );
+//     }
+
+//     final name = _userData?['name'] ?? user.displayName ?? 'Пользователь';
+//     final city = _userData?['city'] ?? '';
+//     final gpa = _userData?['gpa'];
+//     final ielts = _userData?['ielts'];
+//     final ent = _userData?['ent'];
+//     final photoUrl = user.photoURL;
+
+//     return Scaffold(
+//       backgroundColor: const Color(0xFFF2F2F7),
+//       body: CustomScrollView(
+//         slivers: [
+//           // ── Закреплённый AppBar ──────────────────────────
+//           SliverAppBar(
+//             backgroundColor: const Color(0xFFF2F2F7),
+//             elevation: 0,
+//             pinned: true,
+//             automaticallyImplyLeading: false,
+//             toolbarHeight: 56,
+//             leading: GestureDetector(
+//               onTap: () {
+//                 if (context.canPop()) context.pop();
+//               },
+//               child: const Icon(
+//                 Icons.arrow_back_rounded,
+//                 color: Color(0xFF1C1C1E),
+//               ),
+//             ),
+//             actions: [
+//               GestureDetector(
+//                 onTap: () => context.push('/profile-settings'),
+//                 child: const Padding(
+//                   padding: EdgeInsets.only(right: 16),
+//                   child: Icon(
+//                     Icons.settings_outlined,
+//                     color: Color(0xFF1C1C1E),
+//                     size: 24,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+
+//           SliverToBoxAdapter(
+//             child: Column(
+//               children: [
+//                 const SizedBox(height: 8),
+
+//                 // ── Аватар ───────────────────────────────
+//                 _AvatarWidget(photoUrl: photoUrl, name: name),
+
+//                 const SizedBox(height: 12),
+
+//                 // ── Имя ──────────────────────────────────
+//                 Text(
+//                   name,
+//                   style: const TextStyle(
+//                     fontSize: 20,
+//                     fontWeight: FontWeight.w700,
+//                     color: Color(0xFF1C1C1E),
+//                   ),
+//                 ),
+
+//                 // ── Город ────────────────────────────────
+//                 if (city.isNotEmpty) ...[
+//                   const SizedBox(height: 2),
+//                   Text(
+//                     city,
+//                     style: const TextStyle(
+//                       fontSize: 14,
+//                       color: Color(0xFF8E8E93),
+//                     ),
+//                   ),
+//                 ],
+
+//                 const SizedBox(height: 16),
+
+//                 // ── Баллы ────────────────────────────────
+//                 _ScoresRow(gpa: gpa, ielts: ielts, ent: ent),
+
+//                 const SizedBox(height: 24),
+
+//                 // ── Избранные ────────────────────────────
+//                 _FavoritesSection(),
+
+//                 const SizedBox(height: 40),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // ─── Аватар ──────────────────────────────────────────────────
+// class _AvatarWidget extends StatelessWidget {
+//   final String? photoUrl;
+//   final String name;
+
+//   const _AvatarWidget({required this.photoUrl, required this.name});
+
+//   void _showPhotoOptions(BuildContext context) {
+//     showCupertinoModalPopup(
+//       context: context,
+//       builder: (_) => CupertinoActionSheet(
+//         title: const Text('Фото профиля'),
+//         actions: [
+//           CupertinoActionSheetAction(
+//             onPressed: () async {
+//               Navigator.pop(context);
+//               await ImagePicker().pickImage(source: ImageSource.camera);
+//               // TODO: загрузи в Firebase Storage
+//             },
+//             child: const Text('Сделать фото'),
+//           ),
+//           CupertinoActionSheetAction(
+//             onPressed: () async {
+//               Navigator.pop(context);
+//               await ImagePicker().pickImage(source: ImageSource.gallery);
+//               // TODO: загрузи в Firebase Storage
+//             },
+//             child: const Text('Выбрать из галереи'),
+//           ),
+//         ],
+//         cancelButton: CupertinoActionSheetAction(
+//           isDestructiveAction: true,
+//           onPressed: () => Navigator.pop(context),
+//           child: const Text('Отмена'),
+//         ),
+//       ),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () => _showPhotoOptions(context),
+//       child: Stack(
+//         children: [
+//           Container(
+//             width: 96,
+//             height: 96,
+//             decoration: BoxDecoration(
+//               shape: BoxShape.circle,
+//               color: const Color(0xFFF4A8A8),
+//               image: photoUrl != null
+//                   ? DecorationImage(
+//                       image: NetworkImage(photoUrl!),
+//                       fit: BoxFit.cover,
+//                     )
+//                   : null,
+//             ),
+//             child: photoUrl == null
+//                 ? const Icon(
+//                     CupertinoIcons.person_fill,
+//                     color: Colors.white,
+//                     size: 48,
+//                   )
+//                 : null,
+//           ),
+//           Positioned(
+//             bottom: 2,
+//             right: 2,
+//             child: Container(
+//               width: 26,
+//               height: 26,
+//               decoration: BoxDecoration(
+//                 color: const Color(0xFF6366F1),
+//                 shape: BoxShape.circle,
+//                 border: Border.all(
+//                   color: const Color(0xFFF2F2F7),
+//                   width: 2,
+//                 ),
+//               ),
+//               child: const Icon(Icons.add, color: Colors.white, size: 14),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // ─── Строка баллов ───────────────────────────────────────────
+// class _ScoresRow extends StatelessWidget {
+//   final dynamic gpa;
+//   final dynamic ielts;
+//   final dynamic ent;
+
+//   const _ScoresRow({this.gpa, this.ielts, this.ent});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       margin: const EdgeInsets.symmetric(horizontal: 20),
+//       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(50),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.black.withOpacity(0.04),
+//             blurRadius: 10,
+//             offset: const Offset(0, 2),
+//           ),
+//         ],
+//       ),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children: [
+//           Text(
+//             'gpa : ${gpa ?? '—'}',
+//             style: const TextStyle(
+//               fontSize: 13,
+//               fontWeight: FontWeight.w500,
+//               color: Color(0xFF1C1C1E),
+//             ),
+//           ),
+//           const Text(
+//             ':',
+//             style: TextStyle(color: Color(0xFF8E8E93)),
+//           ),
+//           Text(
+//             'ielts : ${ielts ?? '—'}',
+//             style: const TextStyle(
+//               fontSize: 13,
+//               fontWeight: FontWeight.w500,
+//               color: Color(0xFF1C1C1E),
+//             ),
+//           ),
+//           const Text(
+//             ':',
+//             style: TextStyle(color: Color(0xFF8E8E93)),
+//           ),
+//           Text(
+//             'ент : ${ent ?? '—'}',
+//             style: const TextStyle(
+//               fontSize: 13,
+//               fontWeight: FontWeight.w500,
+//               color: Color(0xFF1C1C1E),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // ─── Секция избранных ────────────────────────────────────────
+// class _FavoritesSection extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return ValueListenableBuilder<Set<String>>(
+//       valueListenable: FavoritesNotifier.instance,
+//       builder: (_, favoriteIds, __) {
+//         final favs = kazakhUniversities
+//             .where((u) => favoriteIds.contains(u.id))
+//             .toList();
+
+//         return Column(
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           children: [
+//             const Text(
+//               'избранные',
+//               style: TextStyle(
+//                 fontSize: 16,
+//                 fontWeight: FontWeight.w700,
+//                 color: Color(0xFF1C1C1E),
+//               ),
+//             ),
+//             const SizedBox(height: 12),
+//             if (favs.isEmpty)
+//               Padding(
+//                 padding: const EdgeInsets.symmetric(vertical: 32),
+//                 child: Column(
+//                   children: const [
+//                     Icon(
+//                       Icons.favorite_border_rounded,
+//                       color: Color(0xFFCCCCCC),
+//                       size: 48,
+//                     ),
+//                     SizedBox(height: 12),
+//                     Text(
+//                       'Нет избранных университетов',
+//                       style: TextStyle(
+//                         color: Color(0xFF8E8E93),
+//                         fontSize: 14,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               )
+//             else
+//               GridView.builder(
+//                 shrinkWrap: true,
+//                 physics: const NeverScrollableScrollPhysics(),
+//                 padding: const EdgeInsets.symmetric(horizontal: 20),
+//                 gridDelegate:
+//                     const SliverGridDelegateWithFixedCrossAxisCount(
+//                   crossAxisCount: 2,
+//                   crossAxisSpacing: 12,
+//                   mainAxisSpacing: 12,
+//                   childAspectRatio: 0.82,
+//                 ),
+//                 itemCount: favs.length,
+//                 itemBuilder: (context, i) => _FavCard(university: favs[i]),
+//               ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
+
+// // ─── Карточка избранного ─────────────────────────────────────
+// class _FavCard extends StatelessWidget {
+//   final University university;
+//   const _FavCard({required this.university});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () =>
+//           context.push('/university/${university.id}', extra: university),
+//       child: Container(
+//         decoration: BoxDecoration(
+//           color: Colors.white,
+//           borderRadius: BorderRadius.circular(16),
+//           boxShadow: [
+//             BoxShadow(
+//               color: Colors.black.withOpacity(0.05),
+//               blurRadius: 10,
+//               offset: const Offset(0, 3),
+//             ),
+//           ],
+//         ),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             // Фото
+//             ClipRRect(
+//               borderRadius:
+//                   const BorderRadius.vertical(top: Radius.circular(16)),
+//               child: Image.network(
+//                 university.imageUrl,
+//                 height: 110,
+//                 width: double.infinity,
+//                 fit: BoxFit.cover,
+//                 errorBuilder: (_, __, ___) => Container(
+//                   height: 110,
+//                   color: const Color(0xFFF0EEF8),
+//                   child: const Icon(
+//                     Icons.school_outlined,
+//                     color: Color(0xFF3B3B8E),
+//                     size: 36,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             // Логотип + название
+//             Padding(
+//               padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+//               child: Row(
+//                 children: [
+//                   // Логотип
+//                   Container(
+//                     width: 28,
+//                     height: 28,
+//                     decoration: BoxDecoration(
+//                       shape: BoxShape.circle,
+//                       color: const Color(0xFFF0EEF8),
+//                       border: Border.all(
+//                         color: const Color(0xFFE0DDEF),
+//                         width: 1,
+//                       ),
+//                     ),
+//                     child: ClipOval(
+//                       child: university.logoUrl.isNotEmpty
+//                           ? Image.network(
+//                               university.logoUrl,
+//                               fit: BoxFit.cover,
+//                               errorBuilder: (_, __, ___) => Center(
+//                                 child: Text(
+//                                   university.name[0],
+//                                   style: const TextStyle(
+//                                     fontSize: 12,
+//                                     fontWeight: FontWeight.w700,
+//                                     color: Color(0xFF3B3B8E),
+//                                   ),
+//                                 ),
+//                               ),
+//                             )
+//                           : Center(
+//                               child: Text(
+//                                 university.name[0],
+//                                 style: const TextStyle(
+//                                   fontSize: 12,
+//                                   fontWeight: FontWeight.w700,
+//                                   color: Color(0xFF3B3B8E),
+//                                 ),
+//                               ),
+//                             ),
+//                     ),
+//                   ),
+//                   const SizedBox(width: 6),
+//                   Expanded(
+//                     child: Text(
+//                       university.name,
+//                       style: const TextStyle(
+//                         fontSize: 11,
+//                         fontWeight: FontWeight.w600,
+//                         color: Color(0xFF1C1C1E),
+//                       ),
+//                       maxLines: 2,
+//                       overflow: TextOverflow.ellipsis,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
-// ─── Цвета приложения ──────────────────────────────────────
-class AppColors {
-  static const primary = Color(0xFF6366F1);
-  static const primaryLight = Color(0xFFEEEDFE);
-  static const background = Color(0xFFF2F2F7);
-  static const cardBg = Colors.white;
-  static const textPrimary = Color(0xFF1C1C1E);
-  static const textSecondary = Color(0xFF8E8E93);
-  static const divider = Color(0xFFE5E5EA);
-  static const heartRed = Color(0xFFE53E3E);
-  static const avatarBg = Color(0xFFF9A8A8);
-}
+import '../../../widgets/favorites_notifier.dart';
+import '../../../widgets/university_model.dart';
 
-// ─── Модель избранного университета ────────────────────────
-class FavoriteUniversity {
-  final String name;
-  final String location;
-  final String emoji;
-
-  const FavoriteUniversity({
-    required this.name,
-    required this.location,
-    required this.emoji,
-  });
-}
-
-// ─── Главный экран профиля ──────────────────────────────────
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
-  // Замени на реальные данные из Firebase/BLoC
-  static const _favorites = [
-    FavoriteUniversity(
-      name: 'МГУ им. М.В. Ломоносова',
-      location: 'Москва, Россия',
-      emoji: '🏛️',
-    ),
-    FavoriteUniversity(
-      name: 'МФТИ',
-      location: 'Московская обл., Россия',
-      emoji: '🎓',
-    ),
-    FavoriteUniversity(
-      name: 'Назарбаев Университет',
-      location: 'Астана, Казахстан',
-      emoji: '🌍',
-    ),
-  ];
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  Map<String, dynamic>? _userData;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+    FavoritesNotifier.instance.load();
+  }
+
+  Future<void> _loadUserData() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return;
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
+      if (mounted) {
+        setState(() {
+          _userData = doc.data();
+          _loading = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
-    // Если нет пользователя — редиректим на регистрацию
     if (user == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.go('/register');
@@ -66,158 +1046,113 @@ class ProfileScreen extends StatelessWidget {
       );
     }
 
+    if (_loading) {
+      return const Scaffold(
+        backgroundColor: Color(0xFFF2F2F7),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final name = _userData?['name'] ?? user.displayName ?? 'Пользователь';
+    final city = _userData?['city'] ?? '';
+    final gpa = _userData?['gpa'];
+    final ielts = _userData?['ielts'];
+    final ent = _userData?['ent'];
+    final photoUrl = user.photoURL;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: _ProfileAppBar(
-        onSettingsTap: () => context.push('/settings'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.only(bottom: 24),
-        children: [
-          const SizedBox(height: 8),
-          _AvatarSection(user: user),
-          const SizedBox(height: 16),
-          _ScoresCard(),
-          const SizedBox(height: 20),
-          _FavoritesSection(favorites: _favorites),
+      backgroundColor: const Color(0xFFF2F2F7),
+      body: CustomScrollView(
+        slivers: [
+          // ── Закреплённый AppBar ──────────────────────────
+          SliverAppBar(
+            backgroundColor: const Color(0xFFF2F2F7),
+            elevation: 0,
+            pinned: true,
+            automaticallyImplyLeading: false,
+            toolbarHeight: 56,
+            leading: GestureDetector(
+              onTap: () {
+                if (context.canPop()) context.pop();
+              },
+              child: const Icon(
+                Icons.arrow_back_rounded,
+                color: Color(0xFF1C1C1E),
+              ),
+            ),
+            actions: [
+              GestureDetector(
+                onTap: () => context.push('/profile-settings'),
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 16),
+                  child: Icon(
+                    Icons.settings_outlined,
+                    color: Color(0xFF1C1C1E),
+                    size: 24,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                const SizedBox(height: 8),
+
+                // ── Аватар ───────────────────────────────
+                _AvatarWidget(photoUrl: photoUrl, name: name),
+
+                const SizedBox(height: 12),
+
+                // ── Имя ──────────────────────────────────
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1C1C1E),
+                  ),
+                ),
+
+                // ── Город ────────────────────────────────
+                if (city.isNotEmpty) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    city,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF8E8E93),
+                    ),
+                  ),
+                ],
+
+                const SizedBox(height: 16),
+
+                // ── Баллы ────────────────────────────────
+                _ScoresRow(gpa: gpa, ielts: ielts, ent: ent),
+
+                const SizedBox(height: 24),
+
+                // ── Избранные ────────────────────────────
+                _FavoritesSection(),
+
+                const SizedBox(height: 40),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-// ─── AppBar профиля ─────────────────────────────────────────
-class _ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final VoidCallback onSettingsTap;
+// ─── Аватар ──────────────────────────────────────────────────
+class _AvatarWidget extends StatelessWidget {
+  final String? photoUrl;
+  final String name;
 
-  const _ProfileAppBar({required this.onSettingsTap});
-
-  @override
-  Size get preferredSize => const Size.fromHeight(56);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: AppColors.background,
-      elevation: 0,
-      leading: GestureDetector(
-        onTap: () => context.pop(),
-        child: Container(
-          margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.06),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: const Icon(CupertinoIcons.back, color: AppColors.textPrimary, size: 20),
-        ),
-      ),
-      actions: [
-        GestureDetector(
-          onTap: onSettingsTap,
-          child: Container(
-            margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.06),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: const Padding(
-              padding: EdgeInsets.all(8),
-              child: Icon(CupertinoIcons.settings, color: AppColors.textPrimary, size: 20),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// ─── Секция аватара, имени, города ─────────────────────────
-class _AvatarSection extends StatelessWidget {
-  final User user;
-
-  const _AvatarSection({required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    final displayName = user.displayName ?? 'Пользователь';
-    final photoUrl = user.photoURL;
-
-    return Column(
-      children: [
-        Stack(
-          children: [
-            // Аватар
-            Container(
-              width: 92,
-              height: 92,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.avatarBg,
-                image: photoUrl != null
-                    ? DecorationImage(
-                        image: NetworkImage(photoUrl),
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-              ),
-              child: photoUrl == null
-                  ? const Icon(CupertinoIcons.person_fill, color: Colors.white, size: 46)
-                  : null,
-            ),
-            // Кнопка добавить фото
-            Positioned(
-              bottom: 2,
-              right: 2,
-              child: GestureDetector(
-                onTap: () => _showPhotoOptions(context),
-                child: Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.background, width: 2),
-                  ),
-                  child: const Icon(Icons.add, color: Colors.white, size: 16),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Text(
-          displayName,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        const SizedBox(height: 4),
-        const Text(
-          'Алматы', // Замени на реальный город из профиля
-          style: TextStyle(
-            fontSize: 14,
-            color: AppColors.textSecondary,
-          ),
-        ),
-      ],
-    );
-  }
+  const _AvatarWidget({required this.photoUrl, required this.name});
 
   void _showPhotoOptions(BuildContext context) {
     showCupertinoModalPopup(
@@ -226,16 +1161,18 @@ class _AvatarSection extends StatelessWidget {
         title: const Text('Фото профиля'),
         actions: [
           CupertinoActionSheetAction(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
-              // TODO: image_picker камера
+              await ImagePicker().pickImage(source: ImageSource.camera);
+              // TODO: загрузи в Firebase Storage
             },
             child: const Text('Сделать фото'),
           ),
           CupertinoActionSheetAction(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
-              // TODO: image_picker галерея
+              await ImagePicker().pickImage(source: ImageSource.gallery);
+              // TODO: загрузи в Firebase Storage
             },
             child: const Text('Выбрать из галереи'),
           ),
@@ -248,194 +1185,296 @@ class _AvatarSection extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _showPhotoOptions(context),
+      child: Stack(
+        children: [
+          Container(
+            width: 96,
+            height: 96,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFFF4A8A8),
+              image: photoUrl != null
+                  ? DecorationImage(
+                      image: NetworkImage(photoUrl!),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            ),
+            child: photoUrl == null
+                ? const Icon(
+                    CupertinoIcons.person_fill,
+                    color: Colors.white,
+                    size: 48,
+                  )
+                : null,
+          ),
+          Positioned(
+            bottom: 2,
+            right: 2,
+            child: Container(
+              width: 26,
+              height: 26,
+              decoration: BoxDecoration(
+                color: const Color(0xFF6366F1),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: const Color(0xFFF2F2F7),
+                  width: 2,
+                ),
+              ),
+              child: const Icon(Icons.add, color: Colors.white, size: 14),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-// ─── Карточка баллов ────────────────────────────────────────
-class _ScoresCard extends StatelessWidget {
-  // Замени на реальные данные из BLoC/Firestore
-  final double gpa;
-  final double ielts;
-  final int ent;
+// ─── Строка баллов ───────────────────────────────────────────
+class _ScoresRow extends StatelessWidget {
+  final dynamic gpa;
+  final dynamic ielts;
+  final dynamic ent;
 
-  const _ScoresCard({
-    this.gpa = 3.5,
-    this.ielts = 6.5,
-    this.ent = 120,
-  });
+  const _ScoresRow({this.gpa, this.ielts, this.ent});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
       decoration: BoxDecoration(
-        color: AppColors.cardBg,
-        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(50),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
-            blurRadius: 12,
+            blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _ScoreItem(label: 'gpa', value: gpa.toString()),
-          _Divider(),
-          _ScoreItem(label: 'ielts', value: ielts.toString()),
-          _Divider(),
-          _ScoreItem(label: 'ент', value: ent.toString()),
+          Text(
+            'gpa : ${gpa ?? '—'}',
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF1C1C1E),
+            ),
+          ),
+          const Text(
+            ':',
+            style: TextStyle(color: Color(0xFF8E8E93)),
+          ),
+          Text(
+            'ielts : ${ielts ?? '—'}',
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF1C1C1E),
+            ),
+          ),
+          const Text(
+            ':',
+            style: TextStyle(color: Color(0xFF8E8E93)),
+          ),
+          Text(
+            'ент : ${ent ?? '—'}',
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF1C1C1E),
+            ),
+          ),
         ],
       ),
     );
-  }
-}
-
-class _ScoreItem extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _ScoreItem({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textSecondary,
-            letterSpacing: 0.5,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _Divider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(width: 1, height: 36, color: AppColors.divider);
   }
 }
 
 // ─── Секция избранных ────────────────────────────────────────
 class _FavoritesSection extends StatelessWidget {
-  final List<FavoriteUniversity> favorites;
-
-  const _FavoritesSection({required this.favorites});
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            'избранные',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        if (favorites.isEmpty)
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-            child: Center(
-              child: Text(
-                'Нет избранных университетов',
-                style: TextStyle(color: AppColors.textSecondary),
+    return ValueListenableBuilder<Set<String>>(
+      valueListenable: FavoritesNotifier.instance,
+      builder: (_, favoriteIds, __) {
+        final favs = kazakhUniversities
+            .where((u) => favoriteIds.contains(u.id))
+            .toList();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              'избранные',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF1C1C1E),
               ),
             ),
-          )
-        else
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            itemCount: favorites.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
-            itemBuilder: (context, index) =>
-                _FavoriteCard(university: favorites[index]),
-          ),
-      ],
+            const SizedBox(height: 12),
+            if (favs.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 32),
+                child: Column(
+                  children: const [
+                    Icon(
+                      Icons.favorite_border_rounded,
+                      color: Color(0xFFCCCCCC),
+                      size: 48,
+                    ),
+                    SizedBox(height: 12),
+                    Text(
+                      'Нет избранных университетов',
+                      style: TextStyle(
+                        color: Color(0xFF8E8E93),
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            else
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.82,
+                ),
+                itemCount: favs.length,
+                itemBuilder: (context, i) => _FavCard(university: favs[i]),
+              ),
+          ],
+        );
+      },
     );
   }
 }
 
-class _FavoriteCard extends StatelessWidget {
-  final FavoriteUniversity university;
-
-  const _FavoriteCard({required this.university});
+// ─── Карточка избранного ─────────────────────────────────────
+class _FavCard extends StatelessWidget {
+  final University university;
+  const _FavCard({required this.university});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppColors.cardBg,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.divider, width: 0.5),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: AppColors.primaryLight,
-              borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: () =>
+          context.push('/university/${university.id}', extra: university),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
             ),
-            child: Center(
-              child: Text(university.emoji, style: const TextStyle(fontSize: 26)),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  university.name,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  university.location,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Фото
+            ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(16)),
+              child: Image.network(
+                university.imageUrl,
+                height: 110,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Container(
+                  height: 110,
+                  color: const Color(0xFFF0EEF8),
+                  child: const Icon(
+                    Icons.school_outlined,
+                    color: Color(0xFF3B3B8E),
+                    size: 36,
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-          const Icon(CupertinoIcons.heart_fill, color: AppColors.heartRed, size: 18),
-        ],
+            // Логотип + название
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+              child: Row(
+                children: [
+                  // Логотип
+                  Container(
+                    width: 28,
+                    height: 28,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xFFF0EEF8),
+                      border: Border.all(
+                        color: const Color(0xFFE0DDEF),
+                        width: 1,
+                      ),
+                    ),
+                    child: ClipOval(
+                      child: university.logoUrl.isNotEmpty
+                          ? Image.network(
+                              university.logoUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Center(
+                                child: Text(
+                                  university.name[0],
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF3B3B8E),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                university.name[0],
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF3B3B8E),
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      university.name,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF1C1C1E),
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

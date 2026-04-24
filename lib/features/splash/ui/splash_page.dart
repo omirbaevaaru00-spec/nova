@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stiky/core/router/route_names.dart';
-import 'package:stiky/data/auth/auth_remote_datasource.dart';
-import 'package:stiky/data/auth/auth_repository_impl.dart';
 import 'package:stiky/data/onboarding/onboarding_repository_impl.dart';
 import 'package:stiky/features/splash/bloc/splash_cubit.dart';
 import 'package:stiky/features/splash/bloc/splash_state.dart';

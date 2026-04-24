@@ -50,19 +50,23 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAnHWvq2WnJZA2gHxpSYg3WMHrruHxceaY',
-    appId: '1:101100907568:android:c8af28f524533ec4b911f5',
-    messagingSenderId: '101100907568',
-    projectId: 'nova-87b9a',
-    storageBucket: 'nova-87b9a.firebasestorage.app',
+    apiKey: 'AIzaSyBvZMVAbTzXmWulBx43_L1m59c6zp408DI',
+    appId: '1:1029448023182:android:4d3673140b94a65f885ddf',
+    messagingSenderId: '1029448023182',
+    projectId: 'aruuu-d0881',
+    databaseURL: 'https://aruuu-d0881-default-rtdb.firebaseio.com',
+    storageBucket: 'aruuu-d0881.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCEpTI5podAMTzl6Qw0vRI5mkm5_Qf6XQo',
-    appId: '1:101100907568:ios:041fe76f8f00ef48b911f5',
-    messagingSenderId: '101100907568',
-    projectId: 'nova-87b9a',
-    storageBucket: 'nova-87b9a.firebasestorage.app',
+    apiKey: 'AIzaSyDffwBdRsB93C_slpWImp8WRNdGY1l71ck',
+    appId: '1:1029448023182:ios:be6ecd9a3c6efec6885ddf',
+    messagingSenderId: '1029448023182',
+    projectId: 'aruuu-d0881',
+    databaseURL: 'https://aruuu-d0881-default-rtdb.firebaseio.com',
+    storageBucket: 'aruuu-d0881.firebasestorage.app',
+    androidClientId: '1029448023182-7sl88a29v8r7s24leqhc5vjo4i8mi0go.apps.googleusercontent.com',
+    iosClientId: '1029448023182-ecr1s3d50qramjl7osv59re53eh96lrh.apps.googleusercontent.com',
     iosBundleId: 'com.example.stiky',
   );
 

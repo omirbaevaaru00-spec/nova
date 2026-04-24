@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
-import '../features/home/screens/home_screen.dart';
 import 'favorites_notifier.dart';
 import 'university_model.dart';
 
@@ -14,6 +14,106 @@ class UniversityFeedCard extends StatelessWidget {
     required this.university,
     required this.onTap,
   });
+
+  // ── Обработка лайка ───────────────────────────────────────
+  Future<void> _handleLike(BuildContext context) async {
+    HapticFeedback.lightImpact();
+    try {
+      await FavoritesNotifier.instance.toggle(university.id);
+    } on NeedsAuthException {
+      _showAuthDialog(context);
+    }
+  }
+
+  void _showAuthDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (_) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: const Color(0xFFDDDBEE),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Icon(
+              Icons.favorite_rounded,
+              color: Color(0xFFE53935),
+              size: 44,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Сохрани в избранное',
+              style: TextStyle(
+                color: Color(0xFF1A1A1A),
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Чтобы сохранить университет в избранное,\nнужно зарегистрироваться',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF888888),
+                fontSize: 14,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 28),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  context.push('/register');
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF2B2B8A),
+                    borderRadius: BorderRadius.circular(26),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Зарегистрироваться',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: const Text(
+                'Позже',
+                style: TextStyle(
+                  color: Color(0xFF888888),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +140,6 @@ class UniversityFeedCard extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
               child: Row(
                 children: [
-                  // Логотип / аватар
                   Container(
                     width: 44,
                     height: 44,
@@ -91,9 +190,7 @@ class UniversityFeedCard extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
-                                university.type == 'гос'
-                                    ? 'Гос'
-                                    : 'Частный',
+                                university.type == 'гос' ? 'Гос' : 'Частный',
                                 style: TextStyle(
                                   color: university.type == 'гос'
                                       ? const Color(0xFF2E7D32)
@@ -185,7 +282,7 @@ class UniversityFeedCard extends StatelessWidget {
                 ),
               ),
 
-            // ── Сердечко ─────────────────────────────────
+            // ── Сердечко + цена ──────────────────────────
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
               child: Row(
@@ -203,10 +300,7 @@ class UniversityFeedCard extends StatelessWidget {
                     builder: (_, favorites, __) {
                       final isFav = favorites.contains(university.id);
                       return GestureDetector(
-                        onTap: () {
-                          HapticFeedback.lightImpact();
-                          FavoritesNotifier.instance.toggle(university.id);
-                        },
+                        onTap: () => _handleLike(context),
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 200),
                           child: Icon(
@@ -233,14 +327,14 @@ class UniversityFeedCard extends StatelessWidget {
   }
 }
 
-/// Аватар с инициалами если нет логотипа
 class _InitialsAvatar extends StatelessWidget {
   final String name;
   const _InitialsAvatar({required this.name});
 
   @override
   Widget build(BuildContext context) {
-    final initials = name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : 'U';
+    final initials =
+        name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : 'U';
     return Container(
       color: const Color(0xFF3B3B8E),
       child: Center(

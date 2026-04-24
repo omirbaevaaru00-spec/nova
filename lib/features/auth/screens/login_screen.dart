@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'google_sign_in_button.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/router/route_names.dart';
@@ -202,7 +203,8 @@ class _LoginScreenState extends State<LoginScreen>
                       onSubmitted: (_) => _login(),
                       suffix: GestureDetector(
                         onTap: () => setState(
-                            () => _obscurePassword = !_obscurePassword),
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
                         child: Icon(
                           _obscurePassword
                               ? Icons.visibility_off_outlined
@@ -255,8 +257,12 @@ class _LoginScreenState extends State<LoginScreen>
                       enabled: _canLogin,
                       onTap: _login,
                     ),
-
+                    const SizedBox(height: 20),
+                    const OrDivider(),
+                    const SizedBox(height: 16),
+                    const GoogleSignInButton(),
                     const SizedBox(height: 24),
+
 
                     // ── Нет аккаунта ─────────────────────────
                     Row(
@@ -372,10 +378,7 @@ class _InputField extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: const Color(0xFFDDDBEE),
-          width: 1.5,
-        ),
+        border: Border.all(color: const Color(0xFFDDDBEE), width: 1.5),
       ),
       child: TextField(
         controller: controller,
@@ -385,16 +388,10 @@ class _InputField extends StatelessWidget {
         textInputAction: textInputAction,
         onChanged: onChanged,
         onSubmitted: onSubmitted,
-        style: const TextStyle(
-          color: Color(0xFF1A1A1A),
-          fontSize: 15,
-        ),
+        style: const TextStyle(color: Color(0xFF1A1A1A), fontSize: 15),
         decoration: InputDecoration(
           hintText: hint,
-          hintStyle: const TextStyle(
-            color: Color(0xFF9E9CBB),
-            fontSize: 15,
-          ),
+          hintStyle: const TextStyle(color: Color(0xFF9E9CBB), fontSize: 15),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,

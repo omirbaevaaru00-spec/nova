@@ -6,6 +6,7 @@ import '../../../core/localization/locale_controller.dart';
 import '../../../core/router/route_names.dart';
 import '../../../widgets/university_card.dart';
 import '../../../widgets/university_model.dart';
+import '../../../widgets/favorites_notifier.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +17,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<University> _universities = List.from(kazakhUniversities);
+  @override
+  void initState() {
+    super.initState();
+    FavoritesNotifier.instance.load(); // загружаем избранное
+  }
 
   String get _locale => LocaleController.instance.locale.languageCode;
 
@@ -43,10 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return UniversityFeedCard(
                       university: uni,
                       onTap: () {
-                        context.push(
-                          '/university/${uni.id}',
-                          extra: uni,
-                        );
+                        context.push('/university/${uni.id}', extra: uni);
                       },
                     );
                   },

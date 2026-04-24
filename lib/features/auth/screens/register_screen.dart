@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'google_sign_in_button.dart';
 
 import '../../../core/router/route_names.dart';
 
@@ -95,51 +96,52 @@ class _RegisterScreenState extends State<RegisterScreen>
   // }
 
   // ── Замени метод _proceed() полностью ──
-Future<void> _proceed() async {
-  if (!_canProceed || _loading) return;
-  setState(() {
-    _error = null;
-    _loading = true;
-  });
-  HapticFeedback.lightImpact();
+  Future<void> _proceed() async {
+    if (!_canProceed || _loading) return;
+    setState(() {
+      _error = null;
+      _loading = true;
+    });
+    HapticFeedback.lightImpact();
 
-  try {
-    if (_mode == _InputMode.email) {
-      // Пробуем войти — если пользователь есть, идём на login
-      // Если нет — на profile_setup
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _currentValue,
-          password: '________dummy________', // заведомо неверный пароль
-        );
-        // Если каким-то чудом зашло (не должно) — на профиль
-        if (!mounted) return;
-        context.go(RouteNames.home);
-      } on FirebaseAuthException catch (e) {
-        if (!mounted) return;
-        if (e.code == 'user-not-found' || e.code == 'invalid-credential') {
-          // Новый пользователь
-          context.push(RouteNames.profileSetup,
-              extra: {'email': _currentValue});
-        } else if (e.code == 'wrong-password' ||
-            e.code == 'INVALID_LOGIN_CREDENTIALS') {
-          // Пользователь существует — на экран пароля
-          context.push(RouteNames.login,
-              extra: {'email': _currentValue});
-        } else {
-          setState(() => _error = _firebaseMessage(e.code));
+    try {
+      if (_mode == _InputMode.email) {
+        // Пробуем войти — если пользователь есть, идём на login
+        // Если нет — на profile_setup
+        try {
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _currentValue,
+            password: '________dummy________', // заведомо неверный пароль
+          );
+          // Если каким-то чудом зашло (не должно) — на профиль
+          if (!mounted) return;
+          context.go(RouteNames.home);
+        } on FirebaseAuthException catch (e) {
+          if (!mounted) return;
+          if (e.code == 'user-not-found' || e.code == 'invalid-credential') {
+            // Новый пользователь
+            context.push(
+              RouteNames.profileSetup,
+              extra: {'email': _currentValue},
+            );
+          } else if (e.code == 'wrong-password' ||
+              e.code == 'INVALID_LOGIN_CREDENTIALS') {
+            // Пользователь существует — на экран пароля
+            context.push(RouteNames.login, extra: {'email': _currentValue});
+          } else {
+            setState(() => _error = _firebaseMessage(e.code));
+          }
         }
+      } else {
+        final phone = '+7${_phoneController.text.trim()}';
+        context.push(RouteNames.profileSetup, extra: {'phone': phone});
       }
-    } else {
-      final phone = '+7${_phoneController.text.trim()}';
-      context.push(RouteNames.profileSetup, extra: {'phone': phone});
+    } catch (e) {
+      setState(() => _error = 'Что-то пошло не так. Попробуй ещё раз.');
+    } finally {
+      if (mounted) setState(() => _loading = false);
     }
-  } catch (e) {
-    setState(() => _error = 'Что-то пошло не так. Попробуй ещё раз.');
-  } finally {
-    if (mounted) setState(() => _loading = false);
   }
-}
 
   // String _firebaseMessage(String code) {
   //   switch (code) {
@@ -152,18 +154,18 @@ Future<void> _proceed() async {
   //   }
   // }
   // ── Добавь в _firebaseMessage ──
-String _firebaseMessage(String code) {
-  switch (code) {
-    case 'invalid-email':
-      return 'Неверный формат email';
-    case 'too-many-requests':
-      return 'Слишком много попыток. Подожди немного.';
-    case 'network-request-failed':
-      return 'Нет интернета. Проверь соединение.';
-    default:
-      return 'Ошибка. Попробуй ещё раз.';
+  String _firebaseMessage(String code) {
+    switch (code) {
+      case 'invalid-email':
+        return 'Неверный формат email';
+      case 'too-many-requests':
+        return 'Слишком много попыток. Подожди немного.';
+      case 'network-request-failed':
+        return 'Нет интернета. Проверь соединение.';
+      default:
+        return 'Ошибка. Попробуй ещё раз.';
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -313,6 +315,32 @@ String _firebaseMessage(String code) {
                       enabled: _canProceed,
                       onTap: _proceed,
                     ),
+                    const SizedBox(height: 16),
+
+                    // Разделитель
+                    Row(
+                      children: [
+                        const Expanded(
+                          child: Divider(color: Color(0xFFDDDBEE)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Text(
+                            'или',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.4),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                        const Expanded(
+                          child: Divider(color: Color(0xFFDDDBEE)),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
+                    const GoogleSignInButton(),
 
                     const SizedBox(height: 24),
 

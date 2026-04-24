@@ -1,26 +1,45 @@
 {
   "project_info": {
-    "project_number": "101100907568",
-    "project_id": "nova-87b9a",
-    "storage_bucket": "nova-87b9a.firebasestorage.app"
+    "project_number": "1029448023182",
+    "firebase_url": "https://aruuu-d0881-default-rtdb.firebaseio.com",
+    "project_id": "aruuu-d0881",
+    "storage_bucket": "aruuu-d0881.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:101100907568:android:c8af28f524533ec4b911f5",
+        "mobilesdk_app_id": "1:1029448023182:android:4d3673140b94a65f885ddf",
         "android_client_info": {
           "package_name": "com.example.stiky"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1029448023182-7sl88a29v8r7s24leqhc5vjo4i8mi0go.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stiky",
+            "certificate_hash": "91e6c8853caccdb3b0a22726a275c8d1476a9404"
+          }
+        },
+        {
+          "client_id": "1029448023182-jho15eg4mghjcaf7q7sae7la1en9nmbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAnHWvq2WnJZA2gHxpSYg3WMHrruHxceaY"
+          "current_key": "AIzaSyBvZMVAbTzXmWulBx43_L1m59c6zp408DI"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1029448023182-jho15eg4mghjcaf7q7sae7la1en9nmbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
