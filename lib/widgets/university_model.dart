@@ -1,9 +1,390 @@
+// class University {
+//   final String id;
+//   final String name;
+//   final String city;
+//   final String type; // гос / частный
+//   final String level; // университет / колледж
+//   final String description;
+//   final List<String> directions;
+//   final String costRange;
+//   final String duration;
+//   final List<String> languages;
+//   final String format;
+//   final String website;
+//   final String instagram;
+//   // Для отображения используем сетевые изображения (Unsplash)
+//   final String imageUrl;
+//   final String logoUrl;
+
+//   const University({
+//     required this.id,
+//     required this.name,
+//     required this.city,
+//     required this.type,
+//     required this.level,
+//     required this.description,
+//     required this.directions,
+//     required this.costRange,
+//     required this.duration,
+//     required this.languages,
+//     required this.format,
+//     required this.website,
+//     required this.instagram,
+//     required this.imageUrl,
+//     required this.logoUrl,
+//   });
+// }
+
+// /// 20 казахстанских вузов
+// final List<University> kazakhUniversities = [
+//   University(
+//     id: 'nu',
+//     name: 'Назарбаев Университет',
+//     city: 'Астана',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Ведущий исследовательский университет Казахстана международного уровня.',
+//     directions: ['IT', 'Медицина', 'Бизнес', 'Инженерия', 'Наука'],
+//     costRange: '500 000 – 2 000 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Английский'],
+//     format: 'Очная',
+//     website: 'nu.edu.kz',
+//     instagram: '@nazarbayev_university',
+//     imageUrl: 'https://images.unsplash.com/photo-1562774053-701939374585?w=800',
+//     logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Nazarbayev_University_Logo.svg/200px-Nazarbayev_University_Logo.svg.png',
+//   ),
+//   University(
+//     id: 'kimep',
+//     name: 'КИМЭП Университет',
+//     city: 'Алматы',
+//     type: 'частный',
+//     level: 'университет',
+//     description: 'Международный университет бизнеса и права с программами на английском.',
+//     directions: ['Бизнес', 'Право', 'Медиа'],
+//     costRange: '1 200 000 – 2 500 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Английский'],
+//     format: 'Очная',
+//     website: 'kimep.kz',
+//     instagram: '@kimep_university',
+//     imageUrl: 'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'sdu',
+//     name: 'SDU University',
+//     city: 'Каскелен',
+//     type: 'частный',
+//     level: 'университет',
+//     description: 'Ведущий частный университет с турецкими корнями и широким выбором программ.',
+//     directions: ['IT', 'Бизнес', 'Инженерия', 'Педагогика'],
+//     costRange: '700 000 – 1 500 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский', 'Английский'],
+//     format: 'Очная',
+//     website: 'sdu.edu.kz',
+//     instagram: '@sdu_university',
+//     imageUrl: 'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'kbtu',
+//     name: 'КБТУ',
+//     city: 'Алматы',
+//     type: 'частный',
+//     level: 'университет',
+//     description: 'Казахстанско-британский технический университет. Лидер в IT и энергетике.',
+//     directions: ['IT', 'Инженерия', 'Нефтегаз'],
+//     costRange: '1 000 000 – 2 200 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Английский', 'Русский'],
+//     format: 'Очная',
+//     website: 'kbtu.kz',
+//     instagram: '@kbtu_official',
+//     imageUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'iitu',
+//     name: 'МУИТ',
+//     city: 'Алматы',
+//     type: 'частный',
+//     level: 'университет',
+//     description: 'Международный университет информационных технологий.',
+//     directions: ['IT', 'Инженерия', 'Дизайн'],
+//     costRange: '600 000 – 1 300 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Русский', 'Английский'],
+//     format: 'Очная / Дистанционная',
+//     website: 'iitu.edu.kz',
+//     instagram: '@iitu_kz',
+//     imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'aitu',
+//     name: 'AITU',
+//     city: 'Астана',
+//     type: 'частный',
+//     level: 'университет',
+//     description: 'Astana IT University — технологический университет нового поколения.',
+//     directions: ['IT', 'Data Science', 'Кибербезопасность'],
+//     costRange: '800 000 – 1 800 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Английский', 'Казахский'],
+//     format: 'Очная',
+//     website: 'aitu.edu.kz',
+//     instagram: '@aitu_official',
+//     imageUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'kazntu',
+//     name: 'КазНТУ им. Сатпаева',
+//     city: 'Алматы',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Ведущий технический университет страны с богатой историей.',
+//     directions: ['Инженерия', 'Геология', 'IT', 'Нефтегаз'],
+//     costRange: '400 000 – 900 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский'],
+//     format: 'Очная',
+//     website: 'satbayev.university',
+//     instagram: '@satbayev_university',
+//     imageUrl: 'https://images.unsplash.com/photo-1581093804475-577d72e13eda?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'kaznu',
+//     name: 'КазНУ им. аль-Фараби',
+//     city: 'Алматы',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Старейший и крупнейший классический университет Казахстана.',
+//     directions: ['Наука', 'Медицина', 'Право', 'Педагогика', 'Бизнес'],
+//     costRange: '350 000 – 800 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский', 'Английский'],
+//     format: 'Очная',
+//     website: 'kaznu.kz',
+//     instagram: '@kaznu_official',
+//     imageUrl: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'eurasian',
+//     name: 'ЕНУ им. Гумилёва',
+//     city: 'Астана',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Евразийский национальный университет — один из ведущих вузов столицы.',
+//     directions: ['Право', 'Экономика', 'IT', 'Педагогика'],
+//     costRange: '380 000 – 850 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский'],
+//     format: 'Очная',
+//     website: 'enu.kz',
+//     instagram: '@enu_official',
+//     imageUrl: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'almau',
+//     name: 'AlmaU',
+//     city: 'Алматы',
+//     type: 'частный',
+//     level: 'университет',
+//     description: 'Алматинский университет менеджмента — лидер в бизнес-образовании.',
+//     directions: ['Бизнес', 'MBA', 'Финансы', 'Маркетинг'],
+//     costRange: '900 000 – 1 600 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Русский', 'Английский'],
+//     format: 'Очная / Гибридная',
+//     website: 'almau.edu.kz',
+//     instagram: '@almau_kz',
+//     imageUrl: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'narxoz',
+//     name: 'Нархоз Университет',
+//     city: 'Алматы',
+//     type: 'частный',
+//     level: 'университет',
+//     description: 'Университет Нархоз — топовый вуз для экономики и права.',
+//     directions: ['Экономика', 'Право', 'Бизнес', 'Финансы'],
+//     costRange: '700 000 – 1 400 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский', 'Английский'],
+//     format: 'Очная',
+//     website: 'narxoz.kz',
+//     instagram: '@narxoz_university',
+//     imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'meduniver',
+//     name: 'КазНМУ им. Асфендиярова',
+//     city: 'Алматы',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Ведущий медицинский университет страны.',
+//     directions: ['Медицина', 'Фармация', 'Стоматология'],
+//     costRange: '500 000 – 1 200 000 ₸/год',
+//     duration: '5–6 лет',
+//     languages: ['Казахский', 'Русский', 'Английский'],
+//     format: 'Очная',
+//     website: 'kaznmu.kz',
+//     instagram: '@kaznmu_official',
+//     imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'caa',
+//     name: 'Академия гражданской авиации',
+//     city: 'Алматы',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Единственный авиационный вуз в Центральной Азии.',
+//     directions: ['Авиация', 'Инженерия', 'Логистика'],
+//     costRange: '450 000 – 950 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский'],
+//     format: 'Очная',
+//     website: 'academy.kz',
+//     instagram: '@caa_almaty',
+//     imageUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'ablaikhan',
+//     name: 'КазУМОиМЯ им. Абылай хана',
+//     city: 'Алматы',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Университет международных отношений и мировых языков.',
+//     directions: ['Лингвистика', 'МО', 'Перевод', 'Педагогика'],
+//     costRange: '380 000 – 800 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский', 'Английский'],
+//     format: 'Очная',
+//     website: 'ablaikhan.kz',
+//     instagram: '@ablaikhan_university',
+//     imageUrl: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'kazguu',
+//     name: 'Университет КАЗГЮУ',
+//     city: 'Астана',
+//     type: 'частный',
+//     level: 'университет',
+//     description: 'Казахский гуманитарно-юридический инновационный университет.',
+//     directions: ['Право', 'Бизнес', 'IT', 'Психология'],
+//     costRange: '600 000 – 1 300 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский'],
+//     format: 'Очная',
+//     website: 'kazguu.kz',
+//     instagram: '@kazguu_official',
+//     imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'miras',
+//     name: 'Университет «Мирас»',
+//     city: 'Шымкент',
+//     type: 'частный',
+//     level: 'университет',
+//     description: 'Современный университет юга Казахстана.',
+//     directions: ['Медицина', 'IT', 'Педагогика', 'Бизнес'],
+//     costRange: '350 000 – 750 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский'],
+//     format: 'Очная',
+//     website: 'miras.edu.kz',
+//     instagram: '@miras_university',
+//     imageUrl: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'ektu',
+//     name: 'ВКТУ им. Серикбаева',
+//     city: 'Усть-Каменогорск',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Восточно-Казахстанский технический университет.',
+//     directions: ['Инженерия', 'IT', 'Металлургия'],
+//     costRange: '350 000 – 700 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский'],
+//     format: 'Очная',
+//     website: 'ektu.kz',
+//     instagram: '@ektu_official',
+//     imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'zhgu',
+//     name: 'ЖГУ им. Жансугурова',
+//     city: 'Талдыкорган',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Жетысуский государственный университет.',
+//     directions: ['Педагогика', 'Право', 'Экономика'],
+//     costRange: '300 000 – 600 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский'],
+//     format: 'Очная',
+//     website: 'zhgu.edu.kz',
+//     instagram: '@zhgu_official',
+//     imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'kstu',
+//     name: 'КарТУ им. Абылкасымова',
+//     city: 'Караганда',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Карагандинский технический университет.',
+//     directions: ['Горное дело', 'Инженерия', 'IT'],
+//     costRange: '350 000 – 750 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский'],
+//     format: 'Очная',
+//     website: 'kstu.kz',
+//     instagram: '@kstu_official',
+//     imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
+//     logoUrl: '',
+//   ),
+//   University(
+//     id: 'agu',
+//     name: 'АГУ им. Жубанова',
+//     city: 'Актобе',
+//     type: 'гос',
+//     level: 'университет',
+//     description: 'Актюбинский региональный университет.',
+//     directions: ['Педагогика', 'Медицина', 'Право', 'Экономика'],
+//     costRange: '300 000 – 600 000 ₸/год',
+//     duration: '4 года',
+//     languages: ['Казахский', 'Русский'],
+//     format: 'Очная',
+//     website: 'agu.edu.kz',
+//     instagram: '@agu_jubanov',
+//     imageUrl: 'https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=800',
+//     logoUrl: '',
+//   ),
+// ];
+
 class University {
   final String id;
   final String name;
   final String city;
-  final String type; // гос / частный
-  final String level; // университет / колледж
+  final String type;
+  final String level;
   final String description;
   final List<String> directions;
   final String costRange;
@@ -12,9 +393,23 @@ class University {
   final String format;
   final String website;
   final String instagram;
-  // Для отображения используем сетевые изображения (Unsplash)
   final String imageUrl;
   final String logoUrl;
+
+  // ── Для персонализации ленты ─────────────────────────────
+  /// Теги совпадают с ключами интересов из квиза:
+  /// 'it' | 'medicine' | 'business' | 'grants' | 'design' |
+  /// 'law' | 'pedagogy' | 'engineering' | 'bachelor' | 'college' | 'master'
+  final List<String> tags;
+
+  /// Минимальный балл ЕНТ для поступления (null = нет порога)
+  final int? minEnt;
+
+  /// Минимальный GPA (null = нет порога)
+  final double? minGpa;
+
+  /// Минимальный IELTS (null = нет порога)
+  final double? minIelts;
 
   const University({
     required this.id,
@@ -32,6 +427,10 @@ class University {
     required this.instagram,
     required this.imageUrl,
     required this.logoUrl,
+    this.tags = const [],
+    this.minEnt,
+    this.minGpa,
+    this.minIelts,
   });
 }
 
@@ -43,7 +442,8 @@ final List<University> kazakhUniversities = [
     city: 'Астана',
     type: 'гос',
     level: 'университет',
-    description: 'Ведущий исследовательский университет Казахстана международного уровня.',
+    description:
+        'Ведущий исследовательский университет Казахстана международного уровня.',
     directions: ['IT', 'Медицина', 'Бизнес', 'Инженерия', 'Наука'],
     costRange: '500 000 – 2 000 000 ₸/год',
     duration: '4 года',
@@ -51,8 +451,14 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'nu.edu.kz',
     instagram: '@nazarbayev_university',
-    imageUrl: 'https://images.unsplash.com/photo-1562774053-701939374585?w=800',
-    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Nazarbayev_University_Logo.svg/200px-Nazarbayev_University_Logo.svg.png',
+    imageUrl:
+        'https://images.unsplash.com/photo-1562774053-701939374585?w=800',
+    logoUrl:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Nazarbayev_University_Logo.svg/200px-Nazarbayev_University_Logo.svg.png',
+    tags: ['it', 'medicine', 'business', 'engineering', 'grants', 'master'],
+    minEnt: 110,
+    minGpa: 3.5,
+    minIelts: 6.5,
   ),
   University(
     id: 'kimep',
@@ -60,7 +466,8 @@ final List<University> kazakhUniversities = [
     city: 'Алматы',
     type: 'частный',
     level: 'университет',
-    description: 'Международный университет бизнеса и права с программами на английском.',
+    description:
+        'Международный университет бизнеса и права с программами на английском.',
     directions: ['Бизнес', 'Право', 'Медиа'],
     costRange: '1 200 000 – 2 500 000 ₸/год',
     duration: '4 года',
@@ -68,8 +475,13 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'kimep.kz',
     instagram: '@kimep_university',
-    imageUrl: 'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=800',
     logoUrl: '',
+    tags: ['business', 'law', 'bachelor'],
+    minEnt: 90,
+    minGpa: 3.0,
+    minIelts: 6.0,
   ),
   University(
     id: 'sdu',
@@ -77,7 +489,8 @@ final List<University> kazakhUniversities = [
     city: 'Каскелен',
     type: 'частный',
     level: 'университет',
-    description: 'Ведущий частный университет с турецкими корнями и широким выбором программ.',
+    description:
+        'Ведущий частный университет с турецкими корнями и широким выбором программ.',
     directions: ['IT', 'Бизнес', 'Инженерия', 'Педагогика'],
     costRange: '700 000 – 1 500 000 ₸/год',
     duration: '4 года',
@@ -85,8 +498,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'sdu.edu.kz',
     instagram: '@sdu_university',
-    imageUrl: 'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=800',
     logoUrl: '',
+    tags: ['it', 'business', 'engineering', 'pedagogy', 'bachelor'],
+    minEnt: 80,
+    minGpa: 2.8,
   ),
   University(
     id: 'kbtu',
@@ -94,7 +511,8 @@ final List<University> kazakhUniversities = [
     city: 'Алматы',
     type: 'частный',
     level: 'университет',
-    description: 'Казахстанско-британский технический университет. Лидер в IT и энергетике.',
+    description:
+        'Казахстанско-британский технический университет. Лидер в IT и энергетике.',
     directions: ['IT', 'Инженерия', 'Нефтегаз'],
     costRange: '1 000 000 – 2 200 000 ₸/год',
     duration: '4 года',
@@ -102,8 +520,13 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'kbtu.kz',
     instagram: '@kbtu_official',
-    imageUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800',
     logoUrl: '',
+    tags: ['it', 'engineering', 'bachelor'],
+    minEnt: 100,
+    minGpa: 3.2,
+    minIelts: 5.5,
   ),
   University(
     id: 'iitu',
@@ -119,8 +542,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная / Дистанционная',
     website: 'iitu.edu.kz',
     instagram: '@iitu_kz',
-    imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800',
     logoUrl: '',
+    tags: ['it', 'design', 'engineering', 'bachelor'],
+    minEnt: 70,
+    minGpa: 2.5,
   ),
   University(
     id: 'aitu',
@@ -128,7 +555,8 @@ final List<University> kazakhUniversities = [
     city: 'Астана',
     type: 'частный',
     level: 'университет',
-    description: 'Astana IT University — технологический университет нового поколения.',
+    description:
+        'Astana IT University — технологический университет нового поколения.',
     directions: ['IT', 'Data Science', 'Кибербезопасность'],
     costRange: '800 000 – 1 800 000 ₸/год',
     duration: '4 года',
@@ -136,8 +564,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'aitu.edu.kz',
     instagram: '@aitu_official',
-    imageUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800',
     logoUrl: '',
+    tags: ['it', 'engineering', 'bachelor'],
+    minEnt: 90,
+    minGpa: 3.0,
   ),
   University(
     id: 'kazntu',
@@ -153,8 +585,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'satbayev.university',
     instagram: '@satbayev_university',
-    imageUrl: 'https://images.unsplash.com/photo-1581093804475-577d72e13eda?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1581093804475-577d72e13eda?w=800',
     logoUrl: '',
+    tags: ['engineering', 'it', 'bachelor', 'grants'],
+    minEnt: 75,
+    minGpa: 2.7,
   ),
   University(
     id: 'kaznu',
@@ -162,7 +598,8 @@ final List<University> kazakhUniversities = [
     city: 'Алматы',
     type: 'гос',
     level: 'университет',
-    description: 'Старейший и крупнейший классический университет Казахстана.',
+    description:
+        'Старейший и крупнейший классический университет Казахстана.',
     directions: ['Наука', 'Медицина', 'Право', 'Педагогика', 'Бизнес'],
     costRange: '350 000 – 800 000 ₸/год',
     duration: '4 года',
@@ -170,8 +607,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'kaznu.kz',
     instagram: '@kaznu_official',
-    imageUrl: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800',
     logoUrl: '',
+    tags: ['medicine', 'law', 'pedagogy', 'business', 'grants', 'master', 'bachelor'],
+    minEnt: 75,
+    minGpa: 2.7,
   ),
   University(
     id: 'eurasian',
@@ -179,7 +620,8 @@ final List<University> kazakhUniversities = [
     city: 'Астана',
     type: 'гос',
     level: 'университет',
-    description: 'Евразийский национальный университет — один из ведущих вузов столицы.',
+    description:
+        'Евразийский национальный университет — один из ведущих вузов столицы.',
     directions: ['Право', 'Экономика', 'IT', 'Педагогика'],
     costRange: '380 000 – 850 000 ₸/год',
     duration: '4 года',
@@ -187,8 +629,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'enu.kz',
     instagram: '@enu_official',
-    imageUrl: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=800',
     logoUrl: '',
+    tags: ['law', 'it', 'pedagogy', 'business', 'grants', 'bachelor'],
+    minEnt: 70,
+    minGpa: 2.5,
   ),
   University(
     id: 'almau',
@@ -196,7 +642,8 @@ final List<University> kazakhUniversities = [
     city: 'Алматы',
     type: 'частный',
     level: 'университет',
-    description: 'Алматинский университет менеджмента — лидер в бизнес-образовании.',
+    description:
+        'Алматинский университет менеджмента — лидер в бизнес-образовании.',
     directions: ['Бизнес', 'MBA', 'Финансы', 'Маркетинг'],
     costRange: '900 000 – 1 600 000 ₸/год',
     duration: '4 года',
@@ -204,8 +651,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная / Гибридная',
     website: 'almau.edu.kz',
     instagram: '@almau_kz',
-    imageUrl: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800',
     logoUrl: '',
+    tags: ['business', 'master', 'bachelor'],
+    minEnt: 65,
+    minGpa: 2.5,
   ),
   University(
     id: 'narxoz',
@@ -221,8 +672,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'narxoz.kz',
     instagram: '@narxoz_university',
-    imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800',
     logoUrl: '',
+    tags: ['business', 'law', 'bachelor'],
+    minEnt: 70,
+    minGpa: 2.7,
   ),
   University(
     id: 'meduniver',
@@ -238,8 +693,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'kaznmu.kz',
     instagram: '@kaznmu_official',
-    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800',
     logoUrl: '',
+    tags: ['medicine', 'bachelor', 'grants'],
+    minEnt: 90,
+    minGpa: 3.2,
   ),
   University(
     id: 'caa',
@@ -255,8 +714,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'academy.kz',
     instagram: '@caa_almaty',
-    imageUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800',
     logoUrl: '',
+    tags: ['engineering', 'bachelor'],
+    minEnt: 75,
+    minGpa: 2.8,
   ),
   University(
     id: 'ablaikhan',
@@ -272,8 +735,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'ablaikhan.kz',
     instagram: '@ablaikhan_university',
-    imageUrl: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800',
     logoUrl: '',
+    tags: ['pedagogy', 'bachelor', 'grants'],
+    minEnt: 70,
+    minGpa: 2.7,
   ),
   University(
     id: 'kazguu',
@@ -281,7 +748,8 @@ final List<University> kazakhUniversities = [
     city: 'Астана',
     type: 'частный',
     level: 'университет',
-    description: 'Казахский гуманитарно-юридический инновационный университет.',
+    description:
+        'Казахский гуманитарно-юридический инновационный университет.',
     directions: ['Право', 'Бизнес', 'IT', 'Психология'],
     costRange: '600 000 – 1 300 000 ₸/год',
     duration: '4 года',
@@ -289,8 +757,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'kazguu.kz',
     instagram: '@kazguu_official',
-    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800',
     logoUrl: '',
+    tags: ['law', 'business', 'it', 'bachelor'],
+    minEnt: 70,
+    minGpa: 2.5,
   ),
   University(
     id: 'miras',
@@ -306,8 +778,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'miras.edu.kz',
     instagram: '@miras_university',
-    imageUrl: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800',
     logoUrl: '',
+    tags: ['medicine', 'it', 'pedagogy', 'business', 'bachelor'],
+    minEnt: 60,
+    minGpa: 2.3,
   ),
   University(
     id: 'ektu',
@@ -323,8 +799,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'ektu.kz',
     instagram: '@ektu_official',
-    imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800',
     logoUrl: '',
+    tags: ['engineering', 'it', 'bachelor', 'grants'],
+    minEnt: 65,
+    minGpa: 2.3,
   ),
   University(
     id: 'zhgu',
@@ -340,8 +820,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'zhgu.edu.kz',
     instagram: '@zhgu_official',
-    imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800',
     logoUrl: '',
+    tags: ['pedagogy', 'law', 'business', 'bachelor', 'grants'],
+    minEnt: 55,
+    minGpa: 2.2,
   ),
   University(
     id: 'kstu',
@@ -357,8 +841,12 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'kstu.kz',
     instagram: '@kstu_official',
-    imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
     logoUrl: '',
+    tags: ['engineering', 'it', 'bachelor', 'grants'],
+    minEnt: 60,
+    minGpa: 2.3,
   ),
   University(
     id: 'agu',
@@ -374,7 +862,11 @@ final List<University> kazakhUniversities = [
     format: 'Очная',
     website: 'agu.edu.kz',
     instagram: '@agu_jubanov',
-    imageUrl: 'https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=800',
+    imageUrl:
+        'https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=800',
     logoUrl: '',
+    tags: ['pedagogy', 'medicine', 'law', 'business', 'bachelor', 'grants'],
+    minEnt: 55,
+    minGpa: 2.2,
   ),
 ];
