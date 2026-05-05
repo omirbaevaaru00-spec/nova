@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stiky/core/router/route_names.dart';
-import 'package:stiky/data/onboarding/onboarding_repository_impl.dart';
+import 'package:stiky/data/onboarding/onboarding_repository.dart';
 import 'package:stiky/features/splash/bloc/splash_cubit.dart';
 import 'package:stiky/features/splash/bloc/splash_state.dart';
 
@@ -13,9 +13,9 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) {
-        final repository = OnboardingRepositoryImpl();
-
-        return SplashCubit(onboardnigRepository: repository)..checkOnboarding();
+        return SplashCubit(
+          onboardnigRepository: context.read<OnboardingRepository>(),
+        )..checkOnboarding();
       },
       child: const _SplashView(),
     );

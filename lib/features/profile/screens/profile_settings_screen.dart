@@ -8,11 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stiky/features/auth/screens/interest_quiz_screen.dart';
 
 import '../../../core/localization/locale_controller.dart';
 import '../../../core/theme/theme_controller.dart';
-import '../../home/screens/home_screen.dart' hide kInterestsPrefsKey;// для kInterestsPrefsKey
+
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -75,9 +74,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   // ── SharedPreferences: интересы ─────────────────────────
   Future<void> _loadInterests() async {
-    final prefs = await SharedPreferences.getInstance();
-    final saved = prefs.getStringList(kInterestsPrefsKey) ?? [];
-    if (mounted) setState(() => _interests = saved);
+    // final prefs = await SharedPreferences.getInstance();
+    // final saved = prefs.getStringList(kInterestsPrefsKey) ?? [];
+    // if (mounted) setState(() => _interests = saved);
   }
 
   String get _profileSubtitle {

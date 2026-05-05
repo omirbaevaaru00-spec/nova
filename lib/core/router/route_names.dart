@@ -6,7 +6,7 @@ class RouteNames {
 
   // ── Онбординг (язык выбирается на WelcomeScreen) ──────────
   static const String welcome = '/welcome';
-  static const String interestQuiz = '/quiz';
+    static const onboarding = '/onboarding';
 
   // ── Авторизация (по требованию) ───────────────────────────
   static const String login = '/login';
@@ -31,4 +31,6 @@ class RouteNames {
   static const String savedSearches = '/saved-searches';
   static const String newsFeed = '/news';
   static const String helpCenter = '/help-center';
+
+
 }

@@ -1,21 +1,32 @@
-import 'package:stiky/data/onboarding/onboardnig_repository.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stiky/data/onboarding/onboarding_repository.dart';
 
-class OnboardingRepositoryImpl implements OnboardnigRepository {
-  OnboardingRepositoryImpl();
 
-  static const String _onboardedKey = 'already_onboarded';
+class OnboardingRepositoryImpl implements OnboardingRepository {
+  static const String _kOnboardingCompletedKey = 'onboarding_completed';
+  static const String _kInterestsKey = 'user_interests';
+
+  final SharedPreferences _prefs;
+
+  OnboardingRepositoryImpl(this._prefs);
 
   @override
-  Future<bool> alreadyOnboarded() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_onboardedKey) ?? false;
+  Future<bool> isOnboardingCompleted() async {
+    return _prefs.getBool(_kOnboardingCompletedKey) ?? false;
   }
 
   @override
-  Future<void> onboarded() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_onboardedKey, true);
+  Future<void> completeOnboarding() async {
+    await _prefs.setBool(_kOnboardingCompletedKey, true);
+  }
+
+  @override
+  Future<List<String>> getSavedInterests() async {
+    return _prefs.getStringList(_kInterestsKey) ?? const [];
+  }
+
+  @override
+  Future<void> saveInterests(List<String> interestKeys) async {
+    await _prefs.setStringList(_kInterestsKey, interestKeys);
   }
 }

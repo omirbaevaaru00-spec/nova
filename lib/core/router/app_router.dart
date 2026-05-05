@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:stiky/features/onboarding/ui/onboarding_screen.dart';
 
-import '../../features/auth/screens/welcome_screen.dart';
-import '../../features/auth/screens/interest_quiz_screen.dart';
+import '../../features/welcome/ui/welcome_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
 import '../../features/auth/screens/forgot_password_screen.dart';
@@ -36,14 +35,14 @@ class AppRouter {
         builder: (context, state) => const SplashPage(),
       ),
 
-      // ── Онбординг ─────────────────────────────────────────
+      // ── Онбординг ──────
       GoRoute(
         path: RouteNames.welcome,
         builder: (context, state) => const WelcomeScreen(),
       ),
       GoRoute(
-        path: RouteNames.interestQuiz,
-        builder: (context, state) => const InterestQuizScreen(),
+        path: RouteNames.onboarding,
+        builder: (context, state) => const OnboardingScreen(),
       ),
 
       // ── Авторизация ────────────────────────────────────────

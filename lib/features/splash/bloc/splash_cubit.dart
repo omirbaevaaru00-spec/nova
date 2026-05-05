@@ -1,16 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
-import 'package:stiky/data/auth/auth_repository.dart';
-import 'package:stiky/data/onboarding/onboardnig_repository.dart';
+import 'package:stiky/data/onboarding/onboarding_repository.dart';
 
 import 'splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
-  SplashCubit({required OnboardnigRepository onboardnigRepository})
+  SplashCubit({required OnboardingRepository onboardnigRepository})
     : _onboardnigRepository = onboardnigRepository,
       super(SplashStateInitial());
 
-  final OnboardnigRepository _onboardnigRepository;
+  final OnboardingRepository _onboardnigRepository;
   final _logger = Logger();
 
   static const _minSplashDuration = Duration(milliseconds: 1800);
@@ -21,7 +20,7 @@ class SplashCubit extends Cubit<SplashState> {
     try {
       final stopwatch = Stopwatch()..start();
 
-      final alreadyOnboarded = await _onboardnigRepository.alreadyOnboarded();
+      final alreadyOnboarded = await _onboardnigRepository.isOnboardingCompleted();
 
       final elapsed = stopwatch.elapsed;
       if (elapsed < _minSplashDuration) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stiky/features/auth/screens/interest_quiz_screen.dart';
 
 import '../../../core/localization/locale_controller.dart';
 import '../../../core/router/route_names.dart';
@@ -140,7 +139,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       label: isRu ? 'Пропустить' : 'Өткізіп жіберу',
                       onTap: () {
                         HapticFeedback.lightImpact();
-                        context.go(RouteNames.interestQuiz);
+                        context.go(RouteNames.onboarding);
                       },
                     ),
                   ),
