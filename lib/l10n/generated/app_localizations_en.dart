@@ -588,17 +588,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get universityTabDescription => 'описание';
+  String get universityTabDescription => 'description';
 
   @override
-  String get universityTabPrograms => 'специальности';
+  String get universityTabPrograms => 'programs';
 
   @override
-  String get universityTabNews => 'новости';
+  String get universityTabNews => 'news';
 
   @override
-  String get universityNewsEmpty => 'Новостей пока нет';
+  String get universityNewsEmpty => 'No news yet';
 
   @override
-  String get universityAdmissionTitle => 'Условия поступления';
+  String get universityAdmissionTitle => 'Admission requirements';
 }

@@ -588,17 +588,17 @@ class AppLocalizationsKk extends AppLocalizations {
   }
 
   @override
-  String get universityTabDescription => 'описание';
+  String get universityTabDescription => 'сипаттама';
 
   @override
-  String get universityTabPrograms => 'специальности';
+  String get universityTabPrograms => 'мамандықтар';
 
   @override
-  String get universityTabNews => 'новости';
+  String get universityTabNews => 'жаңалықтар';
 
   @override
-  String get universityNewsEmpty => 'Новостей пока нет';
+  String get universityNewsEmpty => 'Әзірге жаңалықтар жоқ';
 
   @override
-  String get universityAdmissionTitle => 'Условия поступления';
+  String get universityAdmissionTitle => 'Түсу шарттары';
 }

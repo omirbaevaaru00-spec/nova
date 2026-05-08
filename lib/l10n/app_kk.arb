@@ -207,5 +207,11 @@
   "universityRequirements": "Талаптар",
   "universityMinEnt": "Мин. ҰБТ балы: {value}",
   "universityMinGpa": "Мин. GPA: {value}",
-  "universityMinIelts": "Мин. IELTS: {value}"
+  "universityMinIelts": "Мин. IELTS: {value}",
+
+  "universityTabDescription": "сипаттама",
+  "universityTabPrograms": "мамандықтар",
+  "universityTabNews": "жаңалықтар",
+  "universityNewsEmpty": "Әзірге жаңалықтар жоқ",
+  "universityAdmissionTitle": "Түсу шарттары"
 }

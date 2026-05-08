@@ -207,5 +207,11 @@
   "universityRequirements": "Requirements",
   "universityMinEnt": "Min. ENT: {value}",
   "universityMinGpa": "Min. GPA: {value}",
-  "universityMinIelts": "Min. IELTS: {value}"
+  "universityMinIelts": "Min. IELTS: {value}",
+
+  "universityTabDescription": "description",
+  "universityTabPrograms": "programs",
+  "universityTabNews": "news",
+  "universityNewsEmpty": "No news yet",
+  "universityAdmissionTitle": "Admission requirements"
 }
