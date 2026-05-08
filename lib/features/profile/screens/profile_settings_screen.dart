@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/localization/locale_controller.dart';
 import '../../../core/theme/theme_controller.dart';
+import '../../../widgets/favorites_notifier.dart'; // ✅ добавлен импорт
 
 
 class SettingsScreen extends StatefulWidget {
@@ -577,7 +578,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           CupertinoDialogAction(
             isDestructiveAction: true,
             onPressed: () async {
+              Navigator.pop(context);
+
+              // ✅ ФИКС: сначала чистим избранные в памяти,
+              // потом выходим — иначе они останутся в ленте
+              FavoritesNotifier.instance.clear();
+
               await FirebaseAuth.instance.signOut();
+
               if (context.mounted) context.go('/register');
             },
             child: const Text('Выйти'),

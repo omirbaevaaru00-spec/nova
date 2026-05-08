@@ -11,7 +11,10 @@ class FavoritesNotifier extends ValueNotifier<Set<String>> {
 
   // ── Загрузить избранное из Firestore ──────────────────────
   Future<void> load() async {
-    if (!isLoggedIn || _uid == null) return;
+    if (!isLoggedIn || _uid == null) {
+      clear(); // Если не залогинен — чистим на всякий случай
+      return;
+    }
     try {
       final doc = await FirebaseFirestore.instance
           .collection('users')
@@ -20,6 +23,8 @@ class FavoritesNotifier extends ValueNotifier<Set<String>> {
       if (doc.exists) {
         final List favs = doc.data()?['favorites'] ?? [];
         value = Set<String>.from(favs.map((e) => e.toString()));
+      } else {
+        value = {};
       }
     } catch (_) {}
   }
@@ -27,13 +32,13 @@ class FavoritesNotifier extends ValueNotifier<Set<String>> {
   bool isFavorite(String id) => value.contains(id);
 
   // ── Переключить лайк ──────────────────────────────────────
-  // Возвращает true если добавлено, false если удалено
-  // Выбрасывает NeedsAuthException если не авторизован
   Future<bool> toggle(String universityId) async {
     if (!isLoggedIn || _uid == null) {
       throw NeedsAuthException();
     }
 
+    // ✅ Сохраняем снапшот ДО изменения для правильного отката
+    final previous = Set<String>.from(value);
     final updated = Set<String>.from(value);
     final bool added;
 
@@ -45,18 +50,18 @@ class FavoritesNotifier extends ValueNotifier<Set<String>> {
       added = true;
     }
 
+    // Оптимистичное обновление UI
     value = updated;
 
-    // Сохраняем в Firestore
     try {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(_uid)
           .update({'favorites': updated.toList()});
     } catch (_) {
-      // Откатываем если ошибка
-      value = Set<String>.from(value)
-        ..remove(universityId);
+      // ✅ Откатываем к реальному предыдущему состоянию
+      value = previous;
+      rethrow;
     }
 
     return added;

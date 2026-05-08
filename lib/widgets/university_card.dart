@@ -22,6 +22,21 @@ class UniversityFeedCard extends StatelessWidget {
       await FavoritesNotifier.instance.toggle(university.id);
     } on NeedsAuthException {
       _showAuthDialog(context);
+    } catch (_) {
+      // Firestore ошибка — FavoritesNotifier уже откатил значение,
+      // просто показываем снэкбар
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Не удалось сохранить. Попробуй ещё раз.'),
+            backgroundColor: const Color(0xFFD32F2F),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        );
+      }
     }
   }
 
