@@ -17,7 +17,7 @@ import '../../features/profile/screens/profile_screen.dart';
 import '../../features/profile/screens/profile_entry_screen.dart';
 import '../../features/university/screens/university_detail_screen.dart';
 import '../../features/splash/ui/splash_page.dart';
-import '../../features/profile/screens/profile_settings_screen.dart'; // <- класс SettingsScreen
+import '../../features/profile/screens/profile_settings_screen.dart' hide SearchScreen; // <- класс SettingsScreen
 import '../../features/auth/screens/profile_setup_screen.dart';
 import '../../features/auth/screens/phone_otp_screen.dart';
 import 'route_names.dart';
@@ -65,7 +65,7 @@ class AppRouter {
 
       GoRoute(
         path: RouteNames.profileSetup,
-        builder: (context, state) => const ProfileSetupScreen(),
+        builder: (context, state) => const ProfileSetupScreen(), 
       ),
 
       // ── Основная оболочка с BottomNav ──────────────────────
@@ -134,3 +134,6 @@ class AppRouter {
     ),
   );
 }
+
+
+
