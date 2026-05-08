@@ -3,56 +3,54 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'app_text_styles.dart';
 
-/// Тема приложения (пока только светлая).
-///
-/// [ThemeData] собирает в себе цвета, стили текста,
-/// настройки AppBar, кнопок и прочих компонентов.
-/// Чтобы добавить тёмную тему — создайте аналогичный метод `dark()`.
+/// Темы приложения. Используются в `MaterialApp.router`:
+/// `theme: AppTheme.light`, `darkTheme: AppTheme.dark`.
+abstract final class AppTheme {
+  static ThemeData get light => _build(Brightness.light);
+  static ThemeData get dark => _build(Brightness.dark);
 
-class AppTheme {
-  /// Светлая тема.
-  static ThemeData get light {
+  static ThemeData _build(Brightness brightness) {
+    final isDark = brightness == Brightness.dark;
+    final scaffold = isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
+    final surface = isDark ? AppColors.surfaceDark : AppColors.backgroundLight;
+    final onSurface = isDark ? AppColors.textInverse : AppColors.textPrimary;
+
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: AppColors.brandPrimary,
+      brightness: brightness,
+    ).copyWith(
+      primary: AppColors.brandPrimary,
+      secondary: AppColors.brandAccent,
+      surface: surface,
+      onSurface: onSurface,
+      error: AppColors.danger,
+    );
+
     return ThemeData(
       useMaterial3: true,
+      brightness: brightness,
+      colorScheme: colorScheme,
+      scaffoldBackgroundColor: scaffold,
 
-      // ── Цветовая схема ───────────────────────────────────────
-      colorScheme: const ColorScheme.dark(
-        primary: AppColors.button,
-        onPrimary: AppColors.backgroundPrimary,
-        secondary: AppColors.backgroundSecondary,
-        onSecondary: AppColors.textPrimary,
-        surface: AppColors.backgroundSecondaryLight,
-        onSurface: AppColors.backgroundWhite,
-        error: AppColors.accentRed,
-        onError: AppColors.backgroundWhite,
-      ),
-
-      scaffoldBackgroundColor: AppColors.backgroundPrimary,
-
-      // ── AppBar ───────────────────────────────────────────────
-      appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.backgroundPrimary,
-        foregroundColor: AppColors.backgroundWhite,
+      appBarTheme: AppBarTheme(
+        backgroundColor: scaffold,
+        foregroundColor: onSurface,
         centerTitle: true,
         elevation: 0,
       ),
 
-      // ── Кнопки ───────────────────────────────────────────────
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.button,
-          foregroundColor: AppColors.backgroundPrimary,
-          disabledBackgroundColor: AppColors.buttonInactive,
-          disabledForegroundColor: AppColors.backgroundPrimary,
+          backgroundColor: AppColors.brandAccent,
+          foregroundColor: AppColors.textInverse,
           textStyle: AppTextStyles.button,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(25),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         ),
       ),
 
-      // ── Текстовая тема ───────────────────────────────────────
       textTheme: const TextTheme(
         headlineLarge: AppTextStyles.headlineLarge,
         headlineMedium: AppTextStyles.headlineMedium,
@@ -61,15 +59,14 @@ class AppTheme {
         labelSmall: AppTextStyles.label,
       ),
 
-      // ── Навигация ────────────────────────────────────────────
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: AppColors.backgroundSecondary,
-        selectedItemColor: AppColors.button,
-        unselectedItemColor: AppColors.inactiveGrey,
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: surface,
+        selectedItemColor: AppColors.brandAccent,
+        unselectedItemColor: AppColors.textMuted,
         showUnselectedLabels: true,
       ),
 
-      dividerColor: AppColors.backgroundGrey,
+      dividerColor: AppColors.divider,
     );
   }
 }

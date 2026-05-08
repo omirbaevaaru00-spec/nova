@@ -1,133 +1,134 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stiky/features/onboarding/ui/onboarding_screen.dart';
 
-import '../../features/welcome/ui/welcome_screen.dart';
-import '../../features/auth/screens/login_screen.dart';
-import '../../features/auth/screens/register_screen.dart';
-import '../../features/auth/screens/forgot_password_screen.dart';
-import '../../features/home/screens/main_navigation_screen.dart';
-import '../../features/home/screens/home_screen.dart';
-import '../../features/home/screens/search_screen.dart';
-import '../../features/home/screens/favorites_screen.dart';
-import '../../features/home/screens/saved_searches_screen.dart';
-import '../../features/home/screens/news_feed_screen.dart';
-import '../../features/home/screens/notifications_screen.dart';
-import '../../features/profile/screens/profile_screen.dart';
-import '../../features/profile/screens/profile_entry_screen.dart';
-import '../../features/university/screens/university_detail_screen.dart';
+import '../../features/phone_otp/ui/phone_otp_screen.dart';
+import '../../features/profile_setup/ui/profile_setup_screen.dart';
+import '../../features/register/ui/register_screen.dart';
+import '../../features/forgot_password/ui/forgot_password_screen.dart';
+import '../../features/login/ui/login_screen.dart';
+import '../../features/favorites/ui/favorites_screen.dart';
+import '../../features/home/ui/home_screen.dart';
+import '../../features/search/ui/search_screen.dart';
+import '../../features/main_navigation/ui/main_navigation_screen.dart';
+import '../../features/news/ui/news_screen.dart';
+import '../../features/notifications/ui/notifications_screen.dart';
+import '../../features/onboarding/ui/onboarding_screen.dart';
+import '../../features/profile/ui/profile_screen.dart';
+import '../../features/profile_settings/ui/profile_settings_screen.dart';
+import '../../features/profile_entry/ui/profile_entry_screen.dart';
+import '../../features/saved_searches/ui/saved_searches_screen.dart';
 import '../../features/splash/ui/splash_page.dart';
-import '../../features/profile/screens/profile_settings_screen.dart'; // <- класс SettingsScreen
-import '../../features/auth/screens/profile_setup_screen.dart';
-import '../../features/auth/screens/phone_otp_screen.dart';
+import '../../features/university_detail/ui/university_detail_screen.dart';
+import '../../features/welcome/ui/welcome_screen.dart';
 import 'route_names.dart';
 
-class AppRouter {
-  AppRouter._();
-
+abstract final class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: RouteNames.splash,
-
     routes: [
-      // ── Сплэш ─────────────────────────────────────────────
       GoRoute(
         path: RouteNames.splash,
-        builder: (context, state) => const SplashPage(),
+        builder: (_, _) => const SplashPage(),
       ),
-
-      // ── Онбординг ──────
       GoRoute(
         path: RouteNames.welcome,
-        builder: (context, state) => const WelcomeScreen(),
+        builder: (_, _) => const WelcomeScreen(),
       ),
       GoRoute(
         path: RouteNames.onboarding,
-        builder: (context, state) => const OnboardingScreen(),
+        builder: (_, _) => const OnboardingScreen(),
       ),
 
-      // ── Авторизация ────────────────────────────────────────
+      // ── Auth ──────────────────────────────────────────────
       GoRoute(
         path: RouteNames.login,
-        builder: (context, state) => const LoginScreen(),
+        builder: (_, _) => const LoginScreen(),
       ),
       GoRoute(
         path: RouteNames.register,
-        builder: (context, state) => const RegisterScreen(),
+        builder: (_, _) => const RegisterScreen(),
       ),
       GoRoute(
         path: RouteNames.forgotPassword,
-        builder: (context, state) => const ForgotPasswordScreen(),
+        builder: (_, _) => const ForgotPasswordScreen(),
       ),
       GoRoute(
         path: RouteNames.phoneOtp,
-        builder: (context, state) => const PhoneOtpScreen(),
+        builder: (_, state) {
+          final extra = (state.extra as Map?) ?? const {};
+          return PhoneOtpScreen(
+            phone: (extra['phone'] as String?) ?? '',
+            verificationId: (extra['verificationId'] as String?) ?? '',
+          );
+        },
       ),
-
       GoRoute(
         path: RouteNames.profileSetup,
-        builder: (context, state) => const ProfileSetupScreen(),
+        builder: (_, state) {
+          final extra = (state.extra as Map?) ?? const {};
+          return ProfileSetupScreen(
+            email: extra['email'] as String?,
+            phone: extra['phone'] as String?,
+          );
+        },
       ),
 
-      // ── Основная оболочка с BottomNav ──────────────────────
+      // ── Main shell ────────────────────────────────────────
       ShellRoute(
-        builder: (context, state, child) => MainNavigationScreen(child: child),
+        builder: (_, _, child) => MainNavigationScreen(child: child),
         routes: [
           GoRoute(
             path: RouteNames.home,
-            builder: (context, state) => const HomeScreen(),
+            builder: (_, _) => const HomeScreen(),
           ),
           GoRoute(
             path: RouteNames.notifications,
-            builder: (context, state) => const NotificationsScreen(),
+            builder: (_, _) => const NotificationsScreen(),
           ),
           GoRoute(
             path: RouteNames.profile,
-            builder: (context, state) => const ProfileScreen(),
+            builder: (_, _) => const ProfileScreen(),
           ),
         ],
       ),
 
-      // ── Детальные экраны (без навбара) ────────────────────
+      // ── Detail screens ────────────────────────────────────
       GoRoute(
         path: '/university/:id',
-        builder: (context, state) {
-          final id = state.pathParameters['id'] ?? '';
-          return UniversityDetailScreen(id: id);
-        },
+        builder: (_, state) => UniversityDetailScreen(
+          id: state.pathParameters['id'] ?? '',
+        ),
       ),
       GoRoute(
         path: RouteNames.favorites,
-        builder: (context, state) => const FavoritesScreen(),
+        builder: (_, _) => const FavoritesScreen(),
       ),
       GoRoute(
         path: RouteNames.savedSearches,
-        builder: (context, state) => const SavedSearchesScreen(),
+        builder: (_, _) => const SavedSearchesScreen(),
       ),
       GoRoute(
         path: RouteNames.newsFeed,
-        builder: (context, state) => const NewsFeedScreen(),
+        builder: (_, _) => const NewsScreen(),
       ),
       GoRoute(
         path: RouteNames.helpCenter,
-        builder: (context, state) => const ProfileEntryScreen(),
+        builder: (_, _) => const ProfileEntryScreen(),
       ),
       GoRoute(
         path: RouteNames.search,
-        builder: (context, state) => const SearchScreen(),
+        builder: (_, _) => const SearchScreen(),
       ),
-
-      // ── Настройки профиля (без навбара) ───────────────────
       GoRoute(
-        path: '/profile-settings',
+        path: RouteNames.profileSettings,
         name: 'profile-settings',
-        builder: (context, state) => const SettingsScreen(),
+        builder: (_, _) => const SettingsScreen(),
       ),
     ],
-
     errorBuilder: (context, state) => Scaffold(
       body: Center(
         child: Text(
-          'Страница не найдена: ${state.uri}',
+          'Page not found: ${state.uri}',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),

@@ -1,49 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stiky/data/onboarding/onboarding_repository.dart';
-import 'package:stiky/data/onboarding/onboarding_repository_impl.dart';
-import 'firebase_options.dart';
 
-import 'core/router/app_router.dart';
 import 'core/localization/locale_controller.dart';
+import 'core/router/app_router.dart';
+import 'core/services/firebase_service.dart';
+import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
+import 'data/auth/auth_repository.dart';
+import 'data/auth/auth_repository_impl.dart';
+import 'data/onboarding/onboarding_repository.dart';
+import 'data/onboarding/onboarding_repository_impl.dart';
+import 'data/search/search_history_repository.dart';
+import 'data/search/search_history_repository_impl.dart';
+import 'data/university/university_repository.dart';
+import 'data/university/university_repository_impl.dart';
 import 'l10n/generated/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  if (Firebase.apps.isEmpty) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
-
+  await FirebaseService.instance.init();
   await LocaleController.instance.init();
   await ThemeController.instance.init();
+
   final prefs = await SharedPreferences.getInstance();
 
-  // 2. Создаём репозиторий
-  final onboardingRepository = OnboardingRepositoryImpl(prefs);
   runApp(
     MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<OnboardingRepository>.value(
-          value: onboardingRepository,
+        RepositoryProvider<AuthRepository>(
+          create: (_) => AuthRepositoryImpl(FirebaseService.instance),
+        ),
+        RepositoryProvider<OnboardingRepository>(
+          create: (_) => OnboardingRepositoryImpl(prefs),
+        ),
+        RepositoryProvider<UniversityRepository>(
+          create: (_) => const UniversityRepositoryImpl(),
+        ),
+        RepositoryProvider<SearchHistoryRepository>(
+          create: (_) => SearchHistoryRepositoryImpl(prefs),
         ),
       ],
-      child: const MyApp(),
+      child: const StikyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class StikyApp extends StatelessWidget {
+  const StikyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Слушаем оба контроллера
     return AnimatedBuilder(
       animation: Listenable.merge([
         LocaleController.instance,
@@ -56,27 +63,8 @@ class MyApp extends StatelessWidget {
           locale: LocaleController.instance.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-
-          // ── Светлая тема ──
-          theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF5B61F6),
-              brightness: Brightness.light,
-            ),
-          ),
-
-          // ── Тёмная тема ──
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF5B61F6),
-              brightness: Brightness.dark,
-            ),
-            scaffoldBackgroundColor: const Color(0xFF1C1C1E),
-          ),
-
-          // ← теперь управляется ThemeController
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
           themeMode: ThemeController.instance.mode,
         );
       },
