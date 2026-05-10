@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:stiky/data/university/university_model.dart';
 
 import 'favorites_notifier.dart';
-import 'university_model.dart';
+
 
 class UniversityFeedCard extends StatelessWidget {
   final University university;

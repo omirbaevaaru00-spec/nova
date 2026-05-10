@@ -1,35 +1,41 @@
 import 'package:flutter/material.dart';
 
-/// Палитра цветов приложения.
-///
-/// Все цвета определены здесь — в виджетах используем
-/// только `AppColors.xxx`, никаких `Color(0xFF...)` в коде.
-
-/// Цвета приложения Nova из Figma дизайна.
+/// Палитра приложения. В виджетах используем только токены отсюда —
+/// никаких `Color(0xFF…)` в UI-коде.
 abstract final class AppColors {
-  // ── Background ──────────────────────────────────────────────
-  static const Color backgroundPrimary = Color(0xFF101010);
-  static const Color backgroundSecondary = Color(0xFF2C2F36);
-  static const Color backgroundSecondaryLight = Color(0xFF24262B);
-  static const Color backgroundWhite = Color(0xFFFFFFFF);
-  static const Color backgroundGrey = Color(0xFF5D5D5D);
-  static const Color backgroundGreyLight = Color(0xFFB3B3B3);
+  // ── Brand ────────────────────────────────────────────────────
+  static const Color brandPrimary = Color(0xFF3B4FD8);
+  static const Color brandPrimaryDark = Color(0xFF2F3FBF);
+  static const Color brandPrimaryDeep = Color(0xFF1E2D8A);
+  static const Color brandAccent = Color(0xFF2ECC9A);
 
-  // ── Button ──────────────────────────────────────────────────
-  static const Color button = Color(0xFF35E7C7);
-  static const Color buttonInactive = Color(0xFF2AA790);
+  // ── Surfaces ─────────────────────────────────────────────────
+  static const Color backgroundLight = Color(0xFFFFFFFF);
+  static const Color backgroundDark = Color(0xFF101010);
+  static const Color surfaceDark = Color(0xFF1C1C1E);
+  static const Color surfaceMuted = Color(0xFFF0EEF8);
+  static const Color surfaceMutedDark = Color(0xFF2C2F36);
 
-  // ── Text ────────────────────────────────────────────────────
-  static const Color textPrimary = Color(0xFF000000);
-  static const Color textActive = Color(0xFF050505);
+  // ── Text ─────────────────────────────────────────────────────
+  static const Color textPrimary = Color(0xFF1A1A1A);
+  static const Color textSecondary = Color(0xFF888888);
+  static const Color textInverse = Color(0xFFFFFFFF);
+  static const Color textMuted = Color(0xFFBBBBBB);
 
-  // ── Accent ──────────────────────────────────────────────────
-  static const Color accentRed = Color(0xFFE01545);
-  static const Color accentCrimson = Color(0xFFA8123B);
-  static const Color accentBlue = Color(0xFF1DA1F2);
-  static const Color accentCyan = Color(0xFF1DA1F2);
+  // ── Status ───────────────────────────────────────────────────
+  static const Color success = Color(0xFF2E7D32);
+  static const Color successSurface = Color(0xFFE8F5E9);
+  static const Color danger = Color(0xFFE53935);
+  static const Color info = Color(0xFF1DA1F2);
+  static const Color warning = Color(0xFFA8123B);
 
-  // ── Inactive / Muted ───────────────────────────────────────
-  static const Color inactiveGrey = Color(0xFFB7B7B7);
-  static const Color inactiveLight = Color(0xFFBFE4DD);
+  // ── Borders / Dividers ───────────────────────────────────────
+  static const Color border = Color(0xFFE0DDEF);
+  static const Color divider = Color(0xFFDDDBEE);
+
+  // ── Auth-flow specific (deep purple variants) ────────────────
+  static const Color authPrimary = Color(0xFF2B2B8A);
+  static const Color authPrimaryLight = Color(0xFF3B3B8E);
+  static const Color authHint = Color(0xFF9E9CBB);
+  static const Color authDisabled = Color(0xFFAAAAAA);
 }

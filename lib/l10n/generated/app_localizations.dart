@@ -100,67 +100,97 @@ abstract class AppLocalizations {
     Locale('ru'),
   ];
 
-  /// Заголовок на экране приветствия
+  /// No description provided for @appTitle.
   ///
   /// In ru, this message translates to:
   /// **'WELCOME'**
-  String get welcomeTitle;
+  String get appTitle;
 
-  /// Подзаголовок на экране приветствия
+  /// No description provided for @welcomeDescription.
   ///
   /// In ru, this message translates to:
-  /// **'Find universities, explore programs\nand choose your future.'**
-  String get welcomeSubtitle;
+  /// **'Удобный сервис для абитуриентов —\nсравнивай вузы, узнавай проходные\nбаллы, выбирай специальность\nи подавай документы в один клик.'**
+  String get welcomeDescription;
 
-  /// Кнопка продолжить
+  /// No description provided for @welcomeSkip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пропустить'**
+  String get welcomeSkip;
+
+  /// No description provided for @continueText.
   ///
   /// In ru, this message translates to:
   /// **'Продолжить'**
   String get continueText;
 
-  /// Заголовок выбора языка
+  /// No description provided for @chooseLanguage.
   ///
   /// In ru, this message translates to:
   /// **'Выберите язык'**
   String get chooseLanguage;
 
-  /// Опция русского языка
+  /// No description provided for @languageRussian.
   ///
   /// In ru, this message translates to:
   /// **'Русский'**
-  String get russian;
+  String get languageRussian;
 
-  /// Опция казахского языка
+  /// No description provided for @languageRussianSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Интерфейс на русском языке'**
+  String get languageRussianSubtitle;
+
+  /// No description provided for @languageKazakh.
   ///
   /// In ru, this message translates to:
   /// **'Қазақша'**
-  String get kazakh;
+  String get languageKazakh;
 
-  /// Заголовок экрана интересов
+  /// No description provided for @languageKazakhSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Интерфейс қазақ тілінде'**
+  String get languageKazakhSubtitle;
+
+  /// No description provided for @localeShortRu.
+  ///
+  /// In ru, this message translates to:
+  /// **'РУ'**
+  String get localeShortRu;
+
+  /// No description provided for @localeShortKk.
+  ///
+  /// In ru, this message translates to:
+  /// **'ҚАЗ'**
+  String get localeShortKk;
+
+  /// No description provided for @quizTitle.
   ///
   /// In ru, this message translates to:
   /// **'Выбери, что тебе\nинтересно'**
   String get quizTitle;
 
-  /// Подзаголовок экрана интересов
+  /// No description provided for @quizSubtitle.
   ///
   /// In ru, this message translates to:
   /// **'Мы настроим ленту под твои цели, интересы\nи планы на будущее'**
   String get quizSubtitle;
 
-  /// Счётчик выбранных интересов
+  /// No description provided for @quizSelected.
   ///
   /// In ru, this message translates to:
   /// **'Выбрано'**
   String get quizSelected;
 
-  /// Кнопка пропустить
+  /// No description provided for @quizSkip.
   ///
   /// In ru, this message translates to:
   /// **'Пропустить'**
   String get quizSkip;
 
-  /// Кнопка далее
+  /// No description provided for @quizNext.
   ///
   /// In ru, this message translates to:
   /// **'Далее'**
@@ -231,6 +261,996 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Магистратура'**
   String get interestMaster;
+
+  /// No description provided for @navHome.
+  ///
+  /// In ru, this message translates to:
+  /// **'Главная'**
+  String get navHome;
+
+  /// No description provided for @navNotifications.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уведомления'**
+  String get navNotifications;
+
+  /// No description provided for @navProfile.
+  ///
+  /// In ru, this message translates to:
+  /// **'Профиль'**
+  String get navProfile;
+
+  /// No description provided for @screenNotifications.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уведомления'**
+  String get screenNotifications;
+
+  /// No description provided for @screenFavorites.
+  ///
+  /// In ru, this message translates to:
+  /// **'Избранное'**
+  String get screenFavorites;
+
+  /// No description provided for @screenNews.
+  ///
+  /// In ru, this message translates to:
+  /// **'Новости'**
+  String get screenNews;
+
+  /// No description provided for @screenSavedSearches.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранённые поиски'**
+  String get screenSavedSearches;
+
+  /// No description provided for @favoriteAuthRequired.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохрани в избранное'**
+  String get favoriteAuthRequired;
+
+  /// No description provided for @favoriteAuthSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Чтобы сохранить университет в избранное,\nнужно зарегистрироваться'**
+  String get favoriteAuthSubtitle;
+
+  /// No description provided for @actionRegister.
+  ///
+  /// In ru, this message translates to:
+  /// **'Зарегистрироваться'**
+  String get actionRegister;
+
+  /// No description provided for @actionLater.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позже'**
+  String get actionLater;
+
+  /// No description provided for @universityTypeStateShort.
+  ///
+  /// In ru, this message translates to:
+  /// **'Гос'**
+  String get universityTypeStateShort;
+
+  /// No description provided for @universityTypePrivateShort.
+  ///
+  /// In ru, this message translates to:
+  /// **'Частный'**
+  String get universityTypePrivateShort;
+
+  /// No description provided for @loginTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Снова вместе!'**
+  String get loginTitle;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мы скучали — классно, что ты вернулся!'**
+  String get loginSubtitle;
+
+  /// No description provided for @loginIdHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Эл. почта или номер'**
+  String get loginIdHint;
+
+  /// No description provided for @passwordHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пароль'**
+  String get passwordHint;
+
+  /// No description provided for @loginForgotPassword.
+  ///
+  /// In ru, this message translates to:
+  /// **'Забыли пароль?'**
+  String get loginForgotPassword;
+
+  /// No description provided for @loginAction.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войти'**
+  String get loginAction;
+
+  /// No description provided for @loginNoAccountPrefix.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет аккаунта? '**
+  String get loginNoAccountPrefix;
+
+  /// No description provided for @loginPhoneSoon.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вход по телефону — скоро будет доступен'**
+  String get loginPhoneSoon;
+
+  /// No description provided for @orDivider.
+  ///
+  /// In ru, this message translates to:
+  /// **'ИЛИ'**
+  String get orDivider;
+
+  /// No description provided for @googleSignIn.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войти через Google'**
+  String get googleSignIn;
+
+  /// No description provided for @forgotTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Забыли пароль?'**
+  String get forgotTitle;
+
+  /// No description provided for @forgotSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введи email — мы отправим\nссылку для сброса пароля'**
+  String get forgotSubtitle;
+
+  /// No description provided for @forgotSentTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Письмо отправлено!'**
+  String get forgotSentTitle;
+
+  /// No description provided for @forgotSentSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мы отправили ссылку для сброса пароля на\n{email}'**
+  String forgotSentSubtitle(String email);
+
+  /// No description provided for @emailHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Электронная почта'**
+  String get emailHint;
+
+  /// No description provided for @forgotSendAction.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отправить ссылку'**
+  String get forgotSendAction;
+
+  /// No description provided for @forgotBackToLogin.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вернуться к входу'**
+  String get forgotBackToLogin;
+
+  /// No description provided for @forgotCheckSpam.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не пришло письмо? Проверь папку «Спам»'**
+  String get forgotCheckSpam;
+
+  /// No description provided for @errorGeneric.
+  ///
+  /// In ru, this message translates to:
+  /// **'Что-то пошло не так. Попробуй ещё раз.'**
+  String get errorGeneric;
+
+  /// No description provided for @errorUserNotFound.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пользователь не найден'**
+  String get errorUserNotFound;
+
+  /// No description provided for @errorEmailNotFound.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пользователь с таким email не найден'**
+  String get errorEmailNotFound;
+
+  /// No description provided for @errorWrongPassword.
+  ///
+  /// In ru, this message translates to:
+  /// **'Неверный пароль'**
+  String get errorWrongPassword;
+
+  /// No description provided for @errorInvalidEmail.
+  ///
+  /// In ru, this message translates to:
+  /// **'Неверный формат email'**
+  String get errorInvalidEmail;
+
+  /// No description provided for @errorUserDisabled.
+  ///
+  /// In ru, this message translates to:
+  /// **'Аккаунт заблокирован'**
+  String get errorUserDisabled;
+
+  /// No description provided for @errorTooManyRequests.
+  ///
+  /// In ru, this message translates to:
+  /// **'Слишком много попыток. Подожди немного.'**
+  String get errorTooManyRequests;
+
+  /// No description provided for @errorInvalidCredential.
+  ///
+  /// In ru, this message translates to:
+  /// **'Неверный email или пароль'**
+  String get errorInvalidCredential;
+
+  /// No description provided for @errorLogin.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ошибка входа. Попробуй ещё раз.'**
+  String get errorLogin;
+
+  /// No description provided for @errorInvalidPhone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Неверный номер телефона. Проверь и попробуй снова.'**
+  String get errorInvalidPhone;
+
+  /// No description provided for @errorQuotaExceeded.
+  ///
+  /// In ru, this message translates to:
+  /// **'Превышен лимит SMS. Попробуй позже.'**
+  String get errorQuotaExceeded;
+
+  /// No description provided for @errorNetwork.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет интернета. Проверь соединение.'**
+  String get errorNetwork;
+
+  /// No description provided for @registerTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите телефон или адрес\nэл.почты'**
+  String get registerTitle;
+
+  /// No description provided for @registerModePhone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Телефон'**
+  String get registerModePhone;
+
+  /// No description provided for @registerModeEmail.
+  ///
+  /// In ru, this message translates to:
+  /// **'Электронная почта'**
+  String get registerModeEmail;
+
+  /// No description provided for @registerPhoneLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Номер телефона'**
+  String get registerPhoneLabel;
+
+  /// No description provided for @registerPhoneCountryCode.
+  ///
+  /// In ru, this message translates to:
+  /// **'KZ +7'**
+  String get registerPhoneCountryCode;
+
+  /// No description provided for @registerPhoneHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'7XX XXX XX XX'**
+  String get registerPhoneHint;
+
+  /// No description provided for @registerEmailLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Электронная почта'**
+  String get registerEmailLabel;
+
+  /// No description provided for @registerEmailHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'example@mail.com'**
+  String get registerEmailHint;
+
+  /// No description provided for @registerPolicy.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ознакомьтесь с нашей Политикой Конфиденциальности'**
+  String get registerPolicy;
+
+  /// No description provided for @registerProceed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Далее'**
+  String get registerProceed;
+
+  /// No description provided for @registerHasAccountPrefix.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уже есть аккаунт? '**
+  String get registerHasAccountPrefix;
+
+  /// No description provided for @registerLoginAction.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войти'**
+  String get registerLoginAction;
+
+  /// No description provided for @googleContinue.
+  ///
+  /// In ru, this message translates to:
+  /// **'Продолжить через Google'**
+  String get googleContinue;
+
+  /// No description provided for @googleError.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ошибка входа через Google'**
+  String get googleError;
+
+  /// No description provided for @phoneOtpTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите код'**
+  String get phoneOtpTitle;
+
+  /// No description provided for @phoneOtpSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мы отправили SMS на номер\n{phone}'**
+  String phoneOtpSubtitle(String phone);
+
+  /// No description provided for @phoneOtpResend.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отправить код повторно'**
+  String get phoneOtpResend;
+
+  /// No description provided for @phoneOtpResendIn.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отправить повторно через {seconds}с'**
+  String phoneOtpResendIn(int seconds);
+
+  /// No description provided for @phoneOtpVerify.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подтвердить'**
+  String get phoneOtpVerify;
+
+  /// No description provided for @phoneOtpInvalidCode.
+  ///
+  /// In ru, this message translates to:
+  /// **'Неверный код. Проверь и попробуй ещё раз.'**
+  String get phoneOtpInvalidCode;
+
+  /// No description provided for @profileSetupTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Расскажи о себе'**
+  String get profileSetupTitle;
+
+  /// No description provided for @profileSetupSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заполни профиль — это займёт\nменьше минуты'**
+  String get profileSetupSubtitle;
+
+  /// No description provided for @profileSetupNameLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя / Никнейм'**
+  String get profileSetupNameLabel;
+
+  /// No description provided for @profileSetupNameHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например: Арууке'**
+  String get profileSetupNameHint;
+
+  /// No description provided for @profileSetupCityLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Город'**
+  String get profileSetupCityLabel;
+
+  /// No description provided for @profileSetupCityHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например: Алматы'**
+  String get profileSetupCityHint;
+
+  /// No description provided for @profileSetupPasswordLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Придумай пароль'**
+  String get profileSetupPasswordLabel;
+
+  /// No description provided for @profileSetupPasswordHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Минимум 6 символов'**
+  String get profileSetupPasswordHint;
+
+  /// No description provided for @profileSetupContinue.
+  ///
+  /// In ru, this message translates to:
+  /// **'Продолжить'**
+  String get profileSetupContinue;
+
+  /// No description provided for @errorEmailInUse.
+  ///
+  /// In ru, this message translates to:
+  /// **'Этот email уже зарегистрирован. Войди через «Войти».'**
+  String get errorEmailInUse;
+
+  /// No description provided for @errorWeakPassword.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пароль слишком простой. Минимум 6 символов.'**
+  String get errorWeakPassword;
+
+  /// No description provided for @errorAuth.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ошибка авторизации. Попробуй снова.'**
+  String get errorAuth;
+
+  /// No description provided for @profileFallbackName.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пользователь'**
+  String get profileFallbackName;
+
+  /// No description provided for @profileFavoritesSection.
+  ///
+  /// In ru, this message translates to:
+  /// **'избранные'**
+  String get profileFavoritesSection;
+
+  /// No description provided for @profileFavoritesEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет избранных университетов'**
+  String get profileFavoritesEmpty;
+
+  /// No description provided for @profilePhotoTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Фото профиля'**
+  String get profilePhotoTitle;
+
+  /// No description provided for @profilePhotoTake.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сделать фото'**
+  String get profilePhotoTake;
+
+  /// No description provided for @profilePhotoPick.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выбрать из галереи'**
+  String get profilePhotoPick;
+
+  /// No description provided for @actionCancel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отмена'**
+  String get actionCancel;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Профиль'**
+  String get profileTitle;
+
+  /// No description provided for @profileLogout.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выйти из аккаунта'**
+  String get profileLogout;
+
+  /// No description provided for @profileGuestTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войди в аккаунт'**
+  String get profileGuestTitle;
+
+  /// No description provided for @profileGuestSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Чтобы видеть избранное и историю поиска'**
+  String get profileGuestSubtitle;
+
+  /// No description provided for @profileScores.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мои баллы'**
+  String get profileScores;
+
+  /// No description provided for @profileFavorites.
+  ///
+  /// In ru, this message translates to:
+  /// **'Избранное'**
+  String get profileFavorites;
+
+  /// No description provided for @profileSavedSearches.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранённые поиски'**
+  String get profileSavedSearches;
+
+  /// No description provided for @profileSettings.
+  ///
+  /// In ru, this message translates to:
+  /// **'Настройки'**
+  String get profileSettings;
+
+  /// No description provided for @profileEditScores.
+  ///
+  /// In ru, this message translates to:
+  /// **'Изменить баллы'**
+  String get profileEditScores;
+
+  /// No description provided for @profileEditInterests.
+  ///
+  /// In ru, this message translates to:
+  /// **'Изменить интересы'**
+  String get profileEditInterests;
+
+  /// No description provided for @profileLanguage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Язык'**
+  String get profileLanguage;
+
+  /// No description provided for @profileTheme.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тёмная тема'**
+  String get profileTheme;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Настройки'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsSaved.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранено'**
+  String get settingsSaved;
+
+  /// No description provided for @settingsSaveError.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не удалось сохранить'**
+  String get settingsSaveError;
+
+  /// No description provided for @settingsEditProfile.
+  ///
+  /// In ru, this message translates to:
+  /// **'Редактировать профиль'**
+  String get settingsEditProfile;
+
+  /// No description provided for @settingsEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не заполнено'**
+  String get settingsEmpty;
+
+  /// No description provided for @settingsEditScores.
+  ///
+  /// In ru, this message translates to:
+  /// **'Редактировать баллы'**
+  String get settingsEditScores;
+
+  /// No description provided for @settingsQuiz.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пройти опрос по интересам'**
+  String get settingsQuiz;
+
+  /// No description provided for @settingsInterestsEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не выбраны'**
+  String get settingsInterestsEmpty;
+
+  /// No description provided for @settingsLanguageItem.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сменить язык'**
+  String get settingsLanguageItem;
+
+  /// No description provided for @settingsThemeItem.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тёмная тема'**
+  String get settingsThemeItem;
+
+  /// No description provided for @settingsPhotoItem.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавить фото'**
+  String get settingsPhotoItem;
+
+  /// No description provided for @settingsPhotoSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сделать фото или из галереи'**
+  String get settingsPhotoSubtitle;
+
+  /// No description provided for @settingsHelpItem.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нужна помощь'**
+  String get settingsHelpItem;
+
+  /// No description provided for @settingsHelpSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Центр помощи · FAQ и поддержка'**
+  String get settingsHelpSubtitle;
+
+  /// No description provided for @settingsLogoutItem.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выйти из аккаунта'**
+  String get settingsLogoutItem;
+
+  /// No description provided for @settingsLogoutConfirmTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выйти из аккаунта?'**
+  String get settingsLogoutConfirmTitle;
+
+  /// No description provided for @settingsLogoutConfirmText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы уверены, что хотите выйти?'**
+  String get settingsLogoutConfirmText;
+
+  /// No description provided for @actionExit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выйти'**
+  String get actionExit;
+
+  /// No description provided for @actionSave.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранить'**
+  String get actionSave;
+
+  /// No description provided for @actionOk.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ок'**
+  String get actionOk;
+
+  /// No description provided for @settingsAuthTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Требуется вход'**
+  String get settingsAuthTitle;
+
+  /// No description provided for @settingsAuthText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войдите в аккаунт чтобы сохранять баллы.'**
+  String get settingsAuthText;
+
+  /// No description provided for @settingsPhotoUpdated.
+  ///
+  /// In ru, this message translates to:
+  /// **'Фото обновлено'**
+  String get settingsPhotoUpdated;
+
+  /// No description provided for @settingsPhotoError.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ошибка загрузки фото'**
+  String get settingsPhotoError;
+
+  /// No description provided for @dialogNamePlaceholder.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя / ник'**
+  String get dialogNamePlaceholder;
+
+  /// No description provided for @dialogCityPlaceholder.
+  ///
+  /// In ru, this message translates to:
+  /// **'Город (напр. Алматы)'**
+  String get dialogCityPlaceholder;
+
+  /// No description provided for @dialogGpaPlaceholder.
+  ///
+  /// In ru, this message translates to:
+  /// **'GPA (напр. 3.8)'**
+  String get dialogGpaPlaceholder;
+
+  /// No description provided for @dialogIeltsPlaceholder.
+  ///
+  /// In ru, this message translates to:
+  /// **'IELTS (напр. 7.0)'**
+  String get dialogIeltsPlaceholder;
+
+  /// No description provided for @dialogEntPlaceholder.
+  ///
+  /// In ru, this message translates to:
+  /// **'ЕНТ (напр. 120)'**
+  String get dialogEntPlaceholder;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In ru, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @searchTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поиск'**
+  String get searchTitle;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поиск по учреждениям...'**
+  String get searchHint;
+
+  /// No description provided for @searchHistoryTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'История поиска'**
+  String get searchHistoryTitle;
+
+  /// No description provided for @searchHistoryClear.
+  ///
+  /// In ru, this message translates to:
+  /// **'Очистить'**
+  String get searchHistoryClear;
+
+  /// No description provided for @searchHistoryAuthRequired.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войди в аккаунт чтобы сохранять историю поиска'**
+  String get searchHistoryAuthRequired;
+
+  /// No description provided for @searchSavedFilterChip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Применить сохранённый фильтр'**
+  String get searchSavedFilterChip;
+
+  /// No description provided for @searchSaveFilter.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранить фильтр'**
+  String get searchSaveFilter;
+
+  /// No description provided for @searchDeleteSavedFilter.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить сохранённый'**
+  String get searchDeleteSavedFilter;
+
+  /// No description provided for @searchFilterSaved.
+  ///
+  /// In ru, this message translates to:
+  /// **'Фильтр сохранён'**
+  String get searchFilterSaved;
+
+  /// No description provided for @searchFilterDeleted.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранённый фильтр удалён'**
+  String get searchFilterDeleted;
+
+  /// No description provided for @searchSectionTypes.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тип'**
+  String get searchSectionTypes;
+
+  /// No description provided for @searchSectionLangs.
+  ///
+  /// In ru, this message translates to:
+  /// **'Язык'**
+  String get searchSectionLangs;
+
+  /// No description provided for @searchSectionDirs.
+  ///
+  /// In ru, this message translates to:
+  /// **'Направление'**
+  String get searchSectionDirs;
+
+  /// No description provided for @searchSectionFormats.
+  ///
+  /// In ru, this message translates to:
+  /// **'Формат'**
+  String get searchSectionFormats;
+
+  /// No description provided for @searchSectionCosts.
+  ///
+  /// In ru, this message translates to:
+  /// **'Стоимость'**
+  String get searchSectionCosts;
+
+  /// No description provided for @searchEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ничего не найдено'**
+  String get searchEmpty;
+
+  /// No description provided for @searchFilters.
+  ///
+  /// In ru, this message translates to:
+  /// **'Фильтры'**
+  String get searchFilters;
+
+  /// No description provided for @searchClear.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сбросить'**
+  String get searchClear;
+
+  /// No description provided for @searchApply.
+  ///
+  /// In ru, this message translates to:
+  /// **'Применить'**
+  String get searchApply;
+
+  /// No description provided for @filterCity.
+  ///
+  /// In ru, this message translates to:
+  /// **'Город'**
+  String get filterCity;
+
+  /// No description provided for @filterType.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тип'**
+  String get filterType;
+
+  /// No description provided for @filterLanguage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Язык обучения'**
+  String get filterLanguage;
+
+  /// No description provided for @filterCost.
+  ///
+  /// In ru, this message translates to:
+  /// **'Стоимость'**
+  String get filterCost;
+
+  /// No description provided for @filterDirection.
+  ///
+  /// In ru, this message translates to:
+  /// **'Направление'**
+  String get filterDirection;
+
+  /// No description provided for @universityCost.
+  ///
+  /// In ru, this message translates to:
+  /// **'Стоимость'**
+  String get universityCost;
+
+  /// No description provided for @universityDuration.
+  ///
+  /// In ru, this message translates to:
+  /// **'Срок обучения'**
+  String get universityDuration;
+
+  /// No description provided for @universityLanguage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Язык обучения'**
+  String get universityLanguage;
+
+  /// No description provided for @universityFormat.
+  ///
+  /// In ru, this message translates to:
+  /// **'Формат'**
+  String get universityFormat;
+
+  /// No description provided for @universityWebsite.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сайт'**
+  String get universityWebsite;
+
+  /// No description provided for @universityInstagram.
+  ///
+  /// In ru, this message translates to:
+  /// **'Instagram'**
+  String get universityInstagram;
+
+  /// No description provided for @universityDescription.
+  ///
+  /// In ru, this message translates to:
+  /// **'Описание'**
+  String get universityDescription;
+
+  /// No description provided for @universityDirections.
+  ///
+  /// In ru, this message translates to:
+  /// **'Направления'**
+  String get universityDirections;
+
+  /// No description provided for @universityRequirements.
+  ///
+  /// In ru, this message translates to:
+  /// **'Требования'**
+  String get universityRequirements;
+
+  /// No description provided for @universityMinEnt.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мин. балл ЕНТ: {value}'**
+  String universityMinEnt(int value);
+
+  /// No description provided for @universityMinGpa.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мин. GPA: {value}'**
+  String universityMinGpa(double value);
+
+  /// No description provided for @universityMinIelts.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мин. IELTS: {value}'**
+  String universityMinIelts(double value);
+
+  /// No description provided for @universityTabDescription.
+  ///
+  /// In ru, this message translates to:
+  /// **'описание'**
+  String get universityTabDescription;
+
+  /// No description provided for @universityTabPrograms.
+  ///
+  /// In ru, this message translates to:
+  /// **'специальности'**
+  String get universityTabPrograms;
+
+  /// No description provided for @universityTabNews.
+  ///
+  /// In ru, this message translates to:
+  /// **'новости'**
+  String get universityTabNews;
+
+  /// No description provided for @universityNewsEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Новостей пока нет'**
+  String get universityNewsEmpty;
+
+  /// No description provided for @universityAdmissionTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Условия поступления'**
+  String get universityAdmissionTitle;
 }
 
 class _AppLocalizationsDelegate

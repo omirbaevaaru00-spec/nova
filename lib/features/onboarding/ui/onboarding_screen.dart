@@ -83,7 +83,7 @@ class _OnboardingView extends StatelessWidget {
                             width: 36,
                             height: 36,
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.12),
+                              color: Colors.white.withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(
@@ -108,7 +108,7 @@ class _OnboardingView extends StatelessWidget {
                         Text(
                           l10n.quizSubtitle,
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.65),
+                            color: Colors.white.withValues(alpha: 0.65),
                             fontSize: 14,
                             height: 1.45,
                           ),
@@ -159,7 +159,7 @@ class _OnboardingView extends StatelessWidget {
                           child: Text(
                             '${l10n.quizSelected}: ${state.selectedIndexes.length}',
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.5),
+                              color: Colors.white.withValues(alpha: 0.5),
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),
@@ -175,7 +175,7 @@ class _OnboardingView extends StatelessWidget {
                         Expanded(
                           child: _BottomButton(
                             label: l10n.quizSkip,
-                            color: Colors.white.withOpacity(0.15),
+                            color: Colors.white.withValues(alpha: 0.15),
                             textColor: Colors.white,
                             onTap: () {
                               HapticFeedback.selectionClick();
@@ -247,19 +247,19 @@ class _InterestChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? const Color(0xFF2ECC9A)
-              : Colors.white.withOpacity(0.12),
+              : Colors.white.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
             color: isSelected
                 ? const Color(0xFF2ECC9A)
-                : Colors.white.withOpacity(0.18),
+                : Colors.white.withValues(alpha: 0.18),
             width: 1.5,
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.white.withOpacity(0.85),
+            color: isSelected ? Colors.white : Colors.white.withValues(alpha: 0.85),
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),

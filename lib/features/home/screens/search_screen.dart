@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stiky/data/university/kazakh_universities.dart';
+import 'package:stiky/data/university/university_model.dart';
 
-import '../../../widgets/university_model.dart';
+
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

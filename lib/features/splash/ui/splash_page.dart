@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stiky/core/router/route_names.dart';
-import 'package:stiky/data/onboarding/onboarding_repository.dart';
-import 'package:stiky/features/splash/bloc/splash_cubit.dart';
-import 'package:stiky/features/splash/bloc/splash_state.dart';
+
+import '../../../core/router/route_names.dart';
+import '../../../data/auth/auth_repository.dart';
+import '../../../data/onboarding/onboarding_repository.dart';
+import '../bloc/splash_cubit.dart';
+import '../bloc/splash_state.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -12,11 +14,10 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) {
-        return SplashCubit(
-          onboardnigRepository: context.read<OnboardingRepository>(),
-        )..checkOnboarding();
-      },
+      create: (context) => SplashCubit(
+        authRepository: context.read<AuthRepository>(),
+        onboardingRepository: context.read<OnboardingRepository>(),
+      )..bootstrap(),
       child: const _SplashView(),
     );
   }
@@ -31,10 +32,16 @@ class _SplashView extends StatelessWidget {
 
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
-        if (state is SplashStateShouldOnboarding) {
-          context.go(RouteNames.welcome);
-        } else if (state is SplashStateAlreadyOnboarded) {
-          context.go(RouteNames.home);
+        switch (state.status) {
+          case SplashStatus.shouldOnboard:
+            context.go(RouteNames.welcome);
+          case SplashStatus.shouldLogin:
+            context.go(RouteNames.login);
+          case SplashStatus.authenticated:
+            context.go(RouteNames.home);
+          case SplashStatus.initial:
+          case SplashStatus.failure:
+            break;
         }
       },
       child: Scaffold(
