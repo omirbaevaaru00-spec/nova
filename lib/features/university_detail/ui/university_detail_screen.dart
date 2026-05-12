@@ -1,10 +1,856 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:go_router/go_router.dart';
+
+// import '../../../core/theme/app_colors.dart';
+// import '../../../data/university/university_model.dart';
+// import '../../../data/university/university_repository.dart';
+// import '../../../l10n/generated/app_localizations.dart';
+// import '../bloc/university_detail_cubit.dart';
+// import '../bloc/university_detail_state.dart';
+
+// class UniversityDetailScreen extends StatelessWidget {
+//   const UniversityDetailScreen({super.key, required this.id});
+
+//   final String id;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (context) => UniversityDetailCubit(
+//         universityRepository: context.read<UniversityRepository>(),
+//       )..load(id),
+//       child: _UniversityDetailView(universityId: id),
+//     );
+//   }
+// }
+
+// class _UniversityDetailView extends StatelessWidget {
+//   const _UniversityDetailView({required this.universityId});
+
+//   final String universityId;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final l10n = AppLocalizations.of(context);
+//     final isDark = Theme.of(context).brightness == Brightness.dark;
+//     final bgColor =
+//         isDark ? AppColors.backgroundDark : const Color(0xFFF5F4FA);
+
+//     return BlocBuilder<UniversityDetailCubit, UniversityDetailState>(
+//       builder: (context, state) {
+//         if (state.status == UniversityDetailStatus.loading ||
+//             state.status == UniversityDetailStatus.initial) {
+//           return Scaffold(
+//             backgroundColor: bgColor,
+//             body: const Center(child: CircularProgressIndicator()),
+//           );
+//         }
+//         final uni = state.university;
+//         if (uni == null) {
+//           return Scaffold(
+//             backgroundColor: bgColor,
+//             body: Center(child: Text(l10n.searchEmpty)),
+//           );
+//         }
+//         return Scaffold(
+//           backgroundColor: bgColor,
+//           body: SafeArea(
+//             child: CustomScrollView(
+//               slivers: [
+//                 SliverToBoxAdapter(child: _TopBar(isDark: isDark)),
+//                 SliverToBoxAdapter(child: _HeroImage(university: uni)),
+//                 SliverToBoxAdapter(
+//                   child: Padding(
+//                     padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+//                     child: _Header(
+//                       university: uni,
+//                       isDark: isDark,
+//                       universityId: universityId,
+//                     ),
+//                   ),
+//                 ),
+//                 SliverToBoxAdapter(
+//                   child: Padding(
+//                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+//                     child: _Tabs(current: state.tab, isDark: isDark),
+//                   ),
+//                 ),
+//                 SliverToBoxAdapter(
+//                   child: Padding(
+//                     padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
+//                     child: _TabContent(
+//                       state: state,
+//                       university: uni,
+//                       isDark: isDark,
+//                       universityId: universityId,
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
+
+// // ── TopBar ─────────────────────────────────────────────────────────────────────
+
+// class _TopBar extends StatelessWidget {
+//   const _TopBar({required this.isDark});
+
+//   final bool isDark;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final color = isDark ? AppColors.textInverse : AppColors.textPrimary;
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           IconButton(
+//             onPressed: () => Navigator.of(context).maybePop(),
+//             icon: Icon(Icons.arrow_back_rounded, color: color, size: 24),
+//           ),
+//           IconButton(
+//             onPressed: () {},
+//             icon: Icon(
+//               Icons.notifications_none_rounded,
+//               color: color,
+//               size: 26,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // ── HeroImage (одно фото, без слайдера) ───────────────────────────────────────
+
+// class _HeroImage extends StatelessWidget {
+//   const _HeroImage({required this.university});
+
+//   final University university;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 240,
+//       width: double.infinity,
+//       child: university.imageUrl.isNotEmpty
+//           ? Image.network(
+//               university.imageUrl,
+//               fit: BoxFit.cover,
+//               errorBuilder: (_, _, _) => const _HeroPlaceholder(),
+//             )
+//           : const _HeroPlaceholder(),
+//     );
+//   }
+// }
+
+// class _HeroPlaceholder extends StatelessWidget {
+//   const _HeroPlaceholder();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       color: AppColors.divider,
+//       child: const Center(
+//         child: Icon(
+//           Icons.school_outlined,
+//           color: AppColors.authPrimaryLight,
+//           size: 52,
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// // ── Header ─────────────────────────────────────────────────────────────────────
+
+// class _Header extends StatelessWidget {
+//   const _Header({
+//     required this.university,
+//     required this.isDark,
+//     required this.universityId,
+//   });
+
+//   final University university;
+//   final bool isDark;
+//   final String universityId;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       children: [
+//         // Логотип
+//         Container(
+//           width: 64,
+//           height: 64,
+//           decoration: BoxDecoration(
+//             shape: BoxShape.circle,
+//             color: isDark
+//                 ? AppColors.surfaceMutedDark
+//                 : AppColors.surfaceMuted,
+//             border: Border.all(color: AppColors.border),
+//           ),
+//           child: ClipOval(
+//             child: university.logoUrl.isNotEmpty
+//                 ? Image.network(
+//                     university.logoUrl,
+//                     fit: BoxFit.cover,
+//                     errorBuilder: (_, _, _) =>
+//                         _Initial(name: university.name),
+//                   )
+//                 : _Initial(name: university.name),
+//           ),
+//         ),
+//         const SizedBox(width: 14),
+//         // Название + город
+//         Expanded(
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Text(
+//                 university.name,
+//                 style: TextStyle(
+//                   fontSize: 17,
+//                   fontWeight: FontWeight.w700,
+//                   color: isDark
+//                       ? AppColors.textInverse
+//                       : AppColors.textPrimary,
+//                   height: 1.25,
+//                 ),
+//               ),
+//               const SizedBox(height: 3),
+//               Text(
+//                 university.city,
+//                 style: const TextStyle(
+//                   fontSize: 13,
+//                   color: AppColors.textSecondary,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         // Кнопка: избранное
+//         _ActionButton(
+//           icon: Icons.favorite_border_rounded,
+//           isDark: isDark,
+//           onTap: () {
+//             // TODO: добавить/убрать из избранного через FavoritesRepository
+//           },
+//         ),
+//         const SizedBox(width: 10),
+//         // Кнопка: отзывы
+//         _ActionButton(
+//           icon: Icons.chat_bubble_outline_rounded,
+//           isDark: isDark,
+//           onTap: () =>
+//               context.push('/university/$universityId/reviews'),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+// class _ActionButton extends StatelessWidget {
+//   const _ActionButton({
+//     required this.icon,
+//     required this.isDark,
+//     required this.onTap,
+//   });
+
+//   final IconData icon;
+//   final bool isDark;
+//   final VoidCallback onTap;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: onTap,
+//       child: Container(
+//         width: 42,
+//         height: 42,
+//         decoration: BoxDecoration(
+//           shape: BoxShape.circle,
+//           color: isDark
+//               ? AppColors.surfaceMutedDark
+//               : AppColors.backgroundLight,
+//           border: Border.all(
+//             color: isDark ? Colors.transparent : AppColors.border,
+//           ),
+//         ),
+//         child: Icon(
+//           icon,
+//           size: 20,
+//           color: isDark
+//               ? AppColors.textInverse
+//               : AppColors.textPrimary,
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class _Initial extends StatelessWidget {
+//   const _Initial({required this.name});
+
+//   final String name;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: Text(
+//         name.isNotEmpty ? name[0].toUpperCase() : 'U',
+//         style: const TextStyle(
+//           fontSize: 22,
+//           fontWeight: FontWeight.w800,
+//           color: AppColors.authPrimaryLight,
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// // ── Tabs ───────────────────────────────────────────────────────────────────────
+
+// class _Tabs extends StatelessWidget {
+//   const _Tabs({required this.current, required this.isDark});
+
+//   final UniversityDetailTab current;
+//   final bool isDark;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final l10n = AppLocalizations.of(context);
+//     return Row(
+//       children: [
+//         _TabItem(
+//           label: l10n.universityTabDescription,
+//           tab: UniversityDetailTab.description,
+//           current: current,
+//           isDark: isDark,
+//         ),
+//         const SizedBox(width: 4),
+//         _TabItem(
+//           label: l10n.universityTabPrograms,
+//           tab: UniversityDetailTab.programs,
+//           current: current,
+//           isDark: isDark,
+//         ),
+//         const SizedBox(width: 4),
+//         _TabItem(
+//           label: l10n.universityTabNews,
+//           tab: UniversityDetailTab.news,
+//           current: current,
+//           isDark: isDark,
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+// class _TabItem extends StatelessWidget {
+//   const _TabItem({
+//     required this.label,
+//     required this.tab,
+//     required this.current,
+//     required this.isDark,
+//   });
+
+//   final String label;
+//   final UniversityDetailTab tab;
+//   final UniversityDetailTab current;
+//   final bool isDark;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final isSelected = tab == current;
+//     final textColor =
+//         isDark ? AppColors.textInverse : AppColors.textPrimary;
+
+//     return GestureDetector(
+//       onTap: () =>
+//           context.read<UniversityDetailCubit>().selectTab(tab),
+//       child: AnimatedContainer(
+//         duration: const Duration(milliseconds: 180),
+//         padding:
+//             const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+//         decoration: isSelected
+//             ? BoxDecoration(
+//                 border: Border.all(color: textColor, width: 1.5),
+//                 borderRadius: BorderRadius.circular(24),
+//               )
+//             : null,
+//         child: Text(
+//           label,
+//           style: TextStyle(
+//             fontSize: 14,
+//             fontWeight:
+//                 isSelected ? FontWeight.w600 : FontWeight.w400,
+//             color: isSelected ? textColor : AppColors.textSecondary,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// // ── TabContent ─────────────────────────────────────────────────────────────────
+
+// class _TabContent extends StatelessWidget {
+//   const _TabContent({
+//     required this.state,
+//     required this.university,
+//     required this.isDark,
+//     required this.universityId,
+//   });
+
+//   final UniversityDetailState state;
+//   final University university;
+//   final bool isDark;
+//   final String universityId;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final l10n = AppLocalizations.of(context);
+
+//     switch (state.tab) {
+//       case UniversityDetailTab.description:
+//         return Column(
+//           children: [
+//             _Card(
+//               isDark: isDark,
+//               child: Text(
+//                 university.description,
+//                 style: TextStyle(
+//                   fontSize: 15,
+//                   height: 1.6,
+//                   color: isDark
+//                       ? AppColors.textInverse
+//                       : AppColors.textPrimary,
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(height: 14),
+//             _ContactsCard(university: university, isDark: isDark),
+//             const SizedBox(height: 14),
+//             _AdmissionCard(
+//               university: university,
+//               l10n: l10n,
+//               isDark: isDark,
+//             ),
+//           ],
+//         );
+
+//       case UniversityDetailTab.programs:
+//         return Column(
+//           children: university.directions
+//               .map(
+//                 (p) => Padding(
+//                   padding: const EdgeInsets.only(bottom: 12),
+//                   child: _ProgramItem(name: p, isDark: isDark),
+//                 ),
+//               )
+//               .toList(),
+//         );
+
+//       case UniversityDetailTab.news:
+//         return SizedBox(
+//           height: 200,
+//           child: Center(
+//             child: Text(
+//               l10n.universityNewsEmpty,
+//               style: TextStyle(
+//                 fontSize: 16,
+//                 color: (isDark
+//                         ? AppColors.textInverse
+//                         : AppColors.textPrimary)
+//                     .withValues(alpha: 0.4),
+//               ),
+//             ),
+//           ),
+//         );
+//     }
+//   }
+// }
+
+// // ── ProgramItem + диалог профессии ────────────────────────────────────────────
+
+// class _ProgramItem extends StatelessWidget {
+//   const _ProgramItem({required this.name, required this.isDark});
+
+//   final String name;
+//   final bool isDark;
+
+//   void _showDialog(BuildContext context) {
+//     final l10n = AppLocalizations.of(context);
+//     showDialog<void>(
+//       context: context,
+//       builder: (ctx) => Dialog(
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.circular(24),
+//         ),
+//         backgroundColor: isDark
+//             ? AppColors.surfaceMutedDark
+//             : AppColors.backgroundLight,
+//         child: Padding(
+//           padding: const EdgeInsets.all(24),
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Row(
+//                 children: [
+//                   Container(
+//                     width: 44,
+//                     height: 44,
+//                     decoration: BoxDecoration(
+//                       color: AppColors.brandAccent
+//                           .withValues(alpha: 0.15),
+//                       borderRadius: BorderRadius.circular(12),
+//                     ),
+//                     child: const Icon(
+//                       Icons.school_rounded,
+//                       color: AppColors.brandAccent,
+//                       size: 22,
+//                     ),
+//                   ),
+//                   const SizedBox(width: 12),
+//                   Expanded(
+//                     child: Text(
+//                       name,
+//                       style: TextStyle(
+//                         fontSize: 17,
+//                         fontWeight: FontWeight.w700,
+//                         color: isDark
+//                             ? AppColors.textInverse
+//                             : AppColors.textPrimary,
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//               const SizedBox(height: 20),
+//               _InfoRow(
+//                 icon: Icons.access_time_rounded,
+//                 label: l10n.professionDuration,
+//                 value: '4 года',
+//                 isDark: isDark,
+//               ),
+//               const SizedBox(height: 10),
+//               _InfoRow(
+//                 icon: Icons.attach_money_rounded,
+//                 label: l10n.professionCost,
+//                 value: '1 200 000 – 2 400 000 ₸/год',
+//                 isDark: isDark,
+//               ),
+//               const SizedBox(height: 10),
+//               _InfoRow(
+//                 icon: Icons.language_rounded,
+//                 label: l10n.professionLanguage,
+//                 value: 'Казахский, Русский',
+//                 isDark: isDark,
+//               ),
+//               const SizedBox(height: 10),
+//               _InfoRow(
+//                 icon: Icons.work_outline_rounded,
+//                 label: l10n.professionJobs,
+//                 value: l10n.professionJobsExample,
+//                 isDark: isDark,
+//               ),
+//               const SizedBox(height: 24),
+//               SizedBox(
+//                 width: double.infinity,
+//                 height: 48,
+//                 child: ElevatedButton(
+//                   onPressed: () => Navigator.of(ctx).pop(),
+//                   style: ElevatedButton.styleFrom(
+//                     backgroundColor: AppColors.brandAccent,
+//                     foregroundColor: AppColors.backgroundDark,
+//                     shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(14),
+//                     ),
+//                     elevation: 0,
+//                   ),
+//                   child: Text(
+//                     l10n.actionClose,
+//                     style: const TextStyle(
+//                       fontWeight: FontWeight.w700,
+//                       fontSize: 15,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () => _showDialog(context),
+//       child: _Card(
+//         isDark: isDark,
+//         child: Row(
+//           children: [
+//             Expanded(
+//               child: Text(
+//                 name,
+//                 style: TextStyle(
+//                   fontSize: 15,
+//                   fontWeight: FontWeight.w500,
+//                   color: isDark
+//                       ? AppColors.textInverse
+//                       : AppColors.textPrimary,
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               width: 30,
+//               height: 30,
+//               decoration: BoxDecoration(
+//                 color:
+//                     AppColors.brandAccent.withValues(alpha: 0.15),
+//                 borderRadius: BorderRadius.circular(8),
+//               ),
+//               child: const Icon(
+//                 Icons.info_outline_rounded,
+//                 size: 17,
+//                 color: AppColors.brandAccent,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class _InfoRow extends StatelessWidget {
+//   const _InfoRow({
+//     required this.icon,
+//     required this.label,
+//     required this.value,
+//     required this.isDark,
+//   });
+
+//   final IconData icon;
+//   final String label;
+//   final String value;
+//   final bool isDark;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Icon(icon, size: 17, color: AppColors.brandAccent),
+//         const SizedBox(width: 8),
+//         Expanded(
+//           child: RichText(
+//             text: TextSpan(
+//               children: [
+//                 TextSpan(
+//                   text: '$label: ',
+//                   style: TextStyle(
+//                     fontSize: 14,
+//                     fontWeight: FontWeight.w600,
+//                     color: isDark
+//                         ? AppColors.textInverse
+//                         : AppColors.textPrimary,
+//                   ),
+//                 ),
+//                 TextSpan(
+//                   text: value,
+//                   style: const TextStyle(
+//                     fontSize: 14,
+//                     color: AppColors.textSecondary,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+// // ── ContactsCard ───────────────────────────────────────────────────────────────
+
+// class _ContactsCard extends StatelessWidget {
+//   const _ContactsCard({required this.university, required this.isDark});
+
+//   final University university;
+//   final bool isDark;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final rows = <Widget>[];
+
+//     void addRow(IconData icon, String text) {
+//       if (rows.isNotEmpty) {
+//         rows.add(Divider(
+//           height: 20,
+//           color: (isDark ? AppColors.textInverse : AppColors.textPrimary)
+//               .withValues(alpha: 0.08),
+//         ));
+//       }
+//       rows.add(Row(
+//         children: [
+//           Icon(icon, color: AppColors.textSecondary, size: 20),
+//           const SizedBox(width: 12),
+//           Expanded(
+//             child: Text(
+//               text,
+//               style: TextStyle(
+//                 fontSize: 15,
+//                 color: isDark
+//                     ? AppColors.textInverse
+//                     : AppColors.textPrimary,
+//               ),
+//             ),
+//           ),
+//           const Icon(
+//             Icons.chevron_right_rounded,
+//             color: AppColors.textMuted,
+//             size: 20,
+//           ),
+//         ],
+//       ));
+//     }
+
+//     if (university.website.isNotEmpty) {
+//       addRow(Icons.language_rounded, university.website);
+//     }
+//     if (university.instagram.isNotEmpty) {
+//       addRow(Icons.camera_alt_outlined, university.instagram);
+//     }
+
+//     if (rows.isEmpty) return const SizedBox.shrink();
+
+//     return _Card(isDark: isDark, child: Column(children: rows));
+//   }
+// }
+
+// // ── AdmissionCard ──────────────────────────────────────────────────────────────
+
+// class _AdmissionCard extends StatelessWidget {
+//   const _AdmissionCard({
+//     required this.university,
+//     required this.l10n,
+//     required this.isDark,
+//   });
+
+//   final University university;
+//   final AppLocalizations l10n;
+//   final bool isDark;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final lines = <String>[
+//       if (university.minEnt != null)
+//         l10n.universityMinEnt(university.minEnt!),
+//       if (university.minGpa != null)
+//         l10n.universityMinGpa(university.minGpa!),
+//       if (university.minIelts != null)
+//         l10n.universityMinIelts(university.minIelts!),
+//       if (university.languages.isNotEmpty)
+//         '${l10n.universityLanguage}: ${university.languages.join(', ')}',
+//       if (university.format.isNotEmpty)
+//         '${l10n.universityFormat}: ${university.format}',
+//       if (university.duration.isNotEmpty)
+//         '${l10n.universityDuration}: ${university.duration}',
+//       if (university.costRange.isNotEmpty)
+//         '${l10n.universityCost}: ${university.costRange}',
+//     ];
+
+//     if (lines.isEmpty) return const SizedBox.shrink();
+
+//     return _Card(
+//       isDark: isDark,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Text(
+//             l10n.universityAdmissionTitle,
+//             style: TextStyle(
+//               fontSize: 18,
+//               fontWeight: FontWeight.w700,
+//               color: isDark
+//                   ? AppColors.textInverse
+//                   : AppColors.textPrimary,
+//             ),
+//           ),
+//           const SizedBox(height: 14),
+//           ...lines.map(
+//             (line) => Padding(
+//               padding: const EdgeInsets.only(bottom: 10),
+//               child: Text(
+//                 line,
+//                 style: TextStyle(
+//                   fontSize: 15,
+//                   height: 1.5,
+//                   color: isDark
+//                       ? AppColors.textInverse
+//                       : AppColors.textPrimary,
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // ── Shared Card ────────────────────────────────────────────────────────────────
+
+// class _Card extends StatelessWidget {
+//   const _Card({required this.child, required this.isDark});
+
+//   final Widget child;
+//   final bool isDark;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: double.infinity,
+//       padding: const EdgeInsets.all(18),
+//       decoration: BoxDecoration(
+//         color: isDark
+//             ? AppColors.surfaceMutedDark
+//             : const Color(0xFFEFEDF6),
+//         borderRadius: BorderRadius.circular(20),
+//       ),
+//       child: child,
+//     );
+//   }
+// }
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../core/router/route_names.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../data/favorites/favorites_repository.dart';
 import '../../../data/university/university_model.dart';
 import '../../../data/university/university_repository.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../favorites/global_favorites_notifier.dart';
 import '../bloc/university_detail_cubit.dart';
 import '../bloc/university_detail_state.dart';
 
@@ -19,53 +865,78 @@ class UniversityDetailScreen extends StatelessWidget {
       create: (context) => UniversityDetailCubit(
         universityRepository: context.read<UniversityRepository>(),
       )..load(id),
-      child: const _UniversityDetailView(),
+      child: _UniversityDetailView(universityId: id),
     );
   }
 }
 
 class _UniversityDetailView extends StatelessWidget {
-  const _UniversityDetailView();
+  const _UniversityDetailView({required this.universityId});
+
+  final String universityId;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor =
+        isDark ? AppColors.backgroundDark : const Color(0xFFF5F4FA);
+
     return BlocBuilder<UniversityDetailCubit, UniversityDetailState>(
       builder: (context, state) {
         if (state.status == UniversityDetailStatus.loading ||
             state.status == UniversityDetailStatus.initial) {
-          return const Scaffold(
-            backgroundColor: AppColors.surfaceMuted,
-            body: Center(child: CircularProgressIndicator()),
+          return Scaffold(
+            backgroundColor: bgColor,
+            body: const Center(child: CircularProgressIndicator()),
           );
         }
         final uni = state.university;
         if (uni == null) {
           return Scaffold(
-            backgroundColor: AppColors.surfaceMuted,
+            backgroundColor: bgColor,
             body: Center(child: Text(l10n.searchEmpty)),
           );
         }
         return Scaffold(
-          backgroundColor: AppColors.surfaceMuted,
+          backgroundColor: bgColor,
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const _TopBar(),
-                  _HeroImage(university: uni),
-                  const SizedBox(height: 18),
-                  _Header(university: uni),
-                  const SizedBox(height: 22),
-                  _Tabs(current: state.tab),
-                  const SizedBox(height: 22),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: _TabContent(state: state, university: uni),
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: _TopBar(isDark: isDark),
+                ),
+                SliverToBoxAdapter(
+                  child: _HeroImage(university: uni),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                    child: _Header(
+                      university: uni,
+                      isDark: isDark,
+                      universityId: universityId,
+                    ),
                   ),
-                  const SizedBox(height: 32),
-                ],
-              ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    child: _Tabs(current: state.tab, isDark: isDark),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
+                    child: _TabContent(
+                      state: state,
+                      university: uni,
+                      isDark: isDark,
+                      universityId: universityId,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         );
@@ -74,30 +945,131 @@ class _UniversityDetailView extends StatelessWidget {
   }
 }
 
+// ── TopBar ─────────────────────────────────────────────────────────────────────
+
 class _TopBar extends StatelessWidget {
-  const _TopBar();
+  const _TopBar({required this.isDark});
+
+  final bool isDark;
+
+  /// Переход на уведомления. Для незалогиненных — bottomsheet.
+  void _handleNotifications(BuildContext context) {
+    if (GlobalFavoritesNotifier.instance.isLoggedIn) {
+      context.push(RouteNames.notifications);
+    } else {
+      _showAuthSheet(context);
+    }
+  }
+
+  void _showAuthSheet(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: AppColors.backgroundLight,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetCtx) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.divider,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Icon(
+              Icons.notifications_rounded,
+              color: AppColors.brandAccent,
+              size: 44,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              l10n.notificationsAuthRequired,
+              style: const TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l10n.notificationsAuthSubtitle,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 14,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 28),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(sheetCtx);
+                  context.push(RouteNames.register);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.authPrimary,
+                  foregroundColor: AppColors.textInverse,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(26),
+                  ),
+                  elevation: 0,
+                ),
+                child: Text(
+                  l10n.actionRegister,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextButton(
+              onPressed: () => Navigator.pop(sheetCtx),
+              child: Text(
+                l10n.actionLater,
+                style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final color = isDark ? AppColors.textInverse : AppColors.textPrimary;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
             onPressed: () => Navigator.of(context).maybePop(),
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 24,
-              color: AppColors.textPrimary,
-            ),
+            icon: Icon(Icons.arrow_back_rounded, color: color, size: 24),
           ),
-          const Spacer(),
           IconButton(
-            onPressed: () {},
-            icon: const Icon(
+            onPressed: () => _handleNotifications(context),
+            icon: Icon(
               Icons.notifications_none_rounded,
-              size: 28,
-              color: AppColors.textPrimary,
+              color: color,
+              size: 26,
             ),
           ),
         ],
@@ -105,6 +1077,8 @@ class _TopBar extends StatelessWidget {
     );
   }
 }
+
+// ── HeroImage ──────────────────────────────────────────────────────────────────
 
 class _HeroImage extends StatelessWidget {
   const _HeroImage({required this.university});
@@ -114,7 +1088,7 @@ class _HeroImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 220,
+      height: 240,
       width: double.infinity,
       child: university.imageUrl.isNotEmpty
           ? Image.network(
@@ -138,70 +1112,253 @@ class _HeroPlaceholder extends StatelessWidget {
         child: Icon(
           Icons.school_outlined,
           color: AppColors.authPrimaryLight,
-          size: 48,
+          size: 52,
         ),
       ),
     );
   }
 }
 
+// ── Header ─────────────────────────────────────────────────────────────────────
+
 class _Header extends StatelessWidget {
-  const _Header({required this.university});
+  const _Header({
+    required this.university,
+    required this.isDark,
+    required this.universityId,
+  });
 
   final University university;
+  final bool isDark;
+  final String universityId;
+
+  /// Лайк — только для авторизованных.
+  Future<void> _handleLike(BuildContext context) async {
+    HapticFeedback.lightImpact();
+    try {
+      await GlobalFavoritesNotifier.instance.toggle(universityId);
+    } on NotAuthenticatedException {
+      if (!context.mounted) return;
+      _showFavAuthSheet(context);
+    }
+  }
+
+  void _showFavAuthSheet(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: AppColors.backgroundLight,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetCtx) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.divider,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Icon(
+              Icons.favorite_rounded,
+              color: AppColors.danger,
+              size: 44,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              l10n.favoriteAuthRequired,
+              style: const TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l10n.favoriteAuthSubtitle,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 14,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 28),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(sheetCtx);
+                  context.push(RouteNames.register);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.authPrimary,
+                  foregroundColor: AppColors.textInverse,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(26),
+                  ),
+                  elevation: 0,
+                ),
+                child: Text(
+                  l10n.actionRegister,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextButton(
+              onPressed: () => Navigator.pop(sheetCtx),
+              child: Text(
+                l10n.actionLater,
+                style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 74,
-            height: 74,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.surfaceMuted,
-              border: Border.all(color: AppColors.border),
-            ),
-            child: ClipOval(
-              child: university.logoUrl.isNotEmpty
-                  ? Image.network(
-                      university.logoUrl,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, _, _) =>
-                          _Initial(name: university.name),
-                    )
-                  : _Initial(name: university.name),
-            ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Логотип
+        Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isDark
+                ? AppColors.surfaceMutedDark
+                : AppColors.surfaceMuted,
+            border: Border.all(color: AppColors.border),
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  university.name,
-                  style: const TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
-                    height: 1.25,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  university.city,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
+          child: ClipOval(
+            child: university.logoUrl.isNotEmpty
+                ? Image.network(
+                    university.logoUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) =>
+                        _Initial(name: university.name),
+                  )
+                : _Initial(name: university.name),
           ),
-        ],
+        ),
+        const SizedBox(width: 14),
+        // Название + город
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                university.name,
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: isDark
+                      ? AppColors.textInverse
+                      : AppColors.textPrimary,
+                  height: 1.25,
+                ),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                university.city,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+        // Кнопка ❤️ — реактивная через GlobalFavoritesNotifier
+        ValueListenableBuilder<Set<String>>(
+          valueListenable: GlobalFavoritesNotifier.instance,
+          builder: (_, favorites, _) {
+            final isFav = favorites.contains(universityId);
+            return _ActionButton(
+              isDark: isDark,
+              onTap: () => _handleLike(context),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                child: Icon(
+                  isFav
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_border_rounded,
+                  key: ValueKey(isFav),
+                  color: isFav ? AppColors.danger : (isDark
+                      ? AppColors.textInverse
+                      : AppColors.textPrimary),
+                  size: 20,
+                ),
+              ),
+            );
+          },
+        ),
+        const SizedBox(width: 10),
+        // Кнопка 💬 → экран отзывов
+        _ActionButton(
+          isDark: isDark,
+          onTap: () => context.push('/university/$universityId/reviews'),
+          child: Icon(
+            Icons.chat_bubble_outline_rounded,
+            size: 20,
+            color: isDark
+                ? AppColors.textInverse
+                : AppColors.textPrimary,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  const _ActionButton({
+    required this.isDark,
+    required this.onTap,
+    required this.child,
+  });
+
+  final bool isDark;
+  final VoidCallback onTap;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 42,
+        height: 42,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: isDark
+              ? AppColors.surfaceMutedDark
+              : AppColors.backgroundLight,
+          border: Border.all(
+            color: isDark ? Colors.transparent : AppColors.border,
+          ),
+        ),
+        child: Center(child: child),
       ),
     );
   }
@@ -218,7 +1375,7 @@ class _Initial extends StatelessWidget {
       child: Text(
         name.isNotEmpty ? name[0].toUpperCase() : 'U',
         style: const TextStyle(
-          fontSize: 24,
+          fontSize: 22,
           fontWeight: FontWeight.w800,
           color: AppColors.authPrimaryLight,
         ),
@@ -227,81 +1384,82 @@ class _Initial extends StatelessWidget {
   }
 }
 
+// ── Tabs ───────────────────────────────────────────────────────────────────────
+
 class _Tabs extends StatelessWidget {
-  const _Tabs({required this.current});
+  const _Tabs({required this.current, required this.isDark});
 
   final UniversityDetailTab current;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          Expanded(
-            child: _TabButton(
-              label: l10n.universityTabDescription,
-              tab: UniversityDetailTab.description,
-              current: current,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: _TabButton(
-              label: l10n.universityTabPrograms,
-              tab: UniversityDetailTab.programs,
-              current: current,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: _TabButton(
-              label: l10n.universityTabNews,
-              tab: UniversityDetailTab.news,
-              current: current,
-            ),
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        _TabItem(
+          label: l10n.universityTabDescription,
+          tab: UniversityDetailTab.description,
+          current: current,
+          isDark: isDark,
+        ),
+        const SizedBox(width: 4),
+        _TabItem(
+          label: l10n.universityTabPrograms,
+          tab: UniversityDetailTab.programs,
+          current: current,
+          isDark: isDark,
+        ),
+        const SizedBox(width: 4),
+        _TabItem(
+          label: l10n.universityTabNews,
+          tab: UniversityDetailTab.news,
+          current: current,
+          isDark: isDark,
+        ),
+      ],
     );
   }
 }
 
-class _TabButton extends StatelessWidget {
-  const _TabButton({
+class _TabItem extends StatelessWidget {
+  const _TabItem({
     required this.label,
     required this.tab,
     required this.current,
+    required this.isDark,
   });
 
   final String label;
   final UniversityDetailTab tab;
   final UniversityDetailTab current;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
     final isSelected = tab == current;
+    final textColor =
+        isDark ? AppColors.textInverse : AppColors.textPrimary;
     return GestureDetector(
-      onTap: () => context.read<UniversityDetailCubit>().selectTab(tab),
-      child: Container(
-        height: 48,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(22),
-          border: Border.all(
-            color: isSelected ? AppColors.brandPrimary : Colors.transparent,
-            width: 2,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-              color: AppColors.textPrimary,
-            ),
+      onTap: () =>
+          context.read<UniversityDetailCubit>().selectTab(tab),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        padding:
+            const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: isSelected
+            ? BoxDecoration(
+                border: Border.all(color: textColor, width: 1.5),
+                borderRadius: BorderRadius.circular(24),
+              )
+            : null,
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight:
+                isSelected ? FontWeight.w600 : FontWeight.w400,
+            color: isSelected ? textColor : AppColors.textSecondary,
           ),
         ),
       ),
@@ -309,11 +1467,20 @@ class _TabButton extends StatelessWidget {
   }
 }
 
+// ── TabContent ─────────────────────────────────────────────────────────────────
+
 class _TabContent extends StatelessWidget {
-  const _TabContent({required this.state, required this.university});
+  const _TabContent({
+    required this.state,
+    required this.university,
+    required this.isDark,
+    required this.universityId,
+  });
 
   final UniversityDetailState state;
   final University university;
+  final bool isDark;
+  final String universityId;
 
   @override
   Widget build(BuildContext context) {
@@ -322,59 +1489,47 @@ class _TabContent extends StatelessWidget {
       case UniversityDetailTab.description:
         return Column(
           children: [
-            _LightCard(
+            _Card(
+              isDark: isDark,
               child: Text(
                 university.description,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: 15,
                   height: 1.6,
-                  color: AppColors.textPrimary,
+                  color: isDark
+                      ? AppColors.textInverse
+                      : AppColors.textPrimary,
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            _ContactsCard(university: university),
-            const SizedBox(height: 16),
-            _AdmissionCard(university: university, l10n: l10n),
+            const SizedBox(height: 14),
+            _ContactsCard(university: university, isDark: isDark),
+            const SizedBox(height: 14),
+            _AdmissionCard(
+                university: university, l10n: l10n, isDark: isDark),
           ],
         );
       case UniversityDetailTab.programs:
         return Column(
           children: university.directions
               .map((p) => Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: _LightCard(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              p,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: AppColors.textPrimary,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          const Icon(
-                            Icons.chevron_right_rounded,
-                            color: AppColors.textSecondary,
-                          ),
-                        ],
-                      ),
-                    ),
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: _ProgramItem(name: p, isDark: isDark),
                   ))
               .toList(),
         );
       case UniversityDetailTab.news:
         return SizedBox(
-          height: 240,
+          height: 200,
           child: Center(
             child: Text(
               l10n.universityNewsEmpty,
               style: TextStyle(
-                fontSize: 18,
-                color: AppColors.textPrimary.withValues(alpha: 0.45),
+                fontSize: 16,
+                color: (isDark
+                        ? AppColors.textInverse
+                        : AppColors.textPrimary)
+                    .withValues(alpha: 0.4),
               ),
             ),
           ),
@@ -383,94 +1538,254 @@ class _TabContent extends StatelessWidget {
   }
 }
 
-class _LightCard extends StatelessWidget {
-  const _LightCard({required this.child});
+// ── ProgramItem ────────────────────────────────────────────────────────────────
 
-  final Widget child;
+class _ProgramItem extends StatelessWidget {
+  const _ProgramItem({required this.name, required this.isDark});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceMuted,
-        borderRadius: BorderRadius.circular(24),
+  final String name;
+  final bool isDark;
+
+  void _showDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => Dialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24)),
+        backgroundColor: isDark
+            ? AppColors.surfaceMutedDark
+            : AppColors.backgroundLight,
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: AppColors.brandAccent
+                          .withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(Icons.school_rounded,
+                        color: AppColors.brandAccent, size: 22),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      name,
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        color: isDark
+                            ? AppColors.textInverse
+                            : AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              _InfoRow(icon: Icons.access_time_rounded,
+                  label: l10n.professionDuration,
+                  value: '4 года', isDark: isDark),
+              const SizedBox(height: 10),
+              _InfoRow(icon: Icons.attach_money_rounded,
+                  label: l10n.professionCost,
+                  value: '1 200 000 – 2 400 000 ₸/год', isDark: isDark),
+              const SizedBox(height: 10),
+              _InfoRow(icon: Icons.language_rounded,
+                  label: l10n.professionLanguage,
+                  value: 'Казахский, Русский', isDark: isDark),
+              const SizedBox(height: 10),
+              _InfoRow(icon: Icons.work_outline_rounded,
+                  label: l10n.professionJobs,
+                  value: l10n.professionJobsExample, isDark: isDark),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.of(ctx).pop(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.brandAccent,
+                    foregroundColor: AppColors.backgroundDark,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14)),
+                    elevation: 0,
+                  ),
+                  child: Text(l10n.actionClose,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 15)),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-      child: child,
     );
   }
-}
-
-class _ContactsCard extends StatelessWidget {
-  const _ContactsCard({required this.university});
-
-  final University university;
 
   @override
   Widget build(BuildContext context) {
-    return _LightCard(
-      child: Column(
-        children: [
-          if (university.website.isNotEmpty)
-            _ContactRow(
-              icon: Icons.language_rounded,
-              text: university.website,
+    return GestureDetector(
+      onTap: () => _showDialog(context),
+      child: _Card(
+        isDark: isDark,
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                name,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: isDark
+                      ? AppColors.textInverse
+                      : AppColors.textPrimary,
+                ),
+              ),
             ),
-          if (university.instagram.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            _ContactRow(
-              icon: Icons.camera_alt_outlined,
-              text: university.instagram,
+            Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                color: AppColors.brandAccent.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.info_outline_rounded,
+                  size: 17, color: AppColors.brandAccent),
             ),
           ],
-        ],
+        ),
       ),
     );
   }
 }
 
-class _ContactRow extends StatelessWidget {
-  const _ContactRow({required this.icon, required this.text});
+class _InfoRow extends StatelessWidget {
+  const _InfoRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.isDark,
+  });
 
   final IconData icon;
-  final String text;
+  final String label;
+  final String value;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: AppColors.textSecondary),
-        const SizedBox(width: 14),
+        Icon(icon, size: 17, color: AppColors.brandAccent),
+        const SizedBox(width: 8),
         Expanded(
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 16,
-              color: AppColors.textPrimary,
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: '$label: ',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: isDark
+                        ? AppColors.textInverse
+                        : AppColors.textPrimary,
+                  ),
+                ),
+                TextSpan(
+                  text: value,
+                  style: const TextStyle(
+                      fontSize: 14, color: AppColors.textSecondary),
+                ),
+              ],
             ),
           ),
-        ),
-        const Icon(
-          Icons.chevron_right_rounded,
-          color: AppColors.textMuted,
         ),
       ],
     );
   }
 }
 
+// ── ContactsCard ───────────────────────────────────────────────────────────────
+
+class _ContactsCard extends StatelessWidget {
+  const _ContactsCard({required this.university, required this.isDark});
+
+  final University university;
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = <Widget>[];
+
+    void addRow(IconData icon, String text) {
+      if (rows.isNotEmpty) {
+        rows.add(Divider(
+          height: 20,
+          color: (isDark ? AppColors.textInverse : AppColors.textPrimary)
+              .withValues(alpha: 0.08),
+        ));
+      }
+      rows.add(Row(
+        children: [
+          Icon(icon, color: AppColors.textSecondary, size: 20),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(text,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: isDark
+                      ? AppColors.textInverse
+                      : AppColors.textPrimary,
+                )),
+          ),
+          const Icon(Icons.chevron_right_rounded,
+              color: AppColors.textMuted, size: 20),
+        ],
+      ));
+    }
+
+    if (university.website.isNotEmpty) {
+      addRow(Icons.language_rounded, university.website);
+    }
+    if (university.instagram.isNotEmpty) {
+      addRow(Icons.camera_alt_outlined, university.instagram);
+    }
+    if (rows.isEmpty) return const SizedBox.shrink();
+    return _Card(isDark: isDark, child: Column(children: rows));
+  }
+}
+
+// ── AdmissionCard ──────────────────────────────────────────────────────────────
+
 class _AdmissionCard extends StatelessWidget {
-  const _AdmissionCard({required this.university, required this.l10n});
+  const _AdmissionCard({
+    required this.university,
+    required this.l10n,
+    required this.isDark,
+  });
 
   final University university;
   final AppLocalizations l10n;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
     final lines = <String>[
-      if (university.minEnt != null) l10n.universityMinEnt(university.minEnt!),
-      if (university.minGpa != null) l10n.universityMinGpa(university.minGpa!),
+      if (university.minEnt != null)
+        l10n.universityMinEnt(university.minEnt!),
+      if (university.minGpa != null)
+        l10n.universityMinGpa(university.minGpa!),
       if (university.minIelts != null)
         l10n.universityMinIelts(university.minIelts!),
       if (university.languages.isNotEmpty)
@@ -482,34 +1797,60 @@ class _AdmissionCard extends StatelessWidget {
       if (university.costRange.isNotEmpty)
         '${l10n.universityCost}: ${university.costRange}',
     ];
-
-    return _LightCard(
+    if (lines.isEmpty) return const SizedBox.shrink();
+    return _Card(
+      isDark: isDark,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             l10n.universityAdmissionTitle,
-            style: const TextStyle(
-              fontSize: 20,
+            style: TextStyle(
+              fontSize: 18,
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: isDark
+                  ? AppColors.textInverse
+                  : AppColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 16),
-          for (final line in lines)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Text(
-                line,
-                style: const TextStyle(
-                  fontSize: 16,
-                  height: 1.5,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ),
+          const SizedBox(height: 14),
+          ...lines.map((line) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(line,
+                    style: TextStyle(
+                      fontSize: 15,
+                      height: 1.5,
+                      color: isDark
+                          ? AppColors.textInverse
+                          : AppColors.textPrimary,
+                    )),
+              )),
         ],
       ),
+    );
+  }
+}
+
+// ── Shared Card ────────────────────────────────────────────────────────────────
+
+class _Card extends StatelessWidget {
+  const _Card({required this.child, required this.isDark});
+
+  final Widget child;
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: isDark
+            ? AppColors.surfaceMutedDark
+            : const Color(0xFFEFEDF6),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: child,
     );
   }
 }

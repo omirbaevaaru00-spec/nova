@@ -95,7 +95,7 @@ class _HomeAppBar extends StatelessWidget {
           Expanded(
             child: Center(
               child: Image.asset(
-                'assets/images/nova_logo.png',
+                'assets/images/sticky_logo.png',
                 height: 32,
                 fit: BoxFit.contain,
                 color: AppColors.textInverse,

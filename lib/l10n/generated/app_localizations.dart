@@ -1251,6 +1251,144 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Условия поступления'**
   String get universityAdmissionTitle;
+
+  /// No description provided for @universityTabReviews.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отзывы'**
+  String get universityTabReviews;
+
+  /// No description provided for @reviewsAdd.
+  ///
+  /// In ru, this message translates to:
+  /// **'Оставить отзыв'**
+  String get reviewsAdd;
+
+  /// No description provided for @reviewsSubmit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Опубликовать'**
+  String get reviewsSubmit;
+
+  /// No description provided for @reviewsEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отзывов пока нет'**
+  String get reviewsEmpty;
+
+  /// No description provided for @reviewSpeciality.
+  ///
+  /// In ru, this message translates to:
+  /// **'Специальность'**
+  String get reviewSpeciality;
+
+  /// No description provided for @reviewYear.
+  ///
+  /// In ru, this message translates to:
+  /// **'Год поступления'**
+  String get reviewYear;
+
+  /// No description provided for @reviewText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Напишите ваш отзыв...'**
+  String get reviewText;
+
+  /// No description provided for @professionDuration.
+  ///
+  /// In ru, this message translates to:
+  /// **'Срок обучения'**
+  String get professionDuration;
+
+  /// No description provided for @professionCost.
+  ///
+  /// In ru, this message translates to:
+  /// **'Стоимость'**
+  String get professionCost;
+
+  /// No description provided for @professionLanguage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Язык'**
+  String get professionLanguage;
+
+  /// No description provided for @professionJobs.
+  ///
+  /// In ru, this message translates to:
+  /// **'Кем можно работать'**
+  String get professionJobs;
+
+  /// No description provided for @professionJobsExample.
+  ///
+  /// In ru, this message translates to:
+  /// **'Разработчик, аналитик, архитектор ПО'**
+  String get professionJobsExample;
+
+  /// No description provided for @actionClose.
+  ///
+  /// In ru, this message translates to:
+  /// **'Закрыть'**
+  String get actionClose;
+
+  /// No description provided for @profileUnauthTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войди, чтобы открыть профиль'**
+  String get profileUnauthTitle;
+
+  /// No description provided for @profileUnauthSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохраняй избранные университеты, отслеживай баллы и получай персональные рекомендации.'**
+  String get profileUnauthSubtitle;
+
+  /// No description provided for @profileUnauthCta.
+  ///
+  /// In ru, this message translates to:
+  /// **'Зарегистрироваться'**
+  String get profileUnauthCta;
+
+  /// No description provided for @profileUnauthLogin.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уже есть аккаунт? Войти'**
+  String get profileUnauthLogin;
+
+  /// No description provided for @notificationsEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет новостей'**
+  String get notificationsEmpty;
+
+  /// No description provided for @notificationsEmptyHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавь университеты в избранное — здесь будут появляться их новости.'**
+  String get notificationsEmptyHint;
+
+  /// No description provided for @reviewsViewAll.
+  ///
+  /// In ru, this message translates to:
+  /// **'Все отзывы'**
+  String get reviewsViewAll;
+
+  /// No description provided for @reviewsEmptyHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Будьте первым — нажмите + чтобы оставить отзыв.'**
+  String get reviewsEmptyHint;
+
+  /// No description provided for @notificationsAuthRequired.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войди, чтобы видеть новости'**
+  String get notificationsAuthRequired;
+
+  /// No description provided for @notificationsAuthSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавляй университеты в избранное — и здесь будут появляться их новости.'**
+  String get notificationsAuthSubtitle;
 }
 
 class _AppLocalizationsDelegate

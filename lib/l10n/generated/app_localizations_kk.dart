@@ -601,4 +601,78 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get universityAdmissionTitle => 'Түсу шарттары';
+
+  @override
+  String get universityTabReviews => 'Пікірлер';
+
+  @override
+  String get reviewsAdd => 'Пікір қалдыру';
+
+  @override
+  String get reviewsSubmit => 'Жариялау';
+
+  @override
+  String get reviewsEmpty => 'Пікірлер әлі жоқ';
+
+  @override
+  String get reviewSpeciality => 'Мамандық';
+
+  @override
+  String get reviewYear => 'Оқуға түскен жыл';
+
+  @override
+  String get reviewText => 'Пікіріңізді жазыңыз...';
+
+  @override
+  String get professionDuration => 'Оқу мерзімі';
+
+  @override
+  String get professionCost => 'Оқу ақысы';
+
+  @override
+  String get professionLanguage => 'Тіл';
+
+  @override
+  String get professionJobs => 'Кім болуға болады';
+
+  @override
+  String get professionJobsExample =>
+      'Әзірлеуші, талдаушы, бағдарламалық сәулетші';
+
+  @override
+  String get actionClose => 'Жабу';
+
+  @override
+  String get profileUnauthTitle => 'Профильді ашу үшін кіріңіз';
+
+  @override
+  String get profileUnauthSubtitle =>
+      'Таңдаулы университеттерді сақтаңыз, ұпайларыңызды бақылаңыз және жеке ұсынымдар алыңыз.';
+
+  @override
+  String get profileUnauthCta => 'Тіркелу';
+
+  @override
+  String get profileUnauthLogin => 'Аккаунт бар ма? Кіру';
+
+  @override
+  String get notificationsEmpty => 'Жаңалықтар жоқ';
+
+  @override
+  String get notificationsEmptyHint =>
+      'Университеттерді таңдаулыға қосыңыз — олардың жаңалықтары осында пайда болады.';
+
+  @override
+  String get reviewsViewAll => 'Барлық пікірлер';
+
+  @override
+  String get reviewsEmptyHint =>
+      'Бірінші болыңыз — пікір қалдыру үшін + басыңыз.';
+
+  @override
+  String get notificationsAuthRequired => 'Жаңалықтарды көру үшін кіріңіз';
+
+  @override
+  String get notificationsAuthSubtitle =>
+      'Университеттерді таңдаулыға қосыңыз — олардың жаңалықтары осында пайда болады.';
 }

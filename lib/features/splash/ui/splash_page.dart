@@ -60,7 +60,7 @@ class _SplashView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/nova_logo.png',
+                  'assets/images/sticky_logo.png',
                   width: 180,
                   height: 180,
                 ),

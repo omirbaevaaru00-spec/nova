@@ -601,4 +601,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get universityAdmissionTitle => 'Admission requirements';
+
+  @override
+  String get universityTabReviews => 'Reviews';
+
+  @override
+  String get reviewsAdd => 'Leave a review';
+
+  @override
+  String get reviewsSubmit => 'Publish';
+
+  @override
+  String get reviewsEmpty => 'No reviews yet';
+
+  @override
+  String get reviewSpeciality => 'Speciality';
+
+  @override
+  String get reviewYear => 'Enrollment year';
+
+  @override
+  String get reviewText => 'Write your review...';
+
+  @override
+  String get professionDuration => 'Duration';
+
+  @override
+  String get professionCost => 'Tuition cost';
+
+  @override
+  String get professionLanguage => 'Language';
+
+  @override
+  String get professionJobs => 'Career options';
+
+  @override
+  String get professionJobsExample => 'Developer, analyst, software architect';
+
+  @override
+  String get actionClose => 'Close';
+
+  @override
+  String get profileUnauthTitle => 'Sign in to access profile';
+
+  @override
+  String get profileUnauthSubtitle =>
+      'Save favourite universities, track your scores and get personalised recommendations.';
+
+  @override
+  String get profileUnauthCta => 'Create an account';
+
+  @override
+  String get profileUnauthLogin => 'Already have an account? Sign in';
+
+  @override
+  String get notificationsEmpty => 'No news yet';
+
+  @override
+  String get notificationsEmptyHint =>
+      'Add universities to favourites — their news will appear here.';
+
+  @override
+  String get reviewsViewAll => 'All reviews';
+
+  @override
+  String get reviewsEmptyHint => 'Be the first — tap + to leave a review.';
+
+  @override
+  String get notificationsAuthRequired => 'Sign in to see news';
+
+  @override
+  String get notificationsAuthSubtitle =>
+      'Add universities to favourites — their news will appear here.';
 }

@@ -101,7 +101,7 @@ class _RegisterViewState extends State<_RegisterView> {
                       const SizedBox(height: 16),
                       _BackButton(),
                       const SizedBox(height: 20),
-                      Image.asset('assets/images/nova_logo.png', height: 48),
+                      Image.asset('assets/images/sticky_logo.png', height: 48),
                       const SizedBox(height: 28),
                       Text(
                         l10n.registerTitle,

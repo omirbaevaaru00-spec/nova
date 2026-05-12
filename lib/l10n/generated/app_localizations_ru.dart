@@ -604,4 +604,77 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get universityAdmissionTitle => 'Условия поступления';
+
+  @override
+  String get universityTabReviews => 'Отзывы';
+
+  @override
+  String get reviewsAdd => 'Оставить отзыв';
+
+  @override
+  String get reviewsSubmit => 'Опубликовать';
+
+  @override
+  String get reviewsEmpty => 'Отзывов пока нет';
+
+  @override
+  String get reviewSpeciality => 'Специальность';
+
+  @override
+  String get reviewYear => 'Год поступления';
+
+  @override
+  String get reviewText => 'Напишите ваш отзыв...';
+
+  @override
+  String get professionDuration => 'Срок обучения';
+
+  @override
+  String get professionCost => 'Стоимость';
+
+  @override
+  String get professionLanguage => 'Язык';
+
+  @override
+  String get professionJobs => 'Кем можно работать';
+
+  @override
+  String get professionJobsExample => 'Разработчик, аналитик, архитектор ПО';
+
+  @override
+  String get actionClose => 'Закрыть';
+
+  @override
+  String get profileUnauthTitle => 'Войди, чтобы открыть профиль';
+
+  @override
+  String get profileUnauthSubtitle =>
+      'Сохраняй избранные университеты, отслеживай баллы и получай персональные рекомендации.';
+
+  @override
+  String get profileUnauthCta => 'Зарегистрироваться';
+
+  @override
+  String get profileUnauthLogin => 'Уже есть аккаунт? Войти';
+
+  @override
+  String get notificationsEmpty => 'Нет новостей';
+
+  @override
+  String get notificationsEmptyHint =>
+      'Добавь университеты в избранное — здесь будут появляться их новости.';
+
+  @override
+  String get reviewsViewAll => 'Все отзывы';
+
+  @override
+  String get reviewsEmptyHint =>
+      'Будьте первым — нажмите + чтобы оставить отзыв.';
+
+  @override
+  String get notificationsAuthRequired => 'Войди, чтобы видеть новости';
+
+  @override
+  String get notificationsAuthSubtitle =>
+      'Добавляй университеты в избранное — и здесь будут появляться их новости.';
 }

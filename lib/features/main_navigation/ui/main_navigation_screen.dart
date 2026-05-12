@@ -1,3 +1,130 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:go_router/go_router.dart';
+
+// import '../../../core/router/route_names.dart';
+// import '../../../core/theme/app_colors.dart';
+// import '../../../l10n/generated/app_localizations.dart';
+
+// class MainNavigationScreen extends StatelessWidget {
+//   const MainNavigationScreen({super.key, required this.child});
+
+//   final Widget child;
+
+//   int _currentIndex(BuildContext context) {
+//     final location = GoRouterState.of(context).uri.toString();
+//     if (location.startsWith(RouteNames.notifications)) return 1;
+//     if (location.startsWith(RouteNames.profile)) return 2;
+//     return 0;
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final l10n = AppLocalizations.of(context);
+//     final currentIndex = _currentIndex(context);
+
+//     return Scaffold(
+//       body: child,
+//       bottomNavigationBar: Container(
+//         decoration: const BoxDecoration(
+//           color: AppColors.backgroundLight,
+//           border: Border(top: BorderSide(color: AppColors.border)),
+//         ),
+//         child: SafeArea(
+//           top: false,
+//           child: SizedBox(
+//             height: 64,
+//             child: Row(
+//               children: [
+//                 _NavItem(
+//                   icon: Icons.home_outlined,
+//                   activeIcon: Icons.home_rounded,
+//                   label: l10n.navHome,
+//                   isActive: currentIndex == 0,
+//                   onTap: () {
+//                     HapticFeedback.selectionClick();
+//                     context.go(RouteNames.home);
+//                   },
+//                 ),
+//                 _NavItem(
+//                   icon: Icons.notifications_outlined,
+//                   activeIcon: Icons.notifications_rounded,
+//                   label: l10n.navNotifications,
+//                   isActive: currentIndex == 1,
+//                   onTap: () {
+//                     HapticFeedback.selectionClick();
+//                     context.go(RouteNames.notifications);
+//                   },
+//                 ),
+//                 _NavItem(
+//                   icon: Icons.person_outline_rounded,
+//                   activeIcon: Icons.person_rounded,
+//                   label: l10n.navProfile,
+//                   isActive: currentIndex == 2,
+//                   onTap: () {
+//                     HapticFeedback.selectionClick();
+//                     context.go(RouteNames.profile);
+//                   },
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class _NavItem extends StatelessWidget {
+//   const _NavItem({
+//     required this.icon,
+//     required this.activeIcon,
+//     required this.label,
+//     required this.isActive,
+//     required this.onTap,
+//   });
+
+//   final IconData icon;
+//   final IconData activeIcon;
+//   final String label;
+//   final bool isActive;
+//   final VoidCallback onTap;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final color =
+//         isActive ? Theme.of(context).colorScheme.primary : AppColors.textMuted;
+//     return Expanded(
+//       child: GestureDetector(
+//         onTap: onTap,
+//         behavior: HitTestBehavior.opaque,
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             AnimatedSwitcher(
+//               duration: const Duration(milliseconds: 200),
+//               child: Icon(
+//                 isActive ? activeIcon : icon,
+//                 key: ValueKey(isActive),
+//                 color: color,
+//                 size: 26,
+//               ),
+//             ),
+//             const SizedBox(height: 4),
+//             Text(
+//               label,
+//               style: TextStyle(
+//                 color: color,
+//                 fontSize: 11,
+//                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -21,14 +148,32 @@ class MainNavigationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentIndex = _currentIndex(context);
+
+    // Цвета навбара из палитры дизайна
+    final navBg =
+        isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
+    final navBorder =
+        isDark ? AppColors.surfaceMutedDark : AppColors.border;
 
     return Scaffold(
       body: child,
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.backgroundLight,
-          border: Border(top: BorderSide(color: AppColors.border)),
+        decoration: BoxDecoration(
+          color: navBg,
+          border: Border(
+            top: BorderSide(color: navBorder, width: 1),
+          ),
+          boxShadow: isDark
+              ? []
+              : [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.06),
+                    blurRadius: 16,
+                    offset: const Offset(0, -4),
+                  ),
+                ],
         ),
         child: SafeArea(
           top: false,
@@ -41,6 +186,7 @@ class MainNavigationScreen extends StatelessWidget {
                   activeIcon: Icons.home_rounded,
                   label: l10n.navHome,
                   isActive: currentIndex == 0,
+                  isDark: isDark,
                   onTap: () {
                     HapticFeedback.selectionClick();
                     context.go(RouteNames.home);
@@ -51,6 +197,7 @@ class MainNavigationScreen extends StatelessWidget {
                   activeIcon: Icons.notifications_rounded,
                   label: l10n.navNotifications,
                   isActive: currentIndex == 1,
+                  isDark: isDark,
                   onTap: () {
                     HapticFeedback.selectionClick();
                     context.go(RouteNames.notifications);
@@ -61,6 +208,7 @@ class MainNavigationScreen extends StatelessWidget {
                   activeIcon: Icons.person_rounded,
                   label: l10n.navProfile,
                   isActive: currentIndex == 2,
+                  isDark: isDark,
                   onTap: () {
                     HapticFeedback.selectionClick();
                     context.go(RouteNames.profile);
@@ -81,6 +229,7 @@ class _NavItem extends StatelessWidget {
     required this.activeIcon,
     required this.label,
     required this.isActive,
+    required this.isDark,
     required this.onTap,
   });
 
@@ -88,12 +237,17 @@ class _NavItem extends StatelessWidget {
   final IconData activeIcon;
   final String label;
   final bool isActive;
+  final bool isDark;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final color =
-        isActive ? Theme.of(context).colorScheme.primary : AppColors.textMuted;
+    // Активный — акцент (#35E7C7), неактивный — серый
+    final activeColor = AppColors.brandAccent;
+    final inactiveColor =
+        isDark ? AppColors.textSecondary : AppColors.textMuted;
+    final color = isActive ? activeColor : inactiveColor;
+
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -101,23 +255,36 @@ class _NavItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedSwitcher(
+            AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              child: Icon(
-                isActive ? activeIcon : icon,
-                key: ValueKey(isActive),
-                color: color,
-                size: 26,
+              width: 44,
+              height: 32,
+              decoration: BoxDecoration(
+                color: isActive
+                    ? AppColors.brandAccent.withValues(alpha: 0.12)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 180),
+                child: Icon(
+                  isActive ? activeIcon : icon,
+                  key: ValueKey(isActive),
+                  color: color,
+                  size: 24,
+                ),
               ),
             ),
             const SizedBox(height: 4),
-            Text(
-              label,
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 200),
               style: TextStyle(
                 color: color,
                 fontSize: 11,
-                fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+                fontWeight:
+                    isActive ? FontWeight.w600 : FontWeight.w400,
               ),
+              child: Text(label),
             ),
           ],
         ),

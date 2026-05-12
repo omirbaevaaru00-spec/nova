@@ -227,5 +227,43 @@
   "universityTabPrograms": "специальности",
   "universityTabNews": "новости",
   "universityNewsEmpty": "Новостей пока нет",
-  "universityAdmissionTitle": "Условия поступления"
+  "universityAdmissionTitle": "Условия поступления",
+
+ 
+
+  
+  "universityTabReviews": "Отзывы",
+  "reviewsAdd": "Оставить отзыв",
+  "reviewsSubmit": "Опубликовать",
+  "reviewsEmpty": "Отзывов пока нет",
+  "reviewSpeciality": "Специальность",
+  "reviewYear": "Год поступления",
+  "reviewText": "Напишите ваш отзыв...",
+ 
+  
+  "professionDuration": "Срок обучения",
+  "professionCost": "Стоимость",
+  "professionLanguage": "Язык",
+  "professionJobs": "Кем можно работать",
+  "professionJobsExample": "Разработчик, аналитик, архитектор ПО",
+ 
+
+  "actionClose": "Закрыть",
+ 
+
+  "profileUnauthTitle": "Войди, чтобы открыть профиль",
+  "profileUnauthSubtitle": "Сохраняй избранные университеты, отслеживай баллы и получай персональные рекомендации.",
+  "profileUnauthCta": "Зарегистрироваться",
+  "profileUnauthLogin": "Уже есть аккаунт? Войти",
+ 
+ 
+  "notificationsEmpty": "Нет новостей",
+  "notificationsEmptyHint": "Добавь университеты в избранное — здесь будут появляться их новости.",
+
+  "reviewsViewAll": "Все отзывы",
+  "reviewsEmptyHint": "Будьте первым — нажмите + чтобы оставить отзыв.",
+
+  "notificationsAuthRequired": "Войди, чтобы видеть новости",
+  "notificationsAuthSubtitle": "Добавляй университеты в избранное — и здесь будут появляться их новости."
 }
+

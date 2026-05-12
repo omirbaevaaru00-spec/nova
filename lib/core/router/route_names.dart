@@ -31,6 +31,7 @@ class RouteNames {
   static const String savedSearches = '/saved-searches';
   static const String newsFeed = '/news';
   static const String helpCenter = '/help-center';
+  static const String universityReviews = '/university/:id/reviews';
 
 
 }

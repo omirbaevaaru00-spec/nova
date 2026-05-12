@@ -213,5 +213,39 @@
   "universityTabPrograms": "мамандықтар",
   "universityTabNews": "жаңалықтар",
   "universityNewsEmpty": "Әзірге жаңалықтар жоқ",
-  "universityAdmissionTitle": "Түсу шарттары"
+  "universityAdmissionTitle": "Түсу шарттары",
+
+  
+
+  "universityTabReviews": "Пікірлер",
+  "reviewsAdd": "Пікір қалдыру",
+  "reviewsSubmit": "Жариялау",
+  "reviewsEmpty": "Пікірлер әлі жоқ",
+  "reviewSpeciality": "Мамандық",
+  "reviewYear": "Оқуға түскен жыл",
+  "reviewText": "Пікіріңізді жазыңыз...",
+ 
+  "professionDuration": "Оқу мерзімі",
+  "professionCost": "Оқу ақысы",
+  "professionLanguage": "Тіл",
+  "professionJobs": "Кім болуға болады",
+  "professionJobsExample": "Әзірлеуші, талдаушы, бағдарламалық сәулетші",
+ 
+  "actionClose": "Жабу",
+ 
+  "profileUnauthTitle": "Профильді ашу үшін кіріңіз",
+  "profileUnauthSubtitle": "Таңдаулы университеттерді сақтаңыз, ұпайларыңызды бақылаңыз және жеке ұсынымдар алыңыз.",
+  "profileUnauthCta": "Тіркелу",
+  "profileUnauthLogin": "Аккаунт бар ма? Кіру",
+ 
+  "notificationsEmpty": "Жаңалықтар жоқ",
+  "notificationsEmptyHint": "Университеттерді таңдаулыға қосыңыз — олардың жаңалықтары осында пайда болады.",
+
+  "reviewsViewAll": "Барлық пікірлер",
+  "reviewsEmptyHint": "Бірінші болыңыз — пікір қалдыру үшін + басыңыз.",
+
+  "notificationsAuthRequired": "Жаңалықтарды көру үшін кіріңіз",
+  "notificationsAuthSubtitle": "Университеттерді таңдаулыға қосыңыз — олардың жаңалықтары осында пайда болады."
 }
+ 
+

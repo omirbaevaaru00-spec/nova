@@ -213,5 +213,38 @@
   "universityTabPrograms": "programs",
   "universityTabNews": "news",
   "universityNewsEmpty": "No news yet",
-  "universityAdmissionTitle": "Admission requirements"
+  "universityAdmissionTitle": "Admission requirements",
+
+
+
+  "universityTabReviews": "Reviews",
+  "reviewsAdd": "Leave a review",
+  "reviewsSubmit": "Publish",
+  "reviewsEmpty": "No reviews yet",
+  "reviewSpeciality": "Speciality",
+  "reviewYear": "Enrollment year",
+  "reviewText": "Write your review...",
+ 
+  "professionDuration": "Duration",
+  "professionCost": "Tuition cost",
+  "professionLanguage": "Language",
+  "professionJobs": "Career options",
+  "professionJobsExample": "Developer, analyst, software architect",
+ 
+  "actionClose": "Close",
+ 
+  "profileUnauthTitle": "Sign in to access profile",
+  "profileUnauthSubtitle": "Save favourite universities, track your scores and get personalised recommendations.",
+  "profileUnauthCta": "Create an account",
+  "profileUnauthLogin": "Already have an account? Sign in",
+ 
+  "notificationsEmpty": "No news yet",
+  "notificationsEmptyHint": "Add universities to favourites — their news will appear here.",
+
+  "reviewsViewAll": "All reviews",
+  "reviewsEmptyHint": "Be the first — tap + to leave a review.",
+
+  "notificationsAuthRequired": "Sign in to see news",
+  "notificationsAuthSubtitle": "Add universities to favourites — their news will appear here."
 }
+
