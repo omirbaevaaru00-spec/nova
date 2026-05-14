@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../../core/localization/locale_controller.dart';
 import '../../../core/router/route_names.dart';
@@ -204,24 +203,6 @@ class _SettingsView extends StatelessWidget {
                     value: ThemeController.instance.isDark,
                     onChanged: (v) => ThemeController.instance.setDark(v),
                   ),
-                  const SizedBox(height: 10),
-                  if (state.status == ProfileSettingsStatus.uploadingPhoto)
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 18),
-                      decoration: BoxDecoration(
-                        color: AppColors.backgroundLight,
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: const Center(child: CircularProgressIndicator()),
-                    )
-                  else
-                    _SettingsItem(
-                      icon: CupertinoIcons.camera,
-                      iconColor: AppColors.info,
-                      title: l10n.settingsPhotoItem,
-                      subtitle: l10n.settingsPhotoSubtitle,
-                      onTap: () => _pickPhotoSource(context, l10n),
-                    ),
                   const SizedBox(height: 10),
                   _SettingsItem(
                     icon: CupertinoIcons.question_circle,
@@ -435,50 +416,6 @@ class _SettingsView extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _pickPhotoSource(BuildContext context, AppLocalizations l10n) {
-    final cubit = context.read<ProfileSettingsCubit>();
-    showCupertinoModalPopup(
-      context: context,
-      builder: (sheetContext) => CupertinoActionSheet(
-        title: Text(l10n.profilePhotoTitle),
-        actions: [
-          CupertinoActionSheetAction(
-            onPressed: () async {
-              Navigator.pop(sheetContext);
-              await _pickAndUpload(cubit, ImageSource.camera);
-            },
-            child: Text(l10n.profilePhotoTake),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () async {
-              Navigator.pop(sheetContext);
-              await _pickAndUpload(cubit, ImageSource.gallery);
-            },
-            child: Text(l10n.profilePhotoPick),
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          isDestructiveAction: true,
-          onPressed: () => Navigator.pop(sheetContext),
-          child: Text(l10n.actionCancel),
-        ),
-      ),
-    );
-  }
-
-  Future<void> _pickAndUpload(
-    ProfileSettingsCubit cubit,
-    ImageSource source,
-  ) async {
-    final picked = await ImagePicker().pickImage(
-      source: source,
-      imageQuality: 80,
-      maxWidth: 512,
-    );
-    if (picked == null) return;
-    await cubit.uploadAvatar(picked.path);
   }
 
   void _confirmSignOut(BuildContext context, AppLocalizations l10n) {

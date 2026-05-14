@@ -53,6 +53,19 @@ class _HomeView extends StatelessWidget {
                     if (state.status == HomeStatus.loading) {
                       return const Center(child: CircularProgressIndicator());
                     }
+                    if (state.status == HomeStatus.failure) {
+                      return Center(
+                        child: Text(
+                          state.error ?? 'Ошибка загрузки',
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      );
+                    }
+                    if (state.feed.isEmpty) {
+                      return const Center(
+                        child: Text('Нет данных'),
+                      );
+                    }
                     return RefreshIndicator(
                       onRefresh: () => context.read<HomeCubit>().load(),
                       child: ListView.builder(

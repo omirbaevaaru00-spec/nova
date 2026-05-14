@@ -8,7 +8,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/auth_error_mapper.dart';
 import '../../../core/widgets/auth_input_field.dart';
 import '../../../core/widgets/google_sign_in_button.dart';
-import '../../../core/widgets/nova_logo.dart';
 import '../../../core/widgets/primary_button.dart';
 import '../../../data/auth/auth_repository.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -112,7 +111,7 @@ class _LoginViewState extends State<_LoginView> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      const NovaLogo(),
+                      Image.asset('assets/images/sticky_logo.png', height: 48),
                       const SizedBox(height: 24),
                       Text(
                         l10n.loginTitle,

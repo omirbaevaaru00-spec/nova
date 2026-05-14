@@ -72,7 +72,35 @@ class _SearchViewState extends State<_SearchView> {
         backgroundColor: AppColors.surfaceMuted,
         elevation: 0,
         automaticallyImplyLeading: false,
-        titleSpacing: 16,
+        // ── Кнопка назад — слева ──────────────────────────────
+        leading: BlocBuilder<SearchCubit, SearchState>(
+          buildWhen: (a, b) => a.isSearching != b.isSearching,
+          builder: (context, state) {
+            if (state.isSearching) return const SizedBox.shrink();
+            return GestureDetector(
+              onTap: () => context.canPop() ? context.pop() : null,
+              child: Container(
+                margin: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundLight,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.06),
+                      blurRadius: 8,
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  CupertinoIcons.back,
+                  color: AppColors.textPrimary,
+                  size: 18,
+                ),
+              ),
+            );
+          },
+        ),
+        titleSpacing: 4,
         title: BlocBuilder<SearchCubit, SearchState>(
           buildWhen: (a, b) =>
               a.isSearching != b.isSearching || a.query != b.query,
@@ -80,13 +108,16 @@ class _SearchViewState extends State<_SearchView> {
             _syncQuery(state);
             return Row(
               children: [
-                Expanded(child: _SearchField(
-                  controller: _controller,
-                  focusNode: _focusNode,
-                  hint: l10n.searchHint,
-                )),
-                const SizedBox(width: 10),
-                if (state.isSearching)
+                Expanded(
+                  child: _SearchField(
+                    controller: _controller,
+                    focusNode: _focusNode,
+                    hint: l10n.searchHint,
+                  ),
+                ),
+                // Кнопка «Отмена» появляется только во время поиска
+                if (state.isSearching) ...[
+                  const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
                       _focusNode.unfocus();
@@ -100,31 +131,8 @@ class _SearchViewState extends State<_SearchView> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                  )
-                else
-                  GestureDetector(
-                    onTap: () =>
-                        context.canPop() ? context.pop() : null,
-                    child: Container(
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: AppColors.backgroundLight,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.06),
-                            blurRadius: 8,
-                          ),
-                        ],
-                      ),
-                      child: const Icon(
-                        CupertinoIcons.back,
-                        color: AppColors.textPrimary,
-                        size: 18,
-                      ),
-                    ),
                   ),
+                ],
               ],
             );
           },

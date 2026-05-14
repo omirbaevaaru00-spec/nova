@@ -1,28 +1,115 @@
-import 'kazakh_universities.dart';
-import 'university_model.dart';
-import 'university_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:logger/logger.dart';
+import 'package:stiky/core/services/firebase_service.dart';
+import 'package:stiky/data/university/university_model.dart';
+import 'package:stiky/data/university/university_repository.dart';
 
-/// Локальная реализация — отдаёт хардкод-список.
-/// Когда будет Firestore-каталог — меняем только этот класс.
+/// Firestore-реализация [UniversityRepository].
+///
+/// Коллекция: `universities`.
+/// Подколлекции `news` и `programs` читаются отдельными репозиториями.
 class UniversityRepositoryImpl implements UniversityRepository {
-  const UniversityRepositoryImpl();
+  final FirebaseService _firebase;
+  final _log = Logger();
+
+  static const _col = 'universities';
+
+  UniversityRepositoryImpl(this._firebase);
 
   @override
-  Future<List<University>> getAll() async => kazakhUniversities;
+  Future<List<University>> getAll() async {
+    try {
+      final snap = await _firebase.firestore
+          .collection(_col)
+          .orderBy('name')
+          .get();
+      return snap.docs
+          .map((doc) => University.fromFirestore(doc))
+          .toList();
+    } catch (e, st) {
+      _log.e('getAll failed', error: e, stackTrace: st);
+      rethrow;
+    }
+  }
 
   @override
   Future<University?> getById(String id) async {
-    for (final u in kazakhUniversities) {
-      if (u.id == id) return u;
+    try {
+      final doc =
+          await _firebase.firestore.collection(_col).doc(id).get();
+      if (!doc.exists) return null;
+      return University.fromFirestore(doc);
+    } catch (e, st) {
+      _log.e('getById($id) failed', error: e, stackTrace: st);
+      rethrow;
     }
-    return null;
   }
 
   @override
   Future<List<University>> getByTags(Set<String> tags) async {
-    if (tags.isEmpty) return kazakhUniversities;
-    return kazakhUniversities
-        .where((u) => u.tags.any(tags.contains))
-        .toList();
+    if (tags.isEmpty) return getAll();
+    try {
+      // Первый тег фильтруется на сервере, остальные — на клиенте.
+      // Firestore не поддерживает array-contains по нескольким значениям.
+      final primaryTag = tags.first;
+      final snap = await _firebase.firestore
+          .collection(_col)
+          .where('tags', arrayContains: primaryTag)
+          .get();
+
+      final results =
+          snap.docs.map((doc) => University.fromFirestore(doc)).toList();
+
+      if (tags.length == 1) return results;
+
+      // OR-логика: хотя бы один тег совпадает
+      return results.where((u) => u.tags.any(tags.contains)).toList();
+    } catch (e, st) {
+      _log.e('getByTags($tags) failed', error: e, stackTrace: st);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> seedAll(List<University> universities) async {
+    _log.i('Seed: заливка ${universities.length} университетов...');
+    try {
+      const chunkSize = 400;
+      for (var i = 0; i < universities.length; i += chunkSize) {
+        final chunk = universities.skip(i).take(chunkSize).toList();
+        final batch = _firebase.firestore.batch();
+        for (final u in chunk) {
+          final ref = u.id.isEmpty
+              ? _firebase.firestore.collection(_col).doc()
+              : _firebase.firestore.collection(_col).doc(u.id);
+          batch.set(ref, u.toFirestore());
+        }
+        await batch.commit();
+        _log.i('Seed: залито ${i + chunk.length}/${universities.length}');
+      }
+      _log.i('Seed завершён.');
+    } catch (e, st) {
+      _log.e('seedAll failed', error: e, stackTrace: st);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> patchMissingFields(
+    String id,
+    Map<String, dynamic> fields,
+  ) async {
+    try {
+      // SetOptions(merge: true) — добавляет только отсутствующие поля,
+      // существующие значения не перезаписывает.
+      await _firebase.firestore
+          .collection(_col)
+          .doc(id)
+          .set(fields, SetOptions(merge: true));
+      _log.i('patchMissingFields($id): обновлено ${fields.keys}');
+    } catch (e, st) {
+      _log.e('patchMissingFields($id) failed', error: e, stackTrace: st);
+      rethrow;
+    }
   }
 }

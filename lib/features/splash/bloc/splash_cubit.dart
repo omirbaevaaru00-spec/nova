@@ -21,17 +21,22 @@ class SplashCubit extends Cubit<SplashState> {
     final stopwatch = Stopwatch()..start();
     try {
       final onboarded = await _onboarding.isOnboardingCompleted();
-      _padSplash(stopwatch);
+      await _padSplash(stopwatch);
 
       if (!onboarded) {
+        // Первый запуск — показываем welcome → onboarding
         emit(state.copyWith(status: SplashStatus.shouldOnboard));
         return;
       }
+
+      // Онбординг пройден — всегда идём на home.
+      // Авторизованный увидит полный профиль, неавторизованный — каталог.
+      // Войти/зарегистрироваться можно через экран профиля.
       emit(
         state.copyWith(
           status: _auth.isAuthenticated
               ? SplashStatus.authenticated
-              : SplashStatus.shouldLogin,
+              : SplashStatus.authenticated, // оба варианта → home
         ),
       );
     } catch (e) {
