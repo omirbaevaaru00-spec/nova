@@ -677,4 +677,57 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get notificationsAuthSubtitle =>
       'Добавляй университеты в избранное — и здесь будут появляться их новости.';
+
+  @override
+  String get supportTitle => 'Поддержка';
+
+  @override
+  String get supportDescription =>
+      'Здесь вы можете обратиться за помощью. Наша команда отвечает в течение нескольких часов.';
+
+  @override
+  String get supportTelegramButton => 'Написать в Telegram';
+
+  @override
+  String get supportResponseTime => 'Обычно отвечаем в течение 2–4 часов';
+
+  @override
+  String get supportFaq1Question => 'Как найти подходящий вуз?';
+
+  @override
+  String get supportFaq1Answer =>
+      'Используйте фильтры на главном экране: выберите направление, город и форму обучения — список автоматически обновится.';
+
+  @override
+  String get supportFaq2Question => 'Как добавить вуз в избранное?';
+
+  @override
+  String get supportFaq2Answer =>
+      'Нажмите на иконку сердца на карточке университета. Для этого нужно войти в аккаунт.';
+
+  @override
+  String get supportFaq3Question => 'Как сменить язык приложения?';
+
+  @override
+  String get supportFaq3Answer =>
+      'Перейдите в Настройки → Язык и выберите нужный из трёх доступных: русский, английский, казахский.';
+
+  @override
+  String get settingsDeleteAccount => 'Удалить аккаунт';
+
+  @override
+  String get settingsDeleteAccountConfirmTitle => 'Удалить аккаунт?';
+
+  @override
+  String get settingsDeleteAccountConfirmBody =>
+      'Это действие необратимо. Все ваши данные, отзывы и избранное будут удалены навсегда.';
+
+  @override
+  String get settingsDeleteAccountCancel => 'Отмена';
+
+  @override
+  String get settingsDeleteAccountConfirm => 'Удалить';
+
+  @override
+  String get settingsDeleteAccountSuccess => 'Аккаунт удалён';
 }

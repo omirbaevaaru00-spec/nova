@@ -1389,6 +1389,102 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Добавляй университеты в избранное — и здесь будут появляться их новости.'**
   String get notificationsAuthSubtitle;
+
+  /// No description provided for @supportTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поддержка'**
+  String get supportTitle;
+
+  /// No description provided for @supportDescription.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь вы можете обратиться за помощью. Наша команда отвечает в течение нескольких часов.'**
+  String get supportDescription;
+
+  /// No description provided for @supportTelegramButton.
+  ///
+  /// In ru, this message translates to:
+  /// **'Написать в Telegram'**
+  String get supportTelegramButton;
+
+  /// No description provided for @supportResponseTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обычно отвечаем в течение 2–4 часов'**
+  String get supportResponseTime;
+
+  /// No description provided for @supportFaq1Question.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как найти подходящий вуз?'**
+  String get supportFaq1Question;
+
+  /// No description provided for @supportFaq1Answer.
+  ///
+  /// In ru, this message translates to:
+  /// **'Используйте фильтры на главном экране: выберите направление, город и форму обучения — список автоматически обновится.'**
+  String get supportFaq1Answer;
+
+  /// No description provided for @supportFaq2Question.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как добавить вуз в избранное?'**
+  String get supportFaq2Question;
+
+  /// No description provided for @supportFaq2Answer.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нажмите на иконку сердца на карточке университета. Для этого нужно войти в аккаунт.'**
+  String get supportFaq2Answer;
+
+  /// No description provided for @supportFaq3Question.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как сменить язык приложения?'**
+  String get supportFaq3Question;
+
+  /// No description provided for @supportFaq3Answer.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перейдите в Настройки → Язык и выберите нужный из трёх доступных: русский, английский, казахский.'**
+  String get supportFaq3Answer;
+
+  /// No description provided for @settingsDeleteAccount.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить аккаунт'**
+  String get settingsDeleteAccount;
+
+  /// No description provided for @settingsDeleteAccountConfirmTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить аккаунт?'**
+  String get settingsDeleteAccountConfirmTitle;
+
+  /// No description provided for @settingsDeleteAccountConfirmBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Это действие необратимо. Все ваши данные, отзывы и избранное будут удалены навсегда.'**
+  String get settingsDeleteAccountConfirmBody;
+
+  /// No description provided for @settingsDeleteAccountCancel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отмена'**
+  String get settingsDeleteAccountCancel;
+
+  /// No description provided for @settingsDeleteAccountConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить'**
+  String get settingsDeleteAccountConfirm;
+
+  /// No description provided for @settingsDeleteAccountSuccess.
+  ///
+  /// In ru, this message translates to:
+  /// **'Аккаунт удалён'**
+  String get settingsDeleteAccountSuccess;
 }
 
 class _AppLocalizationsDelegate

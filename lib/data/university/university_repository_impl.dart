@@ -45,12 +45,14 @@ class UniversityRepositoryImpl implements UniversityRepository {
     }
   }
 
+  /// Алиас для [getById] — используется в ReviewsCubit.
+  @override
+  Future<University?> fetchById(String id) => getById(id);
+
   @override
   Future<List<University>> getByTags(Set<String> tags) async {
     if (tags.isEmpty) return getAll();
     try {
-      // Первый тег фильтруется на сервере, остальные — на клиенте.
-      // Firestore не поддерживает array-contains по нескольким значениям.
       final primaryTag = tags.first;
       final snap = await _firebase.firestore
           .collection(_col)
@@ -62,7 +64,6 @@ class UniversityRepositoryImpl implements UniversityRepository {
 
       if (tags.length == 1) return results;
 
-      // OR-логика: хотя бы один тег совпадает
       return results.where((u) => u.tags.any(tags.contains)).toList();
     } catch (e, st) {
       _log.e('getByTags($tags) failed', error: e, stackTrace: st);
@@ -100,8 +101,6 @@ class UniversityRepositoryImpl implements UniversityRepository {
     Map<String, dynamic> fields,
   ) async {
     try {
-      // SetOptions(merge: true) — добавляет только отсутствующие поля,
-      // существующие значения не перезаписывает.
       await _firebase.firestore
           .collection(_col)
           .doc(id)

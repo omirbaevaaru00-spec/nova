@@ -108,4 +108,6 @@ class ProfileSettingsCubit extends Cubit<ProfileSettingsState> {
     await _auth.signOut();
     emit(state.copyWith(status: ProfileSettingsStatus.signedOut));
   }
+
+  Future<void> deleteAccount() async {}
 }

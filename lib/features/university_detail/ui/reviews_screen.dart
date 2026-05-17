@@ -1,18 +1,19 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/services/firebase_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../data/university/university_repository.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../bloc/reviews_cubit.dart';
 import '../bloc/reviews_state.dart';
 
-/// Отдельный экран отзывов университета.
-/// Открывается с [UniversityDetailScreen] через context.push.
-/// Остаётся внутри ShellRoute — нижний навбар виден.
+/// Экран отзывов университета.
+/// Открывается из UniversityDetailScreen через context.push('/university/:id/reviews').
 class ReviewsScreen extends StatelessWidget {
   const ReviewsScreen({super.key, required this.universityId});
 
@@ -29,6 +30,8 @@ class ReviewsScreen extends StatelessWidget {
   }
 }
 
+// ─── Основной вид ─────────────────────────────────────────────────────────────
+
 class _ReviewsView extends StatelessWidget {
   const _ReviewsView();
 
@@ -36,13 +39,13 @@ class _ReviewsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF0EEF8);
+    final bgColor =
+        isDark ? AppColors.backgroundDark : const Color(0xFFF0EEF8);
 
     return BlocBuilder<ReviewsCubit, ReviewsState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: bgColor,
-          // ── AppBar ──────────────────────────────────────────
           appBar: AppBar(
             backgroundColor: bgColor,
             elevation: 0,
@@ -51,7 +54,8 @@ class _ReviewsView extends StatelessWidget {
               onPressed: () => Navigator.of(context).maybePop(),
               icon: Icon(
                 Icons.arrow_back_rounded,
-                color: isDark ? AppColors.textInverse : AppColors.textPrimary,
+                color:
+                    isDark ? AppColors.textInverse : AppColors.textPrimary,
               ),
             ),
             title: Text(
@@ -61,11 +65,11 @@ class _ReviewsView extends StatelessWidget {
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
-                color: isDark ? AppColors.textInverse : AppColors.textPrimary,
+                color:
+                    isDark ? AppColors.textInverse : AppColors.textPrimary,
               ),
             ),
           ),
-          // ── FAB «+» ─────────────────────────────────────────
           floatingActionButton: FloatingActionButton(
             onPressed: () => _showAddReviewSheet(context, isDark),
             backgroundColor: AppColors.brandAccent,
@@ -73,7 +77,6 @@ class _ReviewsView extends StatelessWidget {
             elevation: 4,
             child: const Icon(Icons.add_rounded, size: 28),
           ),
-          // ── Body ────────────────────────────────────────────
           body: Builder(
             builder: (_) {
               if (state.status == ReviewsStatus.loading) {
@@ -106,7 +109,7 @@ class _ReviewsView extends StatelessWidget {
   }
 }
 
-// ── Пустое состояние ──────────────────────────────────────────────────────────
+// ─── Пустое состояние ─────────────────────────────────────────────────────────
 
 class _EmptyView extends StatelessWidget {
   const _EmptyView({required this.isDark, required this.l10n});
@@ -134,7 +137,8 @@ class _EmptyView extends StatelessWidget {
               child: Icon(
                 Icons.rate_review_outlined,
                 size: 36,
-                color: isDark ? AppColors.textSecondary : AppColors.textMuted,
+                color:
+                    isDark ? AppColors.textSecondary : AppColors.textMuted,
               ),
             ),
             const SizedBox(height: 20),
@@ -144,7 +148,8 @@ class _EmptyView extends StatelessWidget {
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
-                color: isDark ? AppColors.textInverse : AppColors.textPrimary,
+                color:
+                    isDark ? AppColors.textInverse : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
@@ -164,7 +169,7 @@ class _EmptyView extends StatelessWidget {
   }
 }
 
-// ── Список отзывов ────────────────────────────────────────────────────────────
+// ─── Список отзывов ───────────────────────────────────────────────────────────
 
 class _ReviewsList extends StatelessWidget {
   const _ReviewsList({required this.reviews, required this.isDark});
@@ -184,7 +189,7 @@ class _ReviewsList extends StatelessWidget {
   }
 }
 
-// ── Карточка отзыва ───────────────────────────────────────────────────────────
+// ─── Карточка отзыва ──────────────────────────────────────────────────────────
 
 class _ReviewCard extends StatelessWidget {
   const _ReviewCard({required this.review, required this.isDark});
@@ -194,9 +199,8 @@ class _ReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardColor = isDark
-        ? AppColors.surfaceMutedDark
-        : AppColors.backgroundLight;
+    final cardColor =
+        isDark ? AppColors.surfaceMutedDark : AppColors.backgroundLight;
 
     return Container(
       decoration: BoxDecoration(
@@ -216,7 +220,7 @@ class _ReviewCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Строка: аватар + имя + дата ─────────────────────
+          // Аватар + имя + дата
           Row(
             children: [
               _Avatar(
@@ -249,7 +253,6 @@ class _ReviewCard extends StatelessWidget {
                   ],
                 ),
               ),
-              // Дата
               Text(
                 DateFormat('dd.MM.yy').format(review.createdAt),
                 style: const TextStyle(
@@ -260,10 +263,8 @@ class _ReviewCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          // ── Звёзды ──────────────────────────────────────────
           _StarRow(rating: review.rating),
           const SizedBox(height: 10),
-          // ── Текст отзыва ────────────────────────────────────
           Text(
             review.text,
             style: TextStyle(
@@ -280,6 +281,8 @@ class _ReviewCard extends StatelessWidget {
   }
 }
 
+// ─── Аватар ───────────────────────────────────────────────────────────────────
+
 class _Avatar extends StatelessWidget {
   const _Avatar({required this.name, this.photoUrl});
 
@@ -291,8 +294,7 @@ class _Avatar extends StatelessWidget {
     return CircleAvatar(
       radius: 22,
       backgroundColor: AppColors.brandAccent.withValues(alpha: 0.18),
-      backgroundImage:
-          photoUrl != null ? NetworkImage(photoUrl!) : null,
+      backgroundImage: photoUrl != null ? NetworkImage(photoUrl!) : null,
       child: photoUrl == null
           ? Text(
               name.isNotEmpty ? name[0].toUpperCase() : '?',
@@ -306,6 +308,8 @@ class _Avatar extends StatelessWidget {
     );
   }
 }
+
+// ─── Строка звёзд (для отображения в карточке) ────────────────────────────────
 
 class _StarRow extends StatelessWidget {
   const _StarRow({required this.rating});
@@ -325,7 +329,7 @@ class _StarRow extends StatelessWidget {
                     ? Icons.star_half_rounded
                     : Icons.star_outline_rounded,
             size: 15,
-            color: const Color(0xFFFFC107),
+            color: AppColors.warning,
           );
         }),
         const SizedBox(width: 6),
@@ -342,7 +346,7 @@ class _StarRow extends StatelessWidget {
   }
 }
 
-// ── Bottomsheet добавления отзыва ─────────────────────────────────────────────
+// ─── Bottomsheet добавления отзыва ────────────────────────────────────────────
 
 class _AddReviewSheet extends StatefulWidget {
   const _AddReviewSheet({required this.isDark});
@@ -354,7 +358,10 @@ class _AddReviewSheet extends StatefulWidget {
 }
 
 class _AddReviewSheetState extends State<_AddReviewSheet> {
-  double _rating = 5;
+  /// Рейтинг 0 = не выбрано (звёзды пустые по умолчанию).
+  double _rating = 0;
+  bool _isSubmitting = false;
+
   final _textCtrl = TextEditingController();
   final _specialityCtrl = TextEditingController();
   int _year = DateTime.now().year;
@@ -366,23 +373,88 @@ class _AddReviewSheetState extends State<_AddReviewSheet> {
     super.dispose();
   }
 
-  void _submit() {
-    final text = _textCtrl.text.trim();
-    if (text.isEmpty) return;
+  /// Кнопка активна только если выбран рейтинг И написан текст.
+  bool get _canSubmit =>
+      _rating > 0 && _textCtrl.text.trim().isNotEmpty && !_isSubmitting;
+
+  Future<void> _submit() async {
+    if (!_canSubmit) return;
+
+    setState(() => _isSubmitting = true);
+
+    // Берём ник из Firebase Auth — не хардкодим «Вы».
+    final user = FirebaseService.instance.auth.currentUser;
+    final nickname = _resolveNickname(user);
+    final photoUrl = user?.photoURL;
+
     final review = UniversityReview(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      authorName: 'Вы',
-      authorPhotoUrl: null,
+      authorName: nickname,
+      authorPhotoUrl: photoUrl,
       rating: _rating,
-      text: text,
+      text: _textCtrl.text.trim(),
       year: _year,
       speciality: _specialityCtrl.text.trim().isNotEmpty
           ? _specialityCtrl.text.trim()
           : '—',
       createdAt: DateTime.now(),
     );
-    context.read<ReviewsCubit>().submitReview(review);
+
+    try {
+      await context.read<ReviewsCubit>().submitReview(review);
+    } finally {
+      if (mounted) setState(() => _isSubmitting = false);
+    }
+
+    if (!mounted) return;
     Navigator.of(context).pop();
+
+    // Красивое уведомление после закрытия шторки.
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Row(
+          children: [
+            Icon(
+              Icons.check_circle_rounded,
+              color: AppColors.brandAccent,
+              size: 20,
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                'Спасибо за ваш отзыв!',
+                style: TextStyle(
+                  color: AppColors.textInverse,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFF1A1A2E),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
+  /// Определяет ник: displayName → часть email до @ → «Аноним».
+  String _resolveNickname(dynamic user) {
+    if (user == null) return 'Аноним';
+    final displayName = user.displayName as String?;
+    if (displayName != null && displayName.trim().isNotEmpty) {
+      return displayName.trim();
+    }
+    final email = user.email as String?;
+    if (email != null && email.contains('@')) {
+      return email.split('@').first;
+    }
+    return 'Аноним';
   }
 
   @override
@@ -419,6 +491,8 @@ class _AddReviewSheetState extends State<_AddReviewSheet> {
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Заголовок
               Text(
                 l10n.reviewsAdd,
                 style: TextStyle(
@@ -429,36 +503,70 @@ class _AddReviewSheetState extends State<_AddReviewSheet> {
                       : AppColors.textPrimary,
                 ),
               ),
-              const SizedBox(height: 20),
-              // Звёзды
-              Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(5, (i) {
-                    return GestureDetector(
-                      onTap: () =>
-                          setState(() => _rating = (i + 1).toDouble()),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Icon(
-                          _rating > i
-                              ? Icons.star_rounded
-                              : Icons.star_outline_rounded,
-                          size: 38,
-                          color: const Color(0xFFFFC107),
-                        ),
-                      ),
-                    );
-                  }),
+              const SizedBox(height: 6),
+              Text(
+                'Выберите оценку и напишите отзыв',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: AppColors.textSecondary,
                 ),
               ),
+              const SizedBox(height: 24),
+
+              // ── Звёзды (пустые по умолчанию, анимированные) ──────────────
+              Center(
+                child: _AnimatedStarPicker(
+                  rating: _rating,
+                  onChanged: (r) {
+                    HapticFeedback.selectionClick();
+                    setState(() => _rating = r);
+                  },
+                ),
+              ),
+
+              // Подпись под звёздами
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                child: _rating > 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Center(
+                          child: Text(
+                            _ratingLabel(_rating),
+                            key: ValueKey(_rating),
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.brandAccent,
+                            ),
+                          ),
+                        ),
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Center(
+                          child: Text(
+                            'Коснитесь звезды для оценки',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: AppColors.textMuted,
+                            ),
+                          ),
+                        ),
+                      ),
+              ),
               const SizedBox(height: 20),
+
+              // Специальность
               _Field(
                 controller: _specialityCtrl,
                 hint: l10n.reviewSpeciality,
                 isDark: widget.isDark,
+                onChanged: (_) => setState(() {}),
               ),
               const SizedBox(height: 12),
+
+              // Год
               _YearPicker(
                 year: _year,
                 isDark: widget.isDark,
@@ -466,32 +574,53 @@ class _AddReviewSheetState extends State<_AddReviewSheet> {
                 l10n: l10n,
               ),
               const SizedBox(height: 12),
+
+              // Текст отзыва
               _Field(
                 controller: _textCtrl,
                 hint: l10n.reviewText,
                 maxLines: 4,
                 isDark: widget.isDark,
+                onChanged: (_) => setState(() {}),
               ),
               const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _submit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.brandAccent,
-                    foregroundColor: AppColors.backgroundDark,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+
+              // ── Кнопка «Опубликовать» (неактивна пока не выбраны звёзды и текст) ──
+              AnimatedOpacity(
+                opacity: _canSubmit ? 1.0 : 0.4,
+                duration: const Duration(milliseconds: 250),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: _canSubmit ? _submit : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.brandAccent,
+                      foregroundColor: AppColors.backgroundDark,
+                      disabledBackgroundColor:
+                          AppColors.brandAccent.withValues(alpha: 0.5),
+                      disabledForegroundColor: AppColors.backgroundDark,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      elevation: 0,
                     ),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    l10n.reviewsSubmit,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                    ),
+                    child: _isSubmitting
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.5,
+                              color: AppColors.backgroundDark,
+                            ),
+                          )
+                        : Text(
+                            l10n.reviewsSubmit,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -501,7 +630,65 @@ class _AddReviewSheetState extends State<_AddReviewSheet> {
       ),
     );
   }
+
+  /// Текстовая подпись для рейтинга.
+  String _ratingLabel(double r) {
+    if (r >= 5) return '⭐ Отлично';
+    if (r >= 4) return '👍 Хорошо';
+    if (r >= 3) return '😐 Нормально';
+    if (r >= 2) return '👎 Плохо';
+    return '😞 Очень плохо';
+  }
 }
+
+// ─── Анимированный выбор звёзд ────────────────────────────────────────────────
+
+/// Строка из 5 звёзд с пружинной анимацией при выборе.
+/// Изначально все пустые (rating == 0).
+class _AnimatedStarPicker extends StatelessWidget {
+  const _AnimatedStarPicker({
+    required this.rating,
+    required this.onChanged,
+  });
+
+  final double rating;
+  final ValueChanged<double> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (i) {
+        final starValue = (i + 1).toDouble();
+        final isFilled = rating >= starValue;
+        return GestureDetector(
+          onTap: () => onChanged(starValue),
+          child: TweenAnimationBuilder<double>(
+            // Ключ перестраивает анимацию при каждом изменении состояния звезды.
+            key: ValueKey('star_${i}_$isFilled'),
+            tween: Tween(begin: isFilled ? 0.6 : 1.0, end: isFilled ? 1.25 : 1.0),
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.elasticOut,
+            builder: (context, scale, child) => Transform.scale(
+              scale: scale,
+              child: child,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              child: Icon(
+                isFilled ? Icons.star_rounded : Icons.star_border_rounded,
+                size: 40,
+                color: isFilled ? AppColors.warning : AppColors.textMuted,
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+// ─── Поле ввода ───────────────────────────────────────────────────────────────
 
 class _Field extends StatelessWidget {
   const _Field({
@@ -509,18 +696,21 @@ class _Field extends StatelessWidget {
     required this.hint,
     required this.isDark,
     this.maxLines = 1,
+    this.onChanged,
   });
 
   final TextEditingController controller;
   final String hint;
   final bool isDark;
   final int maxLines;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
       maxLines: maxLines,
+      onChanged: onChanged,
       style: TextStyle(
         color: isDark ? AppColors.textInverse : AppColors.textPrimary,
         fontSize: 15,
@@ -536,12 +726,25 @@ class _Field extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide.none,
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(
+            color: AppColors.brandAccent,
+            width: 1.5,
+          ),
+        ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }
 }
+
+// ─── Выбор года ───────────────────────────────────────────────────────────────
 
 class _YearPicker extends StatelessWidget {
   const _YearPicker({
@@ -572,12 +775,22 @@ class _YearPicker extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide.none,
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(
+            color: AppColors.brandAccent,
+            width: 1.5,
+          ),
+        ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
-      dropdownColor: isDark
-          ? AppColors.surfaceMutedDark
-          : AppColors.backgroundLight,
+      dropdownColor:
+          isDark ? AppColors.surfaceMutedDark : AppColors.backgroundLight,
       style: TextStyle(
         color: isDark ? AppColors.textInverse : AppColors.textPrimary,
         fontSize: 15,

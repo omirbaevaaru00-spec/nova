@@ -673,4 +673,57 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notificationsAuthSubtitle =>
       'Add universities to favourites — their news will appear here.';
+
+  @override
+  String get supportTitle => 'Support';
+
+  @override
+  String get supportDescription =>
+      'Here you can get help. Our team usually responds within a few hours.';
+
+  @override
+  String get supportTelegramButton => 'Write on Telegram';
+
+  @override
+  String get supportResponseTime => 'We usually respond within 2–4 hours';
+
+  @override
+  String get supportFaq1Question => 'How do I find the right university?';
+
+  @override
+  String get supportFaq1Answer =>
+      'Use the filters on the home screen: choose a field of study, city and format — the list updates automatically.';
+
+  @override
+  String get supportFaq2Question => 'How do I add a university to favourites?';
+
+  @override
+  String get supportFaq2Answer =>
+      'Tap the heart icon on the university card. You need to be signed in to do this.';
+
+  @override
+  String get supportFaq3Question => 'How do I change the app language?';
+
+  @override
+  String get supportFaq3Answer =>
+      'Go to Settings → Language and choose from three available options: Russian, English, Kazakh.';
+
+  @override
+  String get settingsDeleteAccount => 'Delete account';
+
+  @override
+  String get settingsDeleteAccountConfirmTitle => 'Delete account?';
+
+  @override
+  String get settingsDeleteAccountConfirmBody =>
+      'This action is irreversible. All your data, reviews and favourites will be permanently deleted.';
+
+  @override
+  String get settingsDeleteAccountCancel => 'Cancel';
+
+  @override
+  String get settingsDeleteAccountConfirm => 'Delete';
+
+  @override
+  String get settingsDeleteAccountSuccess => 'Account deleted';
 }

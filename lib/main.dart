@@ -98,6 +98,9 @@ class _StikyAppState extends State<StikyApp> {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeController.instance.mode,
+      // Найди MaterialApp.router и добавь:
+themeAnimationDuration: const Duration(milliseconds: 350),
+themeAnimationCurve: Curves.easeInOut,
     );
   }
 }

@@ -675,4 +675,58 @@ class AppLocalizationsKk extends AppLocalizations {
   @override
   String get notificationsAuthSubtitle =>
       'Университеттерді таңдаулыға қосыңыз — олардың жаңалықтары осында пайда болады.';
+
+  @override
+  String get supportTitle => 'Қолдау';
+
+  @override
+  String get supportDescription =>
+      'Мұнда сіз көмек сұрай аласыз. Біздің команда бірнеше сағат ішінде жауап береді.';
+
+  @override
+  String get supportTelegramButton => 'Telegram-ға жазу';
+
+  @override
+  String get supportResponseTime => 'Біз әдетте 2–4 сағат ішінде жауап береміз';
+
+  @override
+  String get supportFaq1Question => 'Қалай сәйкес университет табуға болады?';
+
+  @override
+  String get supportFaq1Answer =>
+      'Басты экрандағы сүзгілерді пайдаланыңыз: бағыт, қала және оқу форматын таңдаңыз — тізім автоматты түрде жаңарады.';
+
+  @override
+  String get supportFaq2Question =>
+      'Университетті таңдаулыларға қалай қосуға болады?';
+
+  @override
+  String get supportFaq2Answer =>
+      'Университет картасындағы жүрек белгішесін басыңыз. Бұл үшін аккаунтқа кіру керек.';
+
+  @override
+  String get supportFaq3Question => 'Қолданба тілін қалай өзгертуге болады?';
+
+  @override
+  String get supportFaq3Answer =>
+      'Параметрлер → Тіл бөліміне өтіп, үш қолжетімді тілдің бірін таңдаңыз: орыс, ағылшын, қазақ.';
+
+  @override
+  String get settingsDeleteAccount => 'Аккаунтты жою';
+
+  @override
+  String get settingsDeleteAccountConfirmTitle => 'Аккаунтты жою керек пе?';
+
+  @override
+  String get settingsDeleteAccountConfirmBody =>
+      'Бұл әрекетті қайтару мүмкін емес. Барлық деректеріңіз, пікірлеріңіз және таңдаулыларыңыз мәңгілікке жойылады.';
+
+  @override
+  String get settingsDeleteAccountCancel => 'Болдырмау';
+
+  @override
+  String get settingsDeleteAccountConfirm => 'Жою';
+
+  @override
+  String get settingsDeleteAccountSuccess => 'Аккаунт жойылды';
 }

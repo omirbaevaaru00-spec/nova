@@ -245,6 +245,25 @@
   "reviewsEmptyHint": "Be the first — tap + to leave a review.",
 
   "notificationsAuthRequired": "Sign in to see news",
-  "notificationsAuthSubtitle": "Add universities to favourites — their news will appear here."
+  "notificationsAuthSubtitle": "Add universities to favourites — their news will appear here.",
+
+  
+  "supportTitle": "Support",
+  "supportDescription": "Here you can get help. Our team usually responds within a few hours.",
+  "supportTelegramButton": "Write on Telegram",
+  "supportResponseTime": "We usually respond within 2–4 hours",
+  "supportFaq1Question": "How do I find the right university?",
+  "supportFaq1Answer": "Use the filters on the home screen: choose a field of study, city and format — the list updates automatically.",
+  "supportFaq2Question": "How do I add a university to favourites?",
+  "supportFaq2Answer": "Tap the heart icon on the university card. You need to be signed in to do this.",
+  "supportFaq3Question": "How do I change the app language?",
+  "supportFaq3Answer": "Go to Settings → Language and choose from three available options: Russian, English, Kazakh.",
+ 
+  "settingsDeleteAccount": "Delete account",
+  "settingsDeleteAccountConfirmTitle": "Delete account?",
+  "settingsDeleteAccountConfirmBody": "This action is irreversible. All your data, reviews and favourites will be permanently deleted.",
+  "settingsDeleteAccountCancel": "Cancel",
+  "settingsDeleteAccountConfirm": "Delete",
+  "settingsDeleteAccountSuccess": "Account deleted"
 }
 

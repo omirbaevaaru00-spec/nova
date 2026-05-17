@@ -264,6 +264,25 @@
   "reviewsEmptyHint": "Будьте первым — нажмите + чтобы оставить отзыв.",
 
   "notificationsAuthRequired": "Войди, чтобы видеть новости",
-  "notificationsAuthSubtitle": "Добавляй университеты в избранное — и здесь будут появляться их новости."
+  "notificationsAuthSubtitle": "Добавляй университеты в избранное — и здесь будут появляться их новости.",
+
+  
+  "supportTitle": "Поддержка",
+  "supportDescription": "Здесь вы можете обратиться за помощью. Наша команда отвечает в течение нескольких часов.",
+  "supportTelegramButton": "Написать в Telegram",
+  "supportResponseTime": "Обычно отвечаем в течение 2–4 часов",
+  "supportFaq1Question": "Как найти подходящий вуз?",
+  "supportFaq1Answer": "Используйте фильтры на главном экране: выберите направление, город и форму обучения — список автоматически обновится.",
+  "supportFaq2Question": "Как добавить вуз в избранное?",
+  "supportFaq2Answer": "Нажмите на иконку сердца на карточке университета. Для этого нужно войти в аккаунт.",
+  "supportFaq3Question": "Как сменить язык приложения?",
+  "supportFaq3Answer": "Перейдите в Настройки → Язык и выберите нужный из трёх доступных: русский, английский, казахский.",
+ 
+  "settingsDeleteAccount": "Удалить аккаунт",
+  "settingsDeleteAccountConfirmTitle": "Удалить аккаунт?",
+  "settingsDeleteAccountConfirmBody": "Это действие необратимо. Все ваши данные, отзывы и избранное будут удалены навсегда.",
+  "settingsDeleteAccountCancel": "Отмена",
+  "settingsDeleteAccountConfirm": "Удалить",
+  "settingsDeleteAccountSuccess": "Аккаунт удалён"
 }
 

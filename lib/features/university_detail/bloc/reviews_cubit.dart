@@ -1,75 +1,80 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 
+import '../../../core/services/firebase_service.dart';
 import '../../../data/university/university_repository.dart';
 import 'reviews_state.dart';
 
-/// Cubit отдельного экрана отзывов.
+/// Cubit экрана отзывов.
+/// Загружает список отзывов из Firestore и сохраняет новые.
 class ReviewsCubit extends Cubit<ReviewsState> {
-  ReviewsCubit({required UniversityRepository universityRepository})
-      : _repository = universityRepository,
-        super(const ReviewsState());
-
-  final UniversityRepository _repository;
+  final UniversityRepository _universityRepository;
   final _log = Logger();
 
-  /// Загружает название университета и список отзывов по [universityId].
+  ReviewsCubit({required UniversityRepository universityRepository})
+      : _universityRepository = universityRepository,
+        super(const ReviewsState());
+
+  /// Загружает отзывы и название университета.
   Future<void> load(String universityId) async {
-    emit(state.copyWith(status: ReviewsStatus.loading));
+    emit(state.copyWith(
+      status: ReviewsStatus.loading,
+      universityId: universityId,
+    ));
+
     try {
-      final uni = await _repository.getById(universityId);
-      // TODO: заменить stub на _repository.getReviews(universityId)
-      await Future.delayed(const Duration(milliseconds: 500));
+      // Получаем название университета
+      final university =
+          await _universityRepository.fetchById(universityId);
+      final universityName = university?.name ?? '';
+
+      // Загружаем отзывы из Firestore
+      final snapshot = await FirebaseService.instance.firestore
+          .collection('universities')
+          .doc(universityId)
+          .collection('reviews')
+          .orderBy('createdAt', descending: true)
+          .get();
+
+      final reviews = snapshot.docs
+          .map((doc) =>
+              UniversityReview.fromFirestore(doc.id, doc.data()))
+          .toList();
+
       emit(state.copyWith(
         status: ReviewsStatus.ready,
-        universityName: uni?.name ?? '',
-        reviews: _stubReviews(),
+        universityName: universityName,
+        reviews: reviews,
       ));
-    } catch (e, st) {
-      _log.e('Ошибка загрузки отзывов', error: e, stackTrace: st);
+    } catch (e) {
+      _log.e('ReviewsCubit.load: ошибка загрузки', error: e);
       emit(state.copyWith(
         status: ReviewsStatus.failure,
-        errorMessage: e.toString(),
+        error: e.toString(),
       ));
     }
   }
 
-  /// Добавляет отзыв оптимистично (сразу в начало списка).
-  void submitReview(UniversityReview review) {
-    emit(state.copyWith(reviews: [review, ...state.reviews]));
-    // TODO: сохранить через _repository.addReview(review)
-  }
+  /// Сохраняет отзыв в Firestore и добавляет его в начало локального списка.
+  Future<void> submitReview(UniversityReview review) async {
+    try {
+      // Сохраняем в Firestore
+      await FirebaseService.instance.firestore
+          .collection('universities')
+          .doc(state.universityId)
+          .collection('reviews')
+          .doc(review.id)
+          .set(review.toFirestore());
 
-  List<UniversityReview> _stubReviews() => [
-        UniversityReview(
-          id: '1',
-          authorName: 'Айгерим С.',
-          rating: 4.5,
-          text: 'Хороший университет, преподаватели отзывчивые. '
-              'Инфраструктура кампуса на высоком уровне.',
-          year: 2022,
-          speciality: 'Информатика',
-          createdAt: DateTime(2024, 3, 10),
-        ),
-        UniversityReview(
-          id: '2',
-          authorName: 'Нурлан А.',
-          rating: 3.0,
-          text: 'Программа хорошая, но бюрократия иногда раздражает. '
-              'В целом доволен выбором.',
-          year: 2021,
-          speciality: 'Экономика',
-          createdAt: DateTime(2024, 1, 5),
-        ),
-        UniversityReview(
-          id: '3',
-          authorName: 'Дина Б.',
-          rating: 5.0,
-          text: 'Лучший выбор! Международные связи, стажировки — '
-              'всё на высшем уровне.',
-          year: 2023,
-          speciality: 'Международные отношения',
-          createdAt: DateTime(2024, 5, 20),
-        ),
-      ];
+      _log.i('ReviewsCubit: отзыв сохранён (id=${review.id})');
+    } catch (e) {
+      _log.e('ReviewsCubit.submitReview: ошибка сохранения', error: e);
+      // Не блокируем UI — отзыв всё равно добавляем локально.
+    }
+
+    // Обновляем список локально (не ждём перезагрузки с сервера).
+    emit(state.copyWith(
+      reviews: [review, ...state.reviews],
+    ));
+  }
 }

@@ -245,7 +245,25 @@
   "reviewsEmptyHint": "Бірінші болыңыз — пікір қалдыру үшін + басыңыз.",
 
   "notificationsAuthRequired": "Жаңалықтарды көру үшін кіріңіз",
-  "notificationsAuthSubtitle": "Университеттерді таңдаулыға қосыңыз — олардың жаңалықтары осында пайда болады."
+  "notificationsAuthSubtitle": "Университеттерді таңдаулыға қосыңыз — олардың жаңалықтары осында пайда болады.",
+
+  "supportTitle": "Қолдау",
+  "supportDescription": "Мұнда сіз көмек сұрай аласыз. Біздің команда бірнеше сағат ішінде жауап береді.",
+  "supportTelegramButton": "Telegram-ға жазу",
+  "supportResponseTime": "Біз әдетте 2–4 сағат ішінде жауап береміз",
+  "supportFaq1Question": "Қалай сәйкес университет табуға болады?",
+  "supportFaq1Answer": "Басты экрандағы сүзгілерді пайдаланыңыз: бағыт, қала және оқу форматын таңдаңыз — тізім автоматты түрде жаңарады.",
+  "supportFaq2Question": "Университетті таңдаулыларға қалай қосуға болады?",
+  "supportFaq2Answer": "Университет картасындағы жүрек белгішесін басыңыз. Бұл үшін аккаунтқа кіру керек.",
+  "supportFaq3Question": "Қолданба тілін қалай өзгертуге болады?",
+  "supportFaq3Answer": "Параметрлер → Тіл бөліміне өтіп, үш қолжетімді тілдің бірін таңдаңыз: орыс, ағылшын, қазақ.",
+ 
+  "settingsDeleteAccount": "Аккаунтты жою",
+  "settingsDeleteAccountConfirmTitle": "Аккаунтты жою керек пе?",
+  "settingsDeleteAccountConfirmBody": "Бұл әрекетті қайтару мүмкін емес. Барлық деректеріңіз, пікірлеріңіз және таңдаулыларыңыз мәңгілікке жойылады.",
+  "settingsDeleteAccountCancel": "Болдырмау",
+  "settingsDeleteAccountConfirm": "Жою",
+  "settingsDeleteAccountSuccess": "Аккаунт жойылды"
 }
  
 

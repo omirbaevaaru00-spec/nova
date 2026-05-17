@@ -19,22 +19,38 @@ import '../bloc/university_detail_cubit.dart';
 import '../bloc/university_detail_state.dart';
 
 class UniversityDetailScreen extends StatelessWidget {
-  const UniversityDetailScreen({super.key, required this.id});
+  const UniversityDetailScreen({
+    super.key,
+    required this.id,
+    this.initialTab,
+  });
 
   final String id;
+  final String? initialTab;
 
   @override
   Widget build(BuildContext context) {
+    final tab = _parseTab(initialTab);
     return BlocProvider(
       create: (context) => UniversityDetailCubit(
         universityRepository: context.read<UniversityRepository>(),
         programRepository: context.read<UniversityProgramRepository>(),
         newsRepository: context.read<UniversityNewsRepository>(),
-      )..load(id),
+      )..load(id, initialTab: tab),
       child: _UniversityDetailView(universityId: id),
     );
   }
+
+  UniversityDetailTab _parseTab(String? tab) {
+    return switch (tab) {
+      'news' => UniversityDetailTab.news,
+      'programs' => UniversityDetailTab.programs,
+      _ => UniversityDetailTab.description,
+    };
+  }
 }
+
+// ─── Основной вид ─────────────────────────────────────────────────────────────
 
 class _UniversityDetailView extends StatelessWidget {
   const _UniversityDetailView({required this.universityId});
@@ -107,7 +123,7 @@ class _UniversityDetailView extends StatelessWidget {
   }
 }
 
-// ── TopBar ─────────────────────────────────────────────────────────────────────
+// ─── TopBar ───────────────────────────────────────────────────────────────────
 
 class _TopBar extends StatelessWidget {
   const _TopBar({required this.isDark});
@@ -131,7 +147,7 @@ class _TopBar extends StatelessWidget {
   }
 }
 
-// ── HeroImage ──────────────────────────────────────────────────────────────────
+// ─── HeroImage ────────────────────────────────────────────────────────────────
 
 class _HeroImage extends StatelessWidget {
   const _HeroImage({required this.university});
@@ -147,7 +163,7 @@ class _HeroImage extends StatelessWidget {
           ? Image.network(
               university.imageUrl,
               fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => const _HeroPlaceholder(),
+              errorBuilder: (_, __, ___) => const _HeroPlaceholder(),
             )
           : const _HeroPlaceholder(),
     );
@@ -172,7 +188,7 @@ class _HeroPlaceholder extends StatelessWidget {
   }
 }
 
-// ── Header ─────────────────────────────────────────────────────────────────────
+// ─── Header ───────────────────────────────────────────────────────────────────
 
 class _Header extends StatelessWidget {
   const _Header({
@@ -285,12 +301,14 @@ class _Header extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        // Логотип
         Container(
           width: 64,
           height: 64,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isDark ? AppColors.surfaceMutedDark : AppColors.surfaceMuted,
+            color:
+                isDark ? AppColors.surfaceMutedDark : AppColors.surfaceMuted,
             border: Border.all(color: AppColors.border),
           ),
           child: ClipOval(
@@ -298,13 +316,15 @@ class _Header extends StatelessWidget {
                 ? Image.network(
                     university.logoUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, _, _) =>
+                    errorBuilder: (_, __, ___) =>
                         _Initial(name: university.name),
                   )
                 : _Initial(name: university.name),
           ),
         ),
         const SizedBox(width: 14),
+
+        // Название и город
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,45 +349,130 @@ class _Header extends StatelessWidget {
             ],
           ),
         ),
+
+        // Кнопка лайка с анимацией пружины
         ValueListenableBuilder<Set<String>>(
           valueListenable: GlobalFavoritesNotifier.instance,
-          builder: (_, favorites, _) {
+          builder: (_, favorites, __) {
             final isFav = favorites.contains(universityId);
-            return _ActionButton(
+            return _LikeButton(
               isDark: isDark,
+              isFav: isFav,
               onTap: () => _handleLike(context),
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: Icon(
-                  isFav
-                      ? Icons.favorite_rounded
-                      : Icons.favorite_border_rounded,
-                  key: ValueKey(isFav),
-                  color: isFav
-                      ? AppColors.danger
-                      : (isDark
-                          ? AppColors.textInverse
-                          : AppColors.textPrimary),
-                  size: 20,
-                ),
-              ),
             );
           },
         ),
         const SizedBox(width: 10),
+
+        // Кнопка отзывов
         _ActionButton(
           isDark: isDark,
           onTap: () => context.push('/university/$universityId/reviews'),
           child: Icon(
             Icons.chat_bubble_outline_rounded,
             size: 20,
-            color: isDark ? AppColors.textInverse : AppColors.textPrimary,
+            color:
+                isDark ? AppColors.textInverse : AppColors.textPrimary,
           ),
         ),
       ],
     );
   }
 }
+
+// ─── Кнопка лайка с пружинной анимацией ──────────────────────────────────────
+
+/// При нажатии — иконка сжимается и выпрыгивает обратно.
+/// При переключении isLiked — плавный swap иконки через AnimatedSwitcher.
+class _LikeButton extends StatefulWidget {
+  const _LikeButton({
+    required this.isDark,
+    required this.isFav,
+    required this.onTap,
+  });
+
+  final bool isDark;
+  final bool isFav;
+  final VoidCallback onTap;
+
+  @override
+  State<_LikeButton> createState() => _LikeButtonState();
+}
+
+class _LikeButtonState extends State<_LikeButton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+  late final Animation<double> _springScale;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 450),
+    );
+    _springScale = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(begin: 1.0, end: 1.55)
+            .chain(CurveTween(curve: Curves.easeOut)),
+        weight: 35,
+      ),
+      TweenSequenceItem(
+        tween: Tween(begin: 1.55, end: 0.80)
+            .chain(CurveTween(curve: Curves.easeIn)),
+        weight: 30,
+      ),
+      TweenSequenceItem(
+        tween: Tween(begin: 0.80, end: 1.0)
+            .chain(CurveTween(curve: Curves.elasticOut)),
+        weight: 35,
+      ),
+    ]).animate(_ctrl);
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _ActionButton(
+      isDark: widget.isDark,
+      onTap: () {
+        _ctrl.forward(from: 0);
+        widget.onTap();
+      },
+      child: ScaleTransition(
+        scale: _springScale,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 220),
+          switchInCurve: Curves.easeIn,
+          switchOutCurve: Curves.easeOut,
+          transitionBuilder: (child, animation) => ScaleTransition(
+            scale: animation,
+            child: child,
+          ),
+          child: Icon(
+            widget.isFav
+                ? Icons.favorite_rounded
+                : Icons.favorite_border_rounded,
+            key: ValueKey(widget.isFav),
+            color: widget.isFav
+                ? AppColors.danger
+                : (widget.isDark
+                    ? AppColors.textInverse
+                    : AppColors.textPrimary),
+            size: 20,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Базовая кнопка-иконка ────────────────────────────────────────────────────
 
 class _ActionButton extends StatelessWidget {
   const _ActionButton({
@@ -402,6 +507,8 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
+// ─── Буква-заглушка логотипа ──────────────────────────────────────────────────
+
 class _Initial extends StatelessWidget {
   const _Initial({required this.name});
 
@@ -422,7 +529,7 @@ class _Initial extends StatelessWidget {
   }
 }
 
-// ── Tabs ───────────────────────────────────────────────────────────────────────
+// ─── Вкладки ──────────────────────────────────────────────────────────────────
 
 class _Tabs extends StatelessWidget {
   const _Tabs({required this.current, required this.isDark});
@@ -476,18 +583,29 @@ class _TabItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isSelected = tab == current;
-    final textColor =
+    final activeColor =
         isDark ? AppColors.textInverse : AppColors.textPrimary;
+
     return GestureDetector(
       onTap: () => context.read<UniversityDetailCubit>().selectTab(tab),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        padding:
-            const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: isSelected
             ? BoxDecoration(
-                border: Border.all(color: textColor, width: 1.5),
+                color: isDark
+                    ? AppColors.surfaceMutedDark
+                    : AppColors.backgroundLight,
+                border: Border.all(color: activeColor, width: 1.5),
                 borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.06),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               )
             : null,
         child: Text(
@@ -496,7 +614,7 @@ class _TabItem extends StatelessWidget {
             fontSize: 14,
             fontWeight:
                 isSelected ? FontWeight.w600 : FontWeight.w400,
-            color: isSelected ? textColor : AppColors.textSecondary,
+            color: isSelected ? activeColor : AppColors.textSecondary,
           ),
         ),
       ),
@@ -504,7 +622,7 @@ class _TabItem extends StatelessWidget {
   }
 }
 
-// ── TabContent ─────────────────────────────────────────────────────────────────
+// ─── Контент вкладки ──────────────────────────────────────────────────────────
 
 class _TabContent extends StatelessWidget {
   const _TabContent({
@@ -555,21 +673,7 @@ class _TabContent extends StatelessWidget {
           );
         }
         if (state.programs.isEmpty) {
-          return SizedBox(
-            height: 200,
-            child: Center(
-              child: Text(
-                l10n.universityNewsEmpty,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: (isDark
-                          ? AppColors.textInverse
-                          : AppColors.textPrimary)
-                      .withValues(alpha: 0.4),
-                ),
-              ),
-            ),
-          );
+          return _EmptyTab(isDark: isDark, label: l10n.universityNewsEmpty);
         }
         return Column(
           children: state.programs
@@ -588,21 +692,7 @@ class _TabContent extends StatelessWidget {
           );
         }
         if (state.news.isEmpty) {
-          return SizedBox(
-            height: 200,
-            child: Center(
-              child: Text(
-                l10n.universityNewsEmpty,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: (isDark
-                          ? AppColors.textInverse
-                          : AppColors.textPrimary)
-                      .withValues(alpha: 0.4),
-                ),
-              ),
-            ),
-          );
+          return _EmptyTab(isDark: isDark, label: l10n.universityNewsEmpty);
         }
         return Column(
           children: state.news
@@ -616,7 +706,33 @@ class _TabContent extends StatelessWidget {
   }
 }
 
-// ── ProgramItem ────────────────────────────────────────────────────────────────
+// ─── Пустая вкладка ───────────────────────────────────────────────────────────
+
+class _EmptyTab extends StatelessWidget {
+  const _EmptyTab({required this.isDark, required this.label});
+
+  final bool isDark;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      child: Center(
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 16,
+            color: (isDark ? AppColors.textInverse : AppColors.textPrimary)
+                .withValues(alpha: 0.4),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─── ProgramItem ──────────────────────────────────────────────────────────────
 
 class _ProgramItem extends StatelessWidget {
   const _ProgramItem({required this.program, required this.isDark});
@@ -629,10 +745,11 @@ class _ProgramItem extends StatelessWidget {
     showDialog<void>(
       context: context,
       builder: (ctx) => Dialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        backgroundColor:
-            isDark ? AppColors.surfaceMutedDark : AppColors.backgroundLight,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24)),
+        backgroundColor: isDark
+            ? AppColors.surfaceMutedDark
+            : AppColors.backgroundLight,
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -667,7 +784,6 @@ class _ProgramItem extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              // Описание
               Text(
                 program.description,
                 style: TextStyle(
@@ -792,7 +908,7 @@ class _ProgramItem extends StatelessWidget {
   }
 }
 
-// ── NewsItem ───────────────────────────────────────────────────────────────────
+// ─── NewsItem ─────────────────────────────────────────────────────────────────
 
 class _NewsItem extends StatelessWidget {
   const _NewsItem({required this.news, required this.isDark});
@@ -809,7 +925,6 @@ class _NewsItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Фото новости (если есть)
           if (news.imageUrl.isNotEmpty) ...[
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -818,12 +933,11 @@ class _NewsItem extends StatelessWidget {
                 height: 160,
                 width: double.infinity,
                 fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
               ),
             ),
             const SizedBox(height: 12),
           ],
-          // Дата
           Text(
             dateStr,
             style: const TextStyle(
@@ -832,19 +946,18 @@ class _NewsItem extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          // Заголовок
           Text(
             news.title,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w700,
               height: 1.3,
-              color:
-                  isDark ? AppColors.textInverse : AppColors.textPrimary,
+              color: isDark
+                  ? AppColors.textInverse
+                  : AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
-          // Текст
           Text(
             news.body,
             style: TextStyle(
@@ -861,7 +974,7 @@ class _NewsItem extends StatelessWidget {
   }
 }
 
-// ── InfoRow ────────────────────────────────────────────────────────────────────
+// ─── InfoRow ──────────────────────────────────────────────────────────────────
 
 class _InfoRow extends StatelessWidget {
   const _InfoRow({
@@ -911,7 +1024,7 @@ class _InfoRow extends StatelessWidget {
   }
 }
 
-// ── ContactsCard ───────────────────────────────────────────────────────────────
+// ─── ContactsCard ─────────────────────────────────────────────────────────────
 
 class _ContactsCard extends StatelessWidget {
   const _ContactsCard({required this.university, required this.isDark});
@@ -927,9 +1040,8 @@ class _ContactsCard extends StatelessWidget {
       if (rows.isNotEmpty) {
         rows.add(Divider(
           height: 20,
-          color:
-              (isDark ? AppColors.textInverse : AppColors.textPrimary)
-                  .withValues(alpha: 0.08),
+          color: (isDark ? AppColors.textInverse : AppColors.textPrimary)
+              .withValues(alpha: 0.08),
         ));
       }
       rows.add(Row(
@@ -970,7 +1082,7 @@ class _ContactsCard extends StatelessWidget {
   }
 }
 
-// ── AdmissionCard ──────────────────────────────────────────────────────────────
+// ─── AdmissionCard ────────────────────────────────────────────────────────────
 
 class _AdmissionCard extends StatelessWidget {
   const _AdmissionCard({
@@ -1037,7 +1149,7 @@ class _AdmissionCard extends StatelessWidget {
   }
 }
 
-// ── Shared Card ────────────────────────────────────────────────────────────────
+// ─── Общая карточка ───────────────────────────────────────────────────────────
 
 class _Card extends StatelessWidget {
   const _Card({required this.child, required this.isDark});

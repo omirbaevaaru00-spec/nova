@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +16,6 @@ import '../bloc/profile_cubit.dart';
 import '../bloc/profile_state.dart';
 import '../widgets/favorite_card.dart';
 import '../widgets/scores_pill.dart';
-
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -48,7 +46,7 @@ class _ProfileView extends StatelessWidget {
 
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        // ── Загрузка ─────────────────────────────────────────────
+        // ── Загрузка ──────────────────────────────────────────────
         if (state.status == ProfileStatus.loading ||
             state.status == ProfileStatus.initial) {
           return Scaffold(
@@ -57,13 +55,12 @@ class _ProfileView extends StatelessWidget {
           );
         }
 
-        // ── Не авторизован: показываем заглушку С навбаром ──────
-        // Навбар остаётся — НЕ делаем context.go, остаёмся внутри ShellRoute.
+        // ── Не авторизован ────────────────────────────────────────
         if (state.status == ProfileStatus.unauthenticated) {
           return _UnauthenticatedView(isDark: isDark, l10n: l10n);
         }
 
-        // ── Авторизован ──────────────────────────────────────────
+        // ── Авторизован ───────────────────────────────────────────
         return Scaffold(
           backgroundColor: bgColor,
           body: CustomScrollView(
@@ -143,7 +140,7 @@ class _ProfileView extends StatelessWidget {
   }
 }
 
-// ── Заглушка для неавторизованных (внутри ShellRoute — навбар виден) ─────────
+// ── Заглушка для неавторизованных ────────────────────────────────────────────
 
 class _UnauthenticatedView extends StatelessWidget {
   const _UnauthenticatedView({required this.isDark, required this.l10n});
@@ -164,7 +161,6 @@ class _UnauthenticatedView extends StatelessWidget {
           child: Column(
             children: [
               const Spacer(flex: 2),
-              // Иллюстрация
               Container(
                 width: 110,
                 height: 110,
@@ -196,8 +192,9 @@ class _UnauthenticatedView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
-                  color:
-                      isDark ? AppColors.textInverse : AppColors.textPrimary,
+                  color: isDark
+                      ? AppColors.textInverse
+                      : AppColors.textPrimary,
                 ),
               ),
               const SizedBox(height: 10),
@@ -211,7 +208,6 @@ class _UnauthenticatedView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 36),
-              // Кнопка «Войти / Зарегистрироваться»
               SizedBox(
                 width: double.infinity,
                 height: 52,
@@ -235,7 +231,6 @@ class _UnauthenticatedView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 14),
-              // Вход
               TextButton(
                 onPressed: () => context.push(RouteNames.login),
                 child: Text(
