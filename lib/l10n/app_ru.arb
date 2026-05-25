@@ -283,6 +283,51 @@
   "settingsDeleteAccountConfirmBody": "Это действие необратимо. Все ваши данные, отзывы и избранное будут удалены навсегда.",
   "settingsDeleteAccountCancel": "Отмена",
   "settingsDeleteAccountConfirm": "Удалить",
-  "settingsDeleteAccountSuccess": "Аккаунт удалён"
+  "settingsDeleteAccountSuccess": "Аккаунт удалён",
+
+  "registerSubtitle": "Введите email для создания аккаунта",
+  "validationEmailRequired": "Введите email",
+  "validationEmailInvalid": "Некорректный формат email",
+
+  "reviewDeleteTitle": "Удалить отзыв?",
+  "reviewDeleteBody": "Это действие нельзя отменить. Отзыв будет удалён навсегда.",
+  "reviewDeleteConfirm": "Удалить",
+  "reviewThanksTitle": "Спасибо за ваш отзыв!",
+  "reviewThanksSubtitle": "Ваш отзыв поможет другим абитуриентам.",
+
+
+  "profileScoresEnt": "ЕНТ",
+  "universityTypeStateShort": "Гос",
+  "universityTypePrivateShort": "Частный",
+  "profileEntLabel": "ЕНТ",
+ 
+  "reviewThanksTitle": "Спасибо за ваш отзыв!",
+  "reviewThanksSubtitle": "Ваш отзыв поможет другим абитуриентам.",
+  "reviewDeleteTitle": "Удалить отзыв?",
+  "reviewDeleteBody": "Это действие нельзя отменить.",
+  "reviewDeleteConfirm": "Удалить",
+ 
+  "settingsDeleteAccount": "Удалить аккаунт",
+  "settingsDeleteAccountConfirmTitle": "Удалить аккаунт?",
+  "settingsDeleteAccountConfirmBody": "Все данные будут удалены навсегда.",
+  "settingsDeleteAccountCancel": "Отмена",
+  "settingsDeleteAccountConfirm": "Удалить",
+  "settingsDeleteAccountSuccess": "Аккаунт удалён",
+ 
+  "supportTitle": "Поддержка",
+  "supportDescription": "Здесь вы можете обратиться за помощью.",
+  "supportTelegramButton": "Написать в Telegram",
+  "supportResponseTime": "Обычно отвечаем в течение 2–4 часов",
+  "supportFaq1Question": "Как найти подходящий вуз?",
+  "supportFaq1Answer": "Используйте фильтры на экране поиска.",
+  "supportFaq2Question": "Как добавить вуз в избранное?",
+  "supportFaq2Answer": "Нажмите на иконку сердца. Нужен аккаунт.",
+  "supportFaq3Question": "Как сменить язык?",
+  "supportFaq3Answer": "Настройки → Язык.",
+ 
+  "registerSubtitle": "Введите email для создания аккаунта",
+  "validationEmailRequired": "Введите email",
+  "validationEmailInvalid": "Некорректный формат email"
+
 }
 

@@ -1,15 +1,27 @@
+import 'localized_string.dart';
 import 'university_model.dart';
 
-/// 20 казахстанских вузов — статичный каталог.
+/// 20 казахстанских вузов — статичный каталог на трёх языках.
 const List<University> kazakhUniversities = [
   University(
     id: 'nu',
-    name: 'Назарбаев Университет',
-    city: 'Астана',
+    name: LocalizedString(
+      ru: 'Назарбаев Университет',
+      en: 'Nazarbayev University',
+      kk: 'Назарбаев Университеті',
+    ),
+    city: LocalizedString(
+      ru: 'Астана',
+      en: 'Astana',
+      kk: 'Астана',
+    ),
+    description: LocalizedString(
+      ru: 'Ведущий исследовательский университет Казахстана международного уровня.',
+      en: 'Kazakhstan\'s leading international research university.',
+      kk: 'Қазақстанның жетекші халықаралық деңгейдегі зерттеу университеті.',
+    ),
     type: 'гос',
     level: 'университет',
-    description:
-        'Ведущий исследовательский университет Казахстана международного уровня.',
     directions: ['IT', 'Медицина', 'Бизнес', 'Инженерия', 'Наука'],
     costRange: '500 000 – 2 000 000 ₸/год',
     duration: '4 года',
@@ -28,12 +40,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'kimep',
-    name: 'КИМЭП Университет',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'КИМЭП Университет',
+      en: 'KIMEP University',
+      kk: 'КИМЭП Университеті',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Международный университет бизнеса и права с программами на английском.',
+      en: 'International university of business and law with English-taught programs.',
+      kk: 'Ағылшын тілінде оқытатын халықаралық бизнес және құқық университеті.',
+    ),
     type: 'частный',
     level: 'университет',
-    description:
-        'Международный университет бизнеса и права с программами на английском.',
     directions: ['Бизнес', 'Право', 'Медиа'],
     costRange: '1 200 000 – 2 500 000 ₸/год',
     duration: '4 года',
@@ -51,12 +74,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'sdu',
-    name: 'SDU University',
-    city: 'Каскелен',
+    name: LocalizedString(
+      ru: 'SDU University',
+      en: 'SDU University',
+      kk: 'SDU Университеті',
+    ),
+    city: LocalizedString(
+      ru: 'Каскелен',
+      en: 'Kaskelen',
+      kk: 'Қаскелен',
+    ),
+    description: LocalizedString(
+      ru: 'Ведущий частный университет с турецкими корнями и широким выбором программ.',
+      en: 'A leading private university with Turkish roots and a wide range of programs.',
+      kk: 'Түрік тамырлы жетекші жеке университет, бағдарламалардың кең таңдауымен.',
+    ),
     type: 'частный',
     level: 'университет',
-    description:
-        'Ведущий частный университет с турецкими корнями и широким выбором программ.',
     directions: ['IT', 'Бизнес', 'Инженерия', 'Педагогика'],
     costRange: '700 000 – 1 500 000 ₸/год',
     duration: '4 года',
@@ -73,12 +107,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'kbtu',
-    name: 'КБТУ',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'КБТУ',
+      en: 'KBTU',
+      kk: 'ҚБТУ',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Казахстанско-британский технический университет. Лидер в IT и энергетике.',
+      en: 'Kazakhstan-British Technical University. Leader in IT and energy.',
+      kk: 'Қазақстан-Британ техникалық университеті. IT және энергетика саласының көшбасшысы.',
+    ),
     type: 'частный',
     level: 'университет',
-    description:
-        'Казахстанско-британский технический университет. Лидер в IT и энергетике.',
     directions: ['IT', 'Инженерия', 'Нефтегаз'],
     costRange: '1 000 000 – 2 200 000 ₸/год',
     duration: '4 года',
@@ -96,11 +141,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'iitu',
-    name: 'МУИТ',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'МУИТ',
+      en: 'IITU',
+      kk: 'ХАТУ',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Международный университет информационных технологий.',
+      en: 'International University of Information Technology.',
+      kk: 'Халықаралық ақпараттық технологиялар университеті.',
+    ),
     type: 'частный',
     level: 'университет',
-    description: 'Международный университет информационных технологий.',
     directions: ['IT', 'Инженерия', 'Дизайн'],
     costRange: '600 000 – 1 300 000 ₸/год',
     duration: '4 года',
@@ -117,12 +174,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'aitu',
-    name: 'AITU',
-    city: 'Астана',
+    name: LocalizedString(
+      ru: 'AITU',
+      en: 'AITU',
+      kk: 'AITU',
+    ),
+    city: LocalizedString(
+      ru: 'Астана',
+      en: 'Astana',
+      kk: 'Астана',
+    ),
+    description: LocalizedString(
+      ru: 'Astana IT University — технологический университет нового поколения.',
+      en: 'Astana IT University — a next-generation technology university.',
+      kk: 'Astana IT University — жаңа буын технологиялық университет.',
+    ),
     type: 'частный',
     level: 'университет',
-    description:
-        'Astana IT University — технологический университет нового поколения.',
     directions: ['IT', 'Data Science', 'Кибербезопасность'],
     costRange: '800 000 – 1 800 000 ₸/год',
     duration: '4 года',
@@ -139,11 +207,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'kazntu',
-    name: 'КазНТУ им. Сатпаева',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'КазНТУ им. Сатпаева',
+      en: 'Satbayev University',
+      kk: 'Сәтбаев Университеті',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Ведущий технический университет страны с богатой историей.',
+      en: 'The country\'s leading technical university with a rich history.',
+      kk: 'Бай тарихы бар елдің жетекші техникалық университеті.',
+    ),
     type: 'гос',
     level: 'университет',
-    description: 'Ведущий технический университет страны с богатой историей.',
     directions: ['Инженерия', 'Геология', 'IT', 'Нефтегаз'],
     costRange: '400 000 – 900 000 ₸/год',
     duration: '4 года',
@@ -160,12 +240,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'kaznu',
-    name: 'КазНУ им. аль-Фараби',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'КазНУ им. аль-Фараби',
+      en: 'Al-Farabi Kazakh National University',
+      kk: 'Әл-Фараби атындағы ҚазҰУ',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Старейший и крупнейший классический университет Казахстана.',
+      en: 'The oldest and largest classical university in Kazakhstan.',
+      kk: 'Қазақстанның ең көне және ірі классикалық университеті.',
+    ),
     type: 'гос',
     level: 'университет',
-    description:
-        'Старейший и крупнейший классический университет Казахстана.',
     directions: ['Наука', 'Медицина', 'Право', 'Педагогика', 'Бизнес'],
     costRange: '350 000 – 800 000 ₸/год',
     duration: '4 года',
@@ -176,26 +267,29 @@ const List<University> kazakhUniversities = [
     imageUrl:
         'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800',
     logoUrl: '',
-    tags: [
-      'medicine',
-      'law',
-      'pedagogy',
-      'business',
-      'grants',
-      'master',
-      'bachelor',
-    ],
+    tags: ['medicine', 'law', 'pedagogy', 'business', 'grants', 'master', 'bachelor'],
     minEnt: 75,
     minGpa: 2.7,
   ),
   University(
     id: 'eurasian',
-    name: 'ЕНУ им. Гумилёва',
-    city: 'Астана',
+    name: LocalizedString(
+      ru: 'ЕНУ им. Гумилёва',
+      en: 'L.N. Gumilyov Eurasian National University',
+      kk: 'Л.Н. Гумилев атындағы ЕҰУ',
+    ),
+    city: LocalizedString(
+      ru: 'Астана',
+      en: 'Astana',
+      kk: 'Астана',
+    ),
+    description: LocalizedString(
+      ru: 'Евразийский национальный университет — один из ведущих вузов столицы.',
+      en: 'Eurasian National University — one of the capital\'s leading universities.',
+      kk: 'Еуразия ұлттық университеті — астананың жетекші жоғары оқу орындарының бірі.',
+    ),
     type: 'гос',
     level: 'университет',
-    description:
-        'Евразийский национальный университет — один из ведущих вузов столицы.',
     directions: ['Право', 'Экономика', 'IT', 'Педагогика'],
     costRange: '380 000 – 850 000 ₸/год',
     duration: '4 года',
@@ -212,12 +306,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'almau',
-    name: 'AlmaU',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'AlmaU',
+      en: 'AlmaU',
+      kk: 'AlmaU',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Алматинский университет менеджмента — лидер в бизнес-образовании.',
+      en: 'Almaty Management University — a leader in business education.',
+      kk: 'Алматы менеджмент университеті — бизнес білімінің көшбасшысы.',
+    ),
     type: 'частный',
     level: 'университет',
-    description:
-        'Алматинский университет менеджмента — лидер в бизнес-образовании.',
     directions: ['Бизнес', 'MBA', 'Финансы', 'Маркетинг'],
     costRange: '900 000 – 1 600 000 ₸/год',
     duration: '4 года',
@@ -234,11 +339,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'narxoz',
-    name: 'Нархоз Университет',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Нархоз Университет',
+      en: 'Narxoz University',
+      kk: 'Нархоз Университеті',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Университет Нархоз — топовый вуз для экономики и права.',
+      en: 'Narxoz University — a top institution for economics and law.',
+      kk: 'Нархоз университеті — экономика және құқық бойынша үздік жоғары оқу орны.',
+    ),
     type: 'частный',
     level: 'университет',
-    description: 'Университет Нархоз — топовый вуз для экономики и права.',
     directions: ['Экономика', 'Право', 'Бизнес', 'Финансы'],
     costRange: '700 000 – 1 400 000 ₸/год',
     duration: '4 года',
@@ -255,11 +372,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'meduniver',
-    name: 'КазНМУ им. Асфендиярова',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'КазНМУ им. Асфендиярова',
+      en: 'Asfendiyarov Kazakh National Medical University',
+      kk: 'Асфендияров атындағы ҚазҰМУ',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Ведущий медицинский университет страны.',
+      en: 'The country\'s leading medical university.',
+      kk: 'Елдің жетекші медицина университеті.',
+    ),
     type: 'гос',
     level: 'университет',
-    description: 'Ведущий медицинский университет страны.',
     directions: ['Медицина', 'Фармация', 'Стоматология'],
     costRange: '500 000 – 1 200 000 ₸/год',
     duration: '5–6 лет',
@@ -276,11 +405,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'caa',
-    name: 'Академия гражданской авиации',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Академия гражданской авиации',
+      en: 'Academy of Civil Aviation',
+      kk: 'Азаматтық авиация академиясы',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Единственный авиационный вуз в Центральной Азии.',
+      en: 'The only aviation university in Central Asia.',
+      kk: 'Орталық Азиядағы жалғыз авиациялық жоғары оқу орны.',
+    ),
     type: 'гос',
     level: 'университет',
-    description: 'Единственный авиационный вуз в Центральной Азии.',
     directions: ['Авиация', 'Инженерия', 'Логистика'],
     costRange: '450 000 – 950 000 ₸/год',
     duration: '4 года',
@@ -297,11 +438,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'ablaikhan',
-    name: 'КазУМОиМЯ им. Абылай хана',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'КазУМОиМЯ им. Абылай хана',
+      en: 'Ablai Khan University of International Relations',
+      kk: 'Абылай хан атындағы ҚазХҚжӘТУ',
+    ),
+    city: LocalizedString(
+      ru: 'Алматы',
+      en: 'Almaty',
+      kk: 'Алматы',
+    ),
+    description: LocalizedString(
+      ru: 'Университет международных отношений и мировых языков.',
+      en: 'University of International Relations and World Languages.',
+      kk: 'Халықаралық қатынастар және әлем тілдері университеті.',
+    ),
     type: 'гос',
     level: 'университет',
-    description: 'Университет международных отношений и мировых языков.',
     directions: ['Лингвистика', 'МО', 'Перевод', 'Педагогика'],
     costRange: '380 000 – 800 000 ₸/год',
     duration: '4 года',
@@ -318,12 +471,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'kazguu',
-    name: 'Университет КАЗГЮУ',
-    city: 'Астана',
+    name: LocalizedString(
+      ru: 'Университет КАЗГЮУ',
+      en: 'KAZGUU University',
+      kk: 'ҚАЗГЗУ Университеті',
+    ),
+    city: LocalizedString(
+      ru: 'Астана',
+      en: 'Astana',
+      kk: 'Астана',
+    ),
+    description: LocalizedString(
+      ru: 'Казахский гуманитарно-юридический инновационный университет.',
+      en: 'Kazakh Humanitarian Law Innovation University.',
+      kk: 'Қазақ гуманитарлық-заң инновациялық университеті.',
+    ),
     type: 'частный',
     level: 'университет',
-    description:
-        'Казахский гуманитарно-юридический инновационный университет.',
     directions: ['Право', 'Бизнес', 'IT', 'Психология'],
     costRange: '600 000 – 1 300 000 ₸/год',
     duration: '4 года',
@@ -340,11 +504,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'miras',
-    name: 'Университет «Мирас»',
-    city: 'Шымкент',
+    name: LocalizedString(
+      ru: 'Университет «Мирас»',
+      en: 'Miras University',
+      kk: '«Мирас» Университеті',
+    ),
+    city: LocalizedString(
+      ru: 'Шымкент',
+      en: 'Shymkent',
+      kk: 'Шымкент',
+    ),
+    description: LocalizedString(
+      ru: 'Современный университет юга Казахстана.',
+      en: 'A modern university in southern Kazakhstan.',
+      kk: 'Оңтүстік Қазақстанның заманауи университеті.',
+    ),
     type: 'частный',
     level: 'университет',
-    description: 'Современный университет юга Казахстана.',
     directions: ['Медицина', 'IT', 'Педагогика', 'Бизнес'],
     costRange: '350 000 – 750 000 ₸/год',
     duration: '4 года',
@@ -361,11 +537,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'ektu',
-    name: 'ВКТУ им. Серикбаева',
-    city: 'Усть-Каменогорск',
+    name: LocalizedString(
+      ru: 'ВКТУ им. Серикбаева',
+      en: 'D. Serikbayev EKSTU',
+      kk: 'Д. Серікбаев атындағы ШҚТУ',
+    ),
+    city: LocalizedString(
+      ru: 'Усть-Каменогорск',
+      en: 'Ust-Kamenogorsk',
+      kk: 'Өскемен',
+    ),
+    description: LocalizedString(
+      ru: 'Восточно-Казахстанский технический университет.',
+      en: 'East Kazakhstan Technical University.',
+      kk: 'Шығыс Қазақстан техникалық университеті.',
+    ),
     type: 'гос',
     level: 'университет',
-    description: 'Восточно-Казахстанский технический университет.',
     directions: ['Инженерия', 'IT', 'Металлургия'],
     costRange: '350 000 – 700 000 ₸/год',
     duration: '4 года',
@@ -382,11 +570,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'zhgu',
-    name: 'ЖГУ им. Жансугурова',
-    city: 'Талдыкорган',
+    name: LocalizedString(
+      ru: 'ЖГУ им. Жансугурова',
+      en: 'I. Zhansugurov Zhetysu University',
+      kk: 'І. Жансүгіров атындағы ЖУ',
+    ),
+    city: LocalizedString(
+      ru: 'Талдыкорган',
+      en: 'Taldykorgan',
+      kk: 'Талдықорған',
+    ),
+    description: LocalizedString(
+      ru: 'Жетысуский государственный университет.',
+      en: 'Zhetysu State University.',
+      kk: 'Жетісу мемлекеттік университеті.',
+    ),
     type: 'гос',
     level: 'университет',
-    description: 'Жетысуский государственный университет.',
     directions: ['Педагогика', 'Право', 'Экономика'],
     costRange: '300 000 – 600 000 ₸/год',
     duration: '4 года',
@@ -403,11 +603,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'kstu',
-    name: 'КарТУ им. Абылкасымова',
-    city: 'Караганда',
+    name: LocalizedString(
+      ru: 'КарТУ им. Абылкасымова',
+      en: 'Abylkas Saginov Karaganda Technical University',
+      kk: 'Ә. Сағынов атындағы Қарағанды техникалық университеті',
+    ),
+    city: LocalizedString(
+      ru: 'Караганда',
+      en: 'Karaganda',
+      kk: 'Қарағанды',
+    ),
+    description: LocalizedString(
+      ru: 'Карагандинский технический университет.',
+      en: 'Karaganda Technical University.',
+      kk: 'Қарағанды техникалық университеті.',
+    ),
     type: 'гос',
     level: 'университет',
-    description: 'Карагандинский технический университет.',
     directions: ['Горное дело', 'Инженерия', 'IT'],
     costRange: '350 000 – 750 000 ₸/год',
     duration: '4 года',
@@ -424,11 +636,23 @@ const List<University> kazakhUniversities = [
   ),
   University(
     id: 'agu',
-    name: 'АГУ им. Жубанова',
-    city: 'Актобе',
+    name: LocalizedString(
+      ru: 'АГУ им. Жубанова',
+      en: 'A. Zhubanov Aktobe Regional University',
+      kk: 'Ә. Жұбанов атындағы Ақтөбе өңірлік университеті',
+    ),
+    city: LocalizedString(
+      ru: 'Актобе',
+      en: 'Aktobe',
+      kk: 'Ақтөбе',
+    ),
+    description: LocalizedString(
+      ru: 'Актюбинский региональный университет.',
+      en: 'Aktobe Regional University.',
+      kk: 'Ақтөбе өңірлік университеті.',
+    ),
     type: 'гос',
     level: 'университет',
-    description: 'Актюбинский региональный университет.',
     directions: ['Педагогика', 'Медицина', 'Право', 'Экономика'],
     costRange: '300 000 – 600 000 ₸/год',
     duration: '4 года',

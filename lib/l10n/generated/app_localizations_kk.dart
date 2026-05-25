@@ -680,8 +680,7 @@ class AppLocalizationsKk extends AppLocalizations {
   String get supportTitle => 'Қолдау';
 
   @override
-  String get supportDescription =>
-      'Мұнда сіз көмек сұрай аласыз. Біздің команда бірнеше сағат ішінде жауап береді.';
+  String get supportDescription => 'Мұнда сіз көмек сұрай аласыз.';
 
   @override
   String get supportTelegramButton => 'Telegram-ға жазу';
@@ -693,23 +692,20 @@ class AppLocalizationsKk extends AppLocalizations {
   String get supportFaq1Question => 'Қалай сәйкес университет табуға болады?';
 
   @override
-  String get supportFaq1Answer =>
-      'Басты экрандағы сүзгілерді пайдаланыңыз: бағыт, қала және оқу форматын таңдаңыз — тізім автоматты түрде жаңарады.';
+  String get supportFaq1Answer => 'Іздеу экранындағы сүзгілерді пайдаланыңыз.';
 
   @override
   String get supportFaq2Question =>
       'Университетті таңдаулыларға қалай қосуға болады?';
 
   @override
-  String get supportFaq2Answer =>
-      'Университет картасындағы жүрек белгішесін басыңыз. Бұл үшін аккаунтқа кіру керек.';
+  String get supportFaq2Answer => 'Жүрек белгішесін басыңыз. Аккаунт қажет.';
 
   @override
-  String get supportFaq3Question => 'Қолданба тілін қалай өзгертуге болады?';
+  String get supportFaq3Question => 'Тілді қалай өзгертуге болады?';
 
   @override
-  String get supportFaq3Answer =>
-      'Параметрлер → Тіл бөліміне өтіп, үш қолжетімді тілдің бірін таңдаңыз: орыс, ағылшын, қазақ.';
+  String get supportFaq3Answer => 'Параметрлер → Тіл.';
 
   @override
   String get settingsDeleteAccount => 'Аккаунтты жою';
@@ -719,7 +715,7 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get settingsDeleteAccountConfirmBody =>
-      'Бұл әрекетті қайтару мүмкін емес. Барлық деректеріңіз, пікірлеріңіз және таңдаулыларыңыз мәңгілікке жойылады.';
+      'Барлық деректер мәңгілікке жойылады.';
 
   @override
   String get settingsDeleteAccountCancel => 'Болдырмау';
@@ -729,4 +725,35 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get settingsDeleteAccountSuccess => 'Аккаунт жойылды';
+
+  @override
+  String get registerSubtitle => 'Аккаунт жасау үшін email енгізіңіз';
+
+  @override
+  String get validationEmailRequired => 'Email енгізіңіз';
+
+  @override
+  String get validationEmailInvalid => 'Email форматы қате';
+
+  @override
+  String get reviewDeleteTitle => 'Пікірді жою керек пе?';
+
+  @override
+  String get reviewDeleteBody => 'Бұл әрекетті болдырмау мүмкін емес.';
+
+  @override
+  String get reviewDeleteConfirm => 'Жою';
+
+  @override
+  String get reviewThanksTitle => 'Пікіріңіз үшін рахмет!';
+
+  @override
+  String get reviewThanksSubtitle =>
+      'Сіздің пікіріңіз басқа оқушыларға көмектеседі.';
+
+  @override
+  String get profileScoresEnt => 'ҰБТ';
+
+  @override
+  String get profileEntLabel => 'ҰБТ';
 }

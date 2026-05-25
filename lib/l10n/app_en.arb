@@ -264,6 +264,50 @@
   "settingsDeleteAccountConfirmBody": "This action is irreversible. All your data, reviews and favourites will be permanently deleted.",
   "settingsDeleteAccountCancel": "Cancel",
   "settingsDeleteAccountConfirm": "Delete",
-  "settingsDeleteAccountSuccess": "Account deleted"
+  "settingsDeleteAccountSuccess": "Account deleted",
+
+  "registerSubtitle": "Enter your email to create an account",
+  "validationEmailRequired": "Please enter your email",
+  "validationEmailInvalid": "Invalid email format",
+
+  "reviewDeleteTitle": "Delete review?",
+  "reviewDeleteBody": "This action cannot be undone. The review will be permanently deleted.",
+  "reviewDeleteConfirm": "Delete",
+  "reviewThanksTitle": "Thank you for your review!",
+  "reviewThanksSubtitle": "Your review will help other applicants.",
+
+  
+  "profileScoresEnt": "UNT",
+  "universityTypeStateShort": "State",
+  "universityTypePrivateShort": "Private",
+  "profileEntLabel": "UNT",
+ 
+  "reviewThanksTitle": "Thank you for your review!",
+  "reviewThanksSubtitle": "Your review will help other applicants.",
+  "reviewDeleteTitle": "Delete review?",
+  "reviewDeleteBody": "This action cannot be undone.",
+  "reviewDeleteConfirm": "Delete",
+ 
+  "settingsDeleteAccount": "Delete account",
+  "settingsDeleteAccountConfirmTitle": "Delete account?",
+  "settingsDeleteAccountConfirmBody": "All data will be permanently deleted.",
+  "settingsDeleteAccountCancel": "Cancel",
+  "settingsDeleteAccountConfirm": "Delete",
+  "settingsDeleteAccountSuccess": "Account deleted",
+ 
+  "supportTitle": "Support",
+  "supportDescription": "Here you can get help.",
+  "supportTelegramButton": "Write on Telegram",
+  "supportResponseTime": "We usually respond within 2–4 hours",
+  "supportFaq1Question": "How do I find the right university?",
+  "supportFaq1Answer": "Use the filters on the search screen.",
+  "supportFaq2Question": "How do I add a university to favourites?",
+  "supportFaq2Answer": "Tap the heart icon. You need an account.",
+  "supportFaq3Question": "How do I change the language?",
+  "supportFaq3Answer": "Settings → Language.",
+ 
+  "registerSubtitle": "Enter your email to create an account",
+  "validationEmailRequired": "Please enter your email",
+  "validationEmailInvalid": "Invalid email format"
 }
 

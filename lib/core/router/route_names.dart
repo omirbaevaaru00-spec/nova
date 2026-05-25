@@ -36,7 +36,6 @@
 
 // }
 
-/// Все маршруты приложения Sticky.
 abstract final class RouteNames {
   static const String splash          = '/';
   static const String welcome         = '/welcome';
@@ -55,7 +54,6 @@ abstract final class RouteNames {
   static const String newsFeed        = '/news';
   static const String helpCenter      = '/help';
   static const String search          = '/search';
-
-  /// Страница поддержки с Telegram-ботом.
   static const String support         = '/support';
+  static const String privacyPolicy   = '/privacy-policy';
 }

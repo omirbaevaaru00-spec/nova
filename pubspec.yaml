@@ -1,3 +1,80 @@
+# name: stiky
+# description: "Stiky Flutter app"
+# publish_to: 'none'
+
+# version: 1.0.0+1
+
+# environment:
+#   sdk: ^3.11.0
+
+# dependencies:
+#   flutter:
+#     sdk: flutter
+#   flutter_localizations:
+#     sdk: flutter
+#   cupertino_icons: ^1.0.8
+
+#   # Firebase — изолирован в lib/core/services/firebase_service.dart
+#   firebase_core: ^3.15.2
+#   firebase_auth: ^5.7.0
+#   cloud_firestore: ^5.6.12
+#   firebase_storage: ^12.0.0
+#   google_sign_in: ^6.2.1
+#   sign_in_with_apple: ^6.1.1
+
+#   # Навигация
+#   go_router: ^14.8.1
+
+#   # Управление состоянием — все экраны на BLoC
+#   bloc: ^9.2.0
+#   flutter_bloc: ^9.1.1
+
+#   # Утилиты
+#   equatable: ^2.0.8
+#   logger: ^2.6.2
+#   intl: ^0.20.2
+#   shared_preferences: ^2.5.4
+#   url_launcher: ^6.3.2
+#   image_picker: ^1.2.1
+
+
+#   firebase_messaging: ^15.2.0
+
+# dev_dependencies:
+#   flutter_test:
+#     sdk: flutter
+#   flutter_lints: ^6.0.0
+#   flutter_native_splash: ^2.4.7
+#   flutter_launcher_icons: ^0.14.4
+
+# flutter:
+#   uses-material-design: true
+#   generate: true
+#   assets:
+#     - assets/icons/
+#     - assets/images/
+
+# # ── App Icon ────────────────────────────────────
+# flutter_launcher_icons:
+#   android: true
+#   ios: true
+#   remove_alpha_ios: true
+#   image_path: "assets/icons/app_icon_1024.png"
+#   adaptive_icon_foreground: "assets/icons/adaptive_icon_foreground_1024.png"
+#   adaptive_icon_background: "#101010"
+#   ios_image_path: "assets/icons/app_icon_ios_1024.png"
+#   min_sdk_android: 21
+
+# # ── Native Splash ───────────────────────────────
+# flutter_native_splash:
+#   color: "#101010"
+#   image: "assets/icons/splash_logo_1152.png"
+#   android: true
+#   ios: true
+#   android_12:
+#     color: "#101010"
+#     image: "assets/icons/splash_logo_1152.png"
+
 name: stiky
 description: "Stiky Flutter app"
 publish_to: 'none'
@@ -19,6 +96,7 @@ dependencies:
   firebase_auth: ^5.7.0
   cloud_firestore: ^5.6.12
   firebase_storage: ^12.0.0
+  firebase_messaging: ^15.2.5
   google_sign_in: ^6.2.1
   sign_in_with_apple: ^6.1.1
 

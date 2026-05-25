@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'core/localization/locale_controller.dart';
 import 'core/router/app_router.dart';
 import 'core/services/firebase_service.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
+
 import 'data/auth/auth_repository.dart';
 import 'data/auth/auth_repository_impl.dart';
 import 'data/news/university_news_repository.dart';
@@ -20,11 +22,31 @@ import 'data/search/search_history_repository.dart';
 import 'data/search/search_history_repository_impl.dart';
 import 'data/university/university_repository.dart';
 import 'data/university/university_repository_impl.dart';
+
 import 'l10n/generated/app_localizations.dart';
+
+/// Background handler для FCM.
+/// Обязательно top-level функция — не метод класса.
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(
+  RemoteMessage message,
+) async {
+  // Firebase уже инициализирован когда вызывается этот handler.
+  // Здесь можно логировать или показывать локальное уведомление.
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Инициализируем Firebase
   await FirebaseService.instance.init();
+
+  // Регистрируем обработчик фоновых push-уведомлений
+  FirebaseMessaging.onBackgroundMessage(
+    _firebaseMessagingBackgroundHandler,
+  );
+
+  // Загружаем язык и тему из SharedPreferences
   await LocaleController.instance.init();
   await ThemeController.instance.init();
 
@@ -34,21 +56,27 @@ Future<void> main() async {
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider<AuthRepository>(
-          create: (_) => AuthRepositoryImpl(FirebaseService.instance),
+          create: (_) => AuthRepositoryImpl(
+            FirebaseService.instance,
+          ),
         ),
         RepositoryProvider<OnboardingRepository>(
           create: (_) => OnboardingRepositoryImpl(prefs),
         ),
         RepositoryProvider<UniversityRepository>(
-          create: (_) => UniversityRepositoryImpl(FirebaseService.instance),
+          create: (_) => UniversityRepositoryImpl(
+            FirebaseService.instance,
+          ),
         ),
         RepositoryProvider<UniversityProgramRepository>(
-          create: (_) =>
-              UniversityProgramRepositoryImpl(FirebaseService.instance),
+          create: (_) => UniversityProgramRepositoryImpl(
+            FirebaseService.instance,
+          ),
         ),
         RepositoryProvider<UniversityNewsRepository>(
-          create: (_) =>
-              UniversityNewsRepositoryImpl(FirebaseService.instance),
+          create: (_) => UniversityNewsRepositoryImpl(
+            FirebaseService.instance,
+          ),
         ),
         RepositoryProvider<SearchHistoryRepository>(
           create: (_) => SearchHistoryRepositoryImpl(prefs),
@@ -98,9 +126,9 @@ class _StikyAppState extends State<StikyApp> {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeController.instance.mode,
-      // Найди MaterialApp.router и добавь:
-themeAnimationDuration: const Duration(milliseconds: 350),
-themeAnimationCurve: Curves.easeInOut,
+      // Плавная анимация смены темы
+      themeAnimationDuration: const Duration(milliseconds: 350),
+      themeAnimationCurve: Curves.easeInOut,
     );
   }
 }

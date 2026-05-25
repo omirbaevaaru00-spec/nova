@@ -298,6 +298,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -317,9 +318,9 @@ class _Header extends StatelessWidget {
                     university.logoUrl,
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) =>
-                        _Initial(name: university.name),
+                        _Initial(name: university.name.localized(locale)),
                   )
-                : _Initial(name: university.name),
+                : _Initial(name: university.name.localized(locale)),
           ),
         ),
         const SizedBox(width: 14),
@@ -330,7 +331,7 @@ class _Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                university.name,
+                university.name.localized(locale),
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -342,7 +343,7 @@ class _Header extends StatelessWidget {
               ),
               const SizedBox(height: 3),
               Text(
-                university.city,
+                university.city.localized(locale),
                 style: const TextStyle(
                     fontSize: 13, color: AppColors.textSecondary),
               ),
@@ -639,6 +640,7 @@ class _TabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
     final l10n = AppLocalizations.of(context);
     switch (state.tab) {
       case UniversityDetailTab.description:
@@ -647,7 +649,7 @@ class _TabContent extends StatelessWidget {
             _Card(
               isDark: isDark,
               child: Text(
-                university.description,
+                university.description.localized(locale),
                 style: TextStyle(
                   fontSize: 15,
                   height: 1.6,

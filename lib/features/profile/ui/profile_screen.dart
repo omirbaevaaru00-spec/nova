@@ -46,7 +46,6 @@ class _ProfileView extends StatelessWidget {
 
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        // ── Загрузка ──────────────────────────────────────────────
         if (state.status == ProfileStatus.loading ||
             state.status == ProfileStatus.initial) {
           return Scaffold(
@@ -55,12 +54,10 @@ class _ProfileView extends StatelessWidget {
           );
         }
 
-        // ── Не авторизован ────────────────────────────────────────
         if (state.status == ProfileStatus.unauthenticated) {
           return _UnauthenticatedView(isDark: isDark, l10n: l10n);
         }
 
-        // ── Авторизован ───────────────────────────────────────────
         return Scaffold(
           backgroundColor: bgColor,
           body: CustomScrollView(
@@ -121,10 +118,11 @@ class _ProfileView extends StatelessWidget {
                       ),
                     ],
                     const SizedBox(height: 16),
+                    // Конвертируем num? в String для ScoresPill
                     ScoresPill(
-                      gpa: state.gpa,
-                      ielts: state.ielts,
-                      ent: state.ent,
+                      gpa: state.gpa?.toString() ?? '',
+                      ielts: state.ielts?.toString() ?? '',
+                      ent: state.ent?.toString() ?? '',
                     ),
                     const SizedBox(height: 24),
                     _FavoritesSection(favorites: state.favorites),
@@ -140,10 +138,13 @@ class _ProfileView extends StatelessWidget {
   }
 }
 
-// ── Заглушка для неавторизованных ────────────────────────────────────────────
+// ── Заглушка неавторизованного ───────────────────────────────────────────────
 
 class _UnauthenticatedView extends StatelessWidget {
-  const _UnauthenticatedView({required this.isDark, required this.l10n});
+  const _UnauthenticatedView({
+    required this.isDark,
+    required this.l10n,
+  });
 
   final bool isDark;
   final AppLocalizations l10n;
@@ -253,16 +254,15 @@ class _UnauthenticatedView extends StatelessWidget {
   }
 }
 
-// ── Avatar ────────────────────────────────────────────────────────────────────
+// ── Аватар ────────────────────────────────────────────────────────────────────
 
 class _Avatar extends StatelessWidget {
   const _Avatar({required this.photoUrl});
-
   final String? photoUrl;
 
   void _showPhotoSheet(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    showCupertinoModalPopup(
+    showCupertinoModalPopup<void>(
       context: context,
       builder: (sheetContext) => CupertinoActionSheet(
         title: Text(l10n.profilePhotoTitle),
@@ -350,17 +350,17 @@ class _Avatar extends StatelessWidget {
   }
 }
 
-// ── FavoritesSection ──────────────────────────────────────────────────────────
+// ── Избранные ─────────────────────────────────────────────────────────────────
 
 class _FavoritesSection extends StatelessWidget {
   const _FavoritesSection({required this.favorites});
-
   final List favorites;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -369,7 +369,8 @@ class _FavoritesSection extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
-            color: isDark ? AppColors.textInverse : AppColors.textPrimary,
+            color:
+                isDark ? AppColors.textInverse : AppColors.textPrimary,
           ),
         ),
         const SizedBox(height: 12),

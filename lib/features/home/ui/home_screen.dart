@@ -1,3 +1,143 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:go_router/go_router.dart';
+
+// import '../../../core/router/route_names.dart';
+// import '../../../core/services/firebase_service.dart';
+// import '../../../core/theme/app_colors.dart';
+// import '../../../data/onboarding/onboarding_repository.dart';
+// import '../../../data/profile/profile_repository_impl.dart';
+// import '../../../data/university/university_repository.dart';
+// import '../../favorites/global_favorites_notifier.dart';
+// import '../bloc/home_cubit.dart';
+// import '../bloc/home_state.dart';
+// import '../widgets/university_feed_card.dart';
+
+// class HomeScreen extends StatelessWidget {
+//   const HomeScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (context) {
+//         GlobalFavoritesNotifier.instance.load();
+//         return HomeCubit(
+//           universityRepository: context.read<UniversityRepository>(),
+//           onboardingRepository: context.read<OnboardingRepository>(),
+//           profileRepository: ProfileRepositoryImpl(FirebaseService.instance),
+//         )..load();
+//       },
+//       child: const _HomeView(),
+//     );
+//   }
+// }
+
+// class _HomeView extends StatelessWidget {
+//   const _HomeView();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnnotatedRegion<SystemUiOverlayStyle>(
+//       value: SystemUiOverlayStyle.light,
+//       child: Scaffold(
+//         backgroundColor: AppColors.surfaceMuted,
+//         body: SafeArea(
+//           child: Column(
+//             children: [
+//               const _HomeAppBar(),
+//               const Divider(height: 1, color: AppColors.border),
+//               Expanded(
+//                 child: BlocBuilder<HomeCubit, HomeState>(
+//                   builder: (context, state) {
+//                     if (state.status == HomeStatus.loading) {
+//                       return const Center(child: CircularProgressIndicator());
+//                     }
+//                     if (state.status == HomeStatus.failure) {
+//                       return Center(
+//                         child: Text(
+//                           state.error ?? 'Ошибка загрузки',
+//                           style: const TextStyle(color: Colors.red),
+//                         ),
+//                       );
+//                     }
+//                     if (state.feed.isEmpty) {
+//                       return const Center(
+//                         child: Text('Нет данных'),
+//                       );
+//                     }
+//                     return RefreshIndicator(
+//                       onRefresh: () => context.read<HomeCubit>().load(),
+//                       child: ListView.builder(
+//                         padding: const EdgeInsets.only(top: 8, bottom: 24),
+//                         itemCount: state.feed.length,
+//                         itemBuilder: (context, index) {
+//                           final uni = state.feed[index];
+//                           return UniversityFeedCard(
+//                             university: uni,
+//                             onTap: () => context.push(
+//                               '/university/${uni.id}',
+//                               extra: uni,
+//                             ),
+//                           );
+//                         },
+//                       ),
+//                     );
+//                   },
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class _HomeAppBar extends StatelessWidget {
+//   const _HomeAppBar();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       color: AppColors.authPrimaryLight,
+//       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+//       child: Row(
+//         children: [
+//           const SizedBox(width: 40),
+//           Expanded(
+//             child: Center(
+//               child: Image.asset(
+//                 'assets/images/sticky_logo.png',
+//                 height: 32,
+//                 fit: BoxFit.contain,
+//                 color: AppColors.textInverse,
+//                 colorBlendMode: BlendMode.srcIn,
+//               ),
+//             ),
+//           ),
+//           GestureDetector(
+//             onTap: () => context.push(RouteNames.search),
+//             child: Container(
+//               width: 40,
+//               height: 40,
+//               decoration: BoxDecoration(
+//                 color: AppColors.textInverse.withValues(alpha: 0.15),
+//                 borderRadius: BorderRadius.circular(12),
+//               ),
+//               child: const Icon(
+//                 Icons.search_rounded,
+//                 color: AppColors.textInverse,
+//                 size: 22,
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +165,8 @@ class HomeScreen extends StatelessWidget {
         return HomeCubit(
           universityRepository: context.read<UniversityRepository>(),
           onboardingRepository: context.read<OnboardingRepository>(),
-          profileRepository: ProfileRepositoryImpl(FirebaseService.instance),
+          profileRepository:
+              ProfileRepositoryImpl(FirebaseService.instance),
         )..load();
       },
       child: const _HomeView(),
@@ -38,38 +179,68 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor =
+        isDark ? AppColors.backgroundDark : AppColors.surfaceMuted;
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
+      value: isDark
+          ? SystemUiOverlayStyle.light
+          : SystemUiOverlayStyle.dark,
       child: Scaffold(
-        backgroundColor: AppColors.surfaceMuted,
+        backgroundColor: bgColor,
         body: SafeArea(
           child: Column(
             children: [
-              const _HomeAppBar(),
-              const Divider(height: 1, color: AppColors.border),
+              _HomeAppBar(isDark: isDark),
+              Divider(
+                height: 1,
+                color: isDark
+                    ? const Color(0xFF2C2F36)
+                    : AppColors.border,
+              ),
               Expanded(
                 child: BlocBuilder<HomeCubit, HomeState>(
                   builder: (context, state) {
                     if (state.status == HomeStatus.loading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                     }
                     if (state.status == HomeStatus.failure) {
                       return Center(
                         child: Text(
                           state.error ?? 'Ошибка загрузки',
-                          style: const TextStyle(color: Colors.red),
+                          style: const TextStyle(
+                            color: AppColors.danger,
+                          ),
                         ),
                       );
                     }
                     if (state.feed.isEmpty) {
-                      return const Center(
-                        child: Text('Нет данных'),
+                      return Center(
+                        child: Text(
+                          'Нет данных',
+                          style: TextStyle(
+                            color: isDark
+                                ? AppColors.textSecondary
+                                : AppColors.textMuted,
+                          ),
+                        ),
                       );
                     }
                     return RefreshIndicator(
-                      onRefresh: () => context.read<HomeCubit>().load(),
+                      color: AppColors.brandAccent,
+                      backgroundColor: isDark
+                          ? AppColors.surfaceMutedDark
+                          : AppColors.backgroundLight,
+                      onRefresh: () =>
+                          context.read<HomeCubit>().load(),
                       child: ListView.builder(
-                        padding: const EdgeInsets.only(top: 8, bottom: 24),
+                        padding: const EdgeInsets.only(
+                          top: 8,
+                          bottom: 24,
+                        ),
                         itemCount: state.feed.length,
                         itemBuilder: (context, index) {
                           final uni = state.feed[index];
@@ -95,12 +266,14 @@ class _HomeView extends StatelessWidget {
 }
 
 class _HomeAppBar extends StatelessWidget {
-  const _HomeAppBar();
+  const _HomeAppBar({required this.isDark});
+
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.authPrimaryLight,
+      color: isDark ? AppColors.surfaceMutedDark : AppColors.brandPrimary,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
         children: [
@@ -111,6 +284,7 @@ class _HomeAppBar extends StatelessWidget {
                 'assets/images/sticky_logo.png',
                 height: 32,
                 fit: BoxFit.contain,
+                // Логотип всегда белый на цветном AppBar
                 color: AppColors.textInverse,
                 colorBlendMode: BlendMode.srcIn,
               ),

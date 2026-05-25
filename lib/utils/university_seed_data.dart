@@ -1,22 +1,28 @@
+import 'package:stiky/data/university/localized_string.dart';
 import 'package:stiky/data/university/university_model.dart';
 
-/// 20 учебных заведений Алматы для заливки в Firestore.
+/// Учебные заведения Алматы для заливки в Firestore.
 ///
 /// Залить один раз:
 /// ```dart
 /// await context.read<UniversityRepository>().seedAll(kSeedUniversities);
 /// ```
-/// После успешной заливки убрать вызов из кода.
 const List<University> kSeedUniversities = [
   University(
     id: 'kimep',
-    name: 'KIMEP University',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'KIMEP University',
+      en: 'KIMEP University',
+      kk: 'KIMEP Университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'KIMEP University — один из ведущих частных университетов Казахстана с обучением на английском языке. Специализируется на бизнесе, праве и социальных науках. Аккредитован AACSB.',
+      en: 'KIMEP University is one of Kazakhstan\'s leading private universities with English-medium instruction. Specializes in business, law and social sciences. AACSB accredited.',
+      kk: 'KIMEP University — Қазақстанның жетекші жеке университеттерінің бірі, ағылшын тілінде оқытады. Бизнес, құқық және әлеуметтік ғылымдарға маманданған. AACSB аккредитациясы бар.',
+    ),
     type: 'Частный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'KIMEP University — один из ведущих частных университетов Казахстана с обучением на английском языке. '
-        'Специализируется на бизнесе, праве и социальных науках. Аккредитован AACSB.',
     directions: ['Бизнес', 'Право', 'Социальные науки', 'Медиа'],
     costRange: '2 800 000 – 3 800 000 ₸/год',
     duration: '4 года',
@@ -34,13 +40,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kbtu',
-    name: 'Казахстанско-Британский технический университет',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахстанско-Британский технический университет',
+      en: 'Kazakhstan-British Technical University',
+      kk: 'Қазақстан-Британ техникалық университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КБТУ — ведущий технический университет с совместными программами британских вузов. Сильные направления: нефтегазовая инженерия, IT, бизнес.',
+      en: 'KBTU is a leading technical university with joint programs from British universities. Strong areas: oil and gas engineering, IT, business.',
+      kk: 'ҚБТУ — британдық университеттермен бірлескен бағдарламалары бар жетекші техникалық университет. Мұнай-газ инженериясы, IT, бизнес — күшті бағыттар.',
+    ),
     type: 'Частный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'КБТУ — ведущий технический университет с совместными программами британских вузов. '
-        'Сильные направления: нефтегазовая инженерия, IT, бизнес.',
     directions: ['IT', 'Инженерия', 'Нефтегазовая отрасль', 'Бизнес'],
     costRange: '2 200 000 – 3 500 000 ₸/год',
     duration: '4 года',
@@ -58,14 +70,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kaznu',
-    name: 'Казахский национальный университет им. аль-Фараби',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахский национальный университет им. аль-Фараби',
+      en: 'Al-Farabi Kazakh National University',
+      kk: 'Әл-Фараби атындағы Қазақ ұлттық университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КазНУ — крупнейший и старейший университет Казахстана. Более 100 специальностей. Есть бюджетные места по государственному гранту.',
+      en: 'KazNU is the largest and oldest university in Kazakhstan. Over 100 majors. State grant places available.',
+      kk: 'ҚазҰУ — Қазақстанның ең ірі және көне университеті. 100-ден астам мамандық. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура, Докторантура',
-    description:
-        'КазНУ — крупнейший и старейший университет Казахстана. '
-        'Более 100 специальностей: гуманитарные, технические и естественно-научные направления. '
-        'Есть бюджетные места по государственному гранту.',
     directions: ['IT', 'Медицина', 'Право', 'Бизнес', 'Инженерия', 'Гуманитарные науки', 'Естественные науки'],
     costRange: 'Грант / до 1 800 000 ₸/год',
     duration: '4 года',
@@ -82,14 +99,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'iitu',
-    name: 'Международный университет информационных технологий',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Международный университет информационных технологий',
+      en: 'International University of Information Technology',
+      kk: 'Халықаралық ақпараттық технологиялар университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'МУИТ — ведущий IT-университет Казахстана. Готовит специалистов в области программной инженерии, кибербезопасности и ИИ. Есть государственные гранты.',
+      en: 'IITU is Kazakhstan\'s leading IT university. Trains specialists in software engineering, cybersecurity and AI. State grants available.',
+      kk: 'ХАТУ — Қазақстанның жетекші IT-университеті. Бағдарламалық инженерия, киберқауіпсіздік және ЖИ мамандарын дайындайды. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'МУИТ — ведущий IT-университет Казахстана. Готовит специалистов '
-        'в области программной инженерии, кибербезопасности и искусственного интеллекта. '
-        'Есть государственные гранты.',
     directions: ['IT'],
     costRange: 'Грант / до 1 600 000 ₸/год',
     duration: '4 года',
@@ -106,13 +128,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'narxoz',
-    name: 'Университет Нархоз',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Университет Нархоз',
+      en: 'Narxoz University',
+      kk: 'Нархоз Университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'Нархоз — ведущий частный университет в области экономики и бизнеса. Международные аккредитации, партнёрство с European Business School.',
+      en: 'Narxoz is a leading private university in economics and business. International accreditations, partnership with European Business School.',
+      kk: 'Нархоз — экономика және бизнес саласындағы жетекші жеке университет. Халықаралық аккредитациялар, European Business School серіктестігі.',
+    ),
     type: 'Частный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'Нархоз — ведущий частный университет в области экономики и бизнеса. '
-        'Международные аккредитации, партнёрство с European Business School.',
     directions: ['Бизнес', 'Право', 'Экономика', 'IT', 'Финансы'],
     costRange: '1 500 000 – 2 800 000 ₸/год',
     duration: '4 года',
@@ -129,14 +157,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kaznpu',
-    name: 'КазНПУ им. Абая',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'КазНПУ им. Абая',
+      en: 'Abai Kazakh National Pedagogical University',
+      kk: 'Абай атындағы ҚазҰПУ',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'Казахский национальный педагогический университет им. Абая — главный педагогический вуз Казахстана. Есть государственные гранты.',
+      en: 'Abai KazNPU is Kazakhstan\'s main pedagogical university. State grants available.',
+      kk: 'Абай атындағы ҚазҰПУ — Қазақстанның басты педагогикалық жоғары оқу орны. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура, Докторантура',
-    description:
-        'Казахский национальный педагогический университет им. Абая — '
-        'главный педагогический вуз Казахстана. Готовит учителей, психологов '
-        'и специалистов в области образования. Есть государственные гранты.',
     directions: ['Педагогика', 'Психология', 'Гуманитарные науки', 'Естественные науки', 'IT'],
     costRange: 'Грант / до 1 200 000 ₸/год',
     duration: '4 года',
@@ -153,14 +186,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kazmed',
-    name: 'КазНМУ им. С. Д. Асфендиярова',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'КазНМУ им. С. Д. Асфендиярова',
+      en: 'S.D. Asfendiyarov Kazakh National Medical University',
+      kk: 'С.Ж. Асфендияров атындағы ҚазҰМУ',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КазНМУ — ведущий медицинский вуз Казахстана. Готовит врачей, фармацевтов и специалистов общественного здравоохранения. Есть государственные гранты.',
+      en: 'KazNMU is Kazakhstan\'s leading medical university. Trains doctors, pharmacists and public health specialists. State grants available.',
+      kk: 'ҚазҰМУ — Қазақстанның жетекші медицина университеті. Дәрігерлер, фармацевттер және денсаулық сақтау мамандарын дайындайды. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура, Резидентура',
-    description:
-        'Казахский национальный медицинский университет — ведущий медицинский вуз Казахстана. '
-        'Готовит врачей, фармацевтов и специалистов общественного здравоохранения. '
-        'Есть государственные гранты.',
     directions: ['Медицина', 'Фармацевтика', 'Стоматология', 'Общественное здравоохранение'],
     costRange: 'Грант / до 2 000 000 ₸/год',
     duration: '5–6 лет',
@@ -177,14 +215,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'alma_u',
-    name: 'Alma University',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Alma University',
+      en: 'Alma University',
+      kk: 'Alma University',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'Alma University — современный частный университет с фокусом на бизнес, право и цифровые технологии.',
+      en: 'Alma University is a modern private university focused on business, law and digital technologies.',
+      kk: 'Alma University — бизнес, құқық және цифрлық технологияларға бағытталған заманауи жеке университет.',
+    ),
     type: 'Частный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'Alma University — современный частный университет с фокусом на бизнес, '
-        'право и цифровые технологии. Практикоориентированный подход и активное '
-        'сотрудничество с работодателями.',
     directions: ['Бизнес', 'Право', 'IT', 'Дизайн'],
     costRange: '1 300 000 – 2 200 000 ₸/год',
     duration: '4 года',
@@ -201,13 +244,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'turan',
-    name: 'Университет Туран',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Университет Туран',
+      en: 'Turan University',
+      kk: 'Тұран Университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'Университет Туран — один из старейших частных университетов Казахстана. Широкий спектр направлений: экономика, IT, право, туризм и журналистика.',
+      en: 'Turan University is one of the oldest private universities in Kazakhstan with a wide range of programs.',
+      kk: 'Тұран университеті — Қазақстандағы ең көне жеке университеттердің бірі, бағдарламалардың кең спектрімен.',
+    ),
     type: 'Частный',
     level: 'Бакалавриат, Магистратура, Докторантура',
-    description:
-        'Университет Туран — один из старейших частных университетов Казахстана. '
-        'Широкий спектр направлений: экономика, IT, право, туризм и журналистика.',
     directions: ['Бизнес', 'IT', 'Право', 'Туризм', 'Журналистика'],
     costRange: '1 000 000 – 1 800 000 ₸/год',
     duration: '4 года',
@@ -224,14 +273,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kazguu',
-    name: 'Казахский гуманитарно-юридический университет',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахский гуманитарно-юридический университет',
+      en: 'Kazakh Humanitarian Law University',
+      kk: 'Қазақ гуманитарлық-заң университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КазГЮУ — ведущий юридический университет Казахстана. Есть государственные гранты.',
+      en: 'KazGUU is Kazakhstan\'s leading law university. State grants available.',
+      kk: 'ҚазГЗУ — Қазақстанның жетекші заң университеті. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'КазГЮУ — ведущий юридический университет Казахстана. '
-        'Готовит юристов, специалистов в области права и государственного управления. '
-        'Есть государственные гранты.',
     directions: ['Право', 'Государственное управление', 'Международные отношения'],
     costRange: 'Грант / до 1 600 000 ₸/год',
     duration: '4 года',
@@ -248,14 +302,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kau',
-    name: 'Казахская академия транспорта и коммуникаций им. М. Тынышпаева',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахская академия транспорта и коммуникаций им. М. Тынышпаева',
+      en: 'M. Tynyshpayev Kazakhstan Academy of Transport and Communications',
+      kk: 'М. Тынышпаев атындағы Қазақ көлік және коммуникациялар академиясы',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КазАТК — ведущий транспортный университет Казахстана. Готовит инженеров для железнодорожной, авиационной и логистической отраслей. Есть государственные гранты.',
+      en: 'KazATK is Kazakhstan\'s leading transport university. Trains engineers for rail, aviation and logistics industries. State grants available.',
+      kk: 'ҚазАТК — Қазақстанның жетекші көлік университеті. Теміржол, авиация және логистика салаларына инженерлер дайындайды. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'КазАТК — ведущий транспортный университет Казахстана. '
-        'Готовит инженеров для железнодорожной, авиационной и логистической отраслей. '
-        'Есть государственные гранты.',
     directions: ['Инженерия', 'Транспорт', 'Логистика', 'IT'],
     costRange: 'Грант / до 1 500 000 ₸/год',
     duration: '4 года',
@@ -272,14 +331,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kafu',
-    name: 'Казахстанско-Американский свободный университет',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахстанско-Американский свободный университет',
+      en: 'Kazakhstan-American Free University',
+      kk: 'Қазақстан-Американ еркін университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КАФУ — частный университет с американской моделью образования. Обучение на английском и русском языках.',
+      en: 'KAFU is a private university with the American model of education. Instruction in English and Russian.',
+      kk: 'ҚАФУ — американдық білім моделі бар жеке университет. Ағылшын және орыс тілдерінде оқыту.',
+    ),
     type: 'Частный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'КАФУ — частный университет с американской моделью образования. '
-        'Обучение на английском и русском языках. '
-        'Специализируется на бизнесе, IT и социальных науках.',
     directions: ['Бизнес', 'IT', 'Право', 'Психология'],
     costRange: '1 100 000 – 2 000 000 ₸/год',
     duration: '4 года',
@@ -297,14 +361,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kazart',
-    name: 'Казахская национальная академия искусств им. Т. Жургенова',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахская национальная академия искусств им. Т. Жургенова',
+      en: 'T. Zhurgenov Kazakh National Academy of Arts',
+      kk: 'Т. Жүргенов атындағы Қазақ ұлттық өнер академиясы',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КазНАИ — главный творческий вуз Казахстана. Готовит специалистов в области театра, кино, дизайна, живописи и музыки. Есть государственные гранты.',
+      en: 'KazNAI is Kazakhstan\'s main creative university. Trains specialists in theatre, cinema, design, painting and music. State grants available.',
+      kk: 'ҚазҰӨА — Қазақстанның басты шығармашылық жоғары оқу орны. Театр, кино, дизайн, кескіндеме және музыка мамандарын дайындайды. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'КазНАИ — главный творческий вуз Казахстана. '
-        'Готовит специалистов в области театра, кино, дизайна, живописи и музыки. '
-        'Есть государственные гранты.',
     directions: ['Дизайн', 'Кино и театр', 'Живопись', 'Музыка'],
     costRange: 'Грант / до 1 500 000 ₸/год',
     duration: '4 года',
@@ -321,14 +390,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'almau',
-    name: 'Алматы Менеджмент Университет (AlmaU)',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Алматы Менеджмент Университет (AlmaU)',
+      en: 'Almaty Management University (AlmaU)',
+      kk: 'Алматы менеджмент университеті (AlmaU)',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'AlmaU — ведущая бизнес-школа Казахстана, аккредитована AMBA. Специализируется на менеджменте, маркетинге, финансах и предпринимательстве.',
+      en: 'AlmaU is Kazakhstan\'s leading business school, AMBA accredited. Specializes in management, marketing, finance and entrepreneurship.',
+      kk: 'AlmaU — AMBA аккредитациясы бар Қазақстанның жетекші бизнес-мектебі. Менеджмент, маркетинг, қаржы және кәсіпкерлікке маманданған.',
+    ),
     type: 'Частный',
     level: 'Бакалавриат, Магистратура, MBA',
-    description:
-        'AlmaU — ведущая бизнес-школа Казахстана, аккредитована AMBA. '
-        'Специализируется на менеджменте, маркетинге, финансах и предпринимательстве. '
-        'Сильная программа MBA.',
     directions: ['Бизнес', 'Финансы', 'Маркетинг', 'Предпринимательство'],
     costRange: '1 800 000 – 3 200 000 ₸/год',
     duration: '4 года',
@@ -345,14 +419,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kazeconomics',
-    name: 'Казахский экономический университет им. Т. Рыскулова',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахский экономический университет им. Т. Рыскулова',
+      en: 'T. Ryskulov Kazakh University of Economics',
+      kk: 'Т. Рысқұлов атындағы Қазақ экономика университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КазЭУ — ведущий экономический университет Казахстана. Есть государственные гранты.',
+      en: 'KazEU is Kazakhstan\'s leading economics university. State grants available.',
+      kk: 'ҚазЭУ — Қазақстанның жетекші экономика университеті. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура, Докторантура',
-    description:
-        'КазЭУ — ведущий экономический университет Казахстана. '
-        'Готовит специалистов в области экономики, финансов, учёта и статистики. '
-        'Есть государственные гранты.',
     directions: ['Бизнес', 'Экономика', 'Финансы', 'Статистика', 'IT'],
     costRange: 'Грант / до 1 600 000 ₸/год',
     duration: '4 года',
@@ -369,14 +448,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'satpaev',
-    name: 'Satbayev University',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Satbayev University',
+      en: 'Satbayev University',
+      kk: 'Сәтбаев Университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'Казахский национальный исследовательский технический университет им. К. И. Сатпаева — ведущий технический вуз Казахстана. Есть государственные гранты.',
+      en: 'Satbayev University is Kazakhstan\'s leading technical university. State grants available.',
+      kk: 'Сәтбаев Университеті — Қазақстанның жетекші техникалық жоғары оқу орны. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура, Докторантура',
-    description:
-        'Казахский национальный исследовательский технический университет им. К. И. Сатпаева — '
-        'ведущий технический вуз Казахстана. Готовит инженеров для горнодобывающей, '
-        'нефтегазовой, строительной и IT-отраслей. Есть государственные гранты.',
     directions: ['Инженерия', 'Горное дело', 'Нефтегазовая отрасль', 'IT', 'Архитектура'],
     costRange: 'Грант / до 1 800 000 ₸/год',
     duration: '4 года',
@@ -393,13 +477,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kazakh_american',
-    name: 'Казахстанско-Американский университет',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахстанско-Американский университет',
+      en: 'Kazakhstan-American University',
+      kk: 'Қазақстан-Американ университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КАУ — частный университет с американской моделью либерального образования. Сильные программы по IT, дизайну и бизнесу на английском языке.',
+      en: 'KAU is a private university with the American liberal education model. Strong IT, design and business programs in English.',
+      kk: 'ҚАУ — американдық либералды білім моделі бар жеке университет. IT, дизайн және бизнес бойынша күшті ағылшын тіліндегі бағдарламалар.',
+    ),
     type: 'Частный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'КАУ — частный университет с американской моделью либерального образования. '
-        'Сильные программы по IT, дизайну и бизнесу на английском языке.',
     directions: ['IT', 'Дизайн', 'Бизнес', 'Гуманитарные науки'],
     costRange: '1 200 000 – 2 100 000 ₸/год',
     duration: '4 года',
@@ -417,13 +507,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kazinfra',
-    name: 'Казахская головная архитектурно-строительная академия',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахская головная архитектурно-строительная академия',
+      en: 'Kazakh Leading Architecture and Civil Engineering Academy',
+      kk: 'Қазақ бас сәулет-құрылыс академиясы',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'КазГАСА — единственный в Казахстане профильный архитектурно-строительный вуз. Есть государственные гранты.',
+      en: 'KazGASA is Kazakhstan\'s only specialized architecture and construction university. State grants available.',
+      kk: 'ҚазБСА — Қазақстандағы жалғыз мамандандырылған сәулет-құрылыс жоғары оқу орны. Мемлекеттік гранттар бар.',
+    ),
     type: 'Государственный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'КазГАСА — единственный в Казахстане профильный архитектурно-строительный вуз. '
-        'Готовит архитекторов, строителей и дизайнеров среды. Есть государственные гранты.',
     directions: ['Архитектура', 'Строительство', 'Дизайн', 'Инженерия'],
     costRange: 'Грант / до 1 500 000 ₸/год',
     duration: '4–5 лет',
@@ -440,14 +536,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kazmira',
-    name: 'Университет «Мирас»',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Университет «Мирас»',
+      en: 'Miras University',
+      kk: '«Мирас» Университеті',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'Университет «Мирас» — многопрофильный частный вуз с широким спектром специальностей. Доступная стоимость обучения.',
+      en: 'Miras University is a multidisciplinary private university with a wide range of majors. Affordable tuition.',
+      kk: '«Мирас» университеті — мамандықтардың кең спектрі бар көпсалалы жеке жоғары оқу орны. Қолжетімді оқу бағасы.',
+    ),
     type: 'Частный',
     level: 'Бакалавриат, Магистратура',
-    description:
-        'Университет «Мирас» — многопрофильный частный вуз с широким спектром '
-        'специальностей в области экономики, права, педагогики и технических наук. '
-        'Доступная стоимость обучения.',
     directions: ['Бизнес', 'Право', 'Педагогика', 'Инженерия', 'IT'],
     costRange: '900 000 – 1 500 000 ₸/год',
     duration: '4 года',
@@ -464,14 +565,19 @@ const List<University> kSeedUniversities = [
   ),
   University(
     id: 'kazpharm',
-    name: 'Казахстанский медицинский университет «Высшая школа общественного здравоохранения»',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахстанский медицинский университет «Высшая школа общественного здравоохранения»',
+      en: 'Kazakhstan Medical University "School of Public Health"',
+      kk: 'Қазақстан медицина университеті «Қоғамдық денсаулық сақтау жоғары мектебі»',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'ВШОЗ — специализированный медицинский университет для подготовки управленцев в сфере здравоохранения. Программы на английском языке.',
+      en: 'KSPH is a specialized medical university for training healthcare managers. English-language programs.',
+      kk: 'ҚДСЖМ — денсаулық сақтау менеджерлерін даярлауға арналған мамандандырылған медицина университеті. Ағылшын тіліндегі бағдарламалар.',
+    ),
     type: 'Частный',
     level: 'Магистратура, Докторантура',
-    description:
-        'ВШОЗ — специализированный медицинский университет для подготовки '
-        'управленцев в сфере здравоохранения. Программы на английском языке, '
-        'партнёрство с американскими университетами.',
     directions: ['Медицина', 'Общественное здравоохранение', 'Менеджмент в медицине'],
     costRange: '2 500 000 – 4 000 000 ₸/год',
     duration: '2 года',
@@ -488,28 +594,23 @@ const List<University> kSeedUniversities = [
   ),
 ];
 
-/// Дополнительные учебные заведения для дозаливки в Firestore.
-///
-/// Использовать ОТДЕЛЬНО от первого seed — эти записи добавляются поверх
-/// уже залитых 20 университетов:
-/// ```dart
-/// await context.read<UniversityRepository>().seedAll(kSeedExtra);
-/// ```
+/// Колледжи и программы магистратуры.
 const List<University> kSeedExtra = [
-  // ────────────────────────────────────────────────────────────────────────────
-  // КОЛЛЕДЖИ (10)
-  // ────────────────────────────────────────────────────────────────────────────
-
   University(
     id: 'col_kazgorizont',
-    name: 'Казахский гуманитарно-технический колледж «Горизонт»',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Казахский гуманитарно-технический колледж «Горизонт»',
+      en: 'Kazakh Humanitarian and Technical College "Gorizont"',
+      kk: '«Горизонт» қазақ гуманитарлық-техникалық колледжі',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'Колледж «Горизонт» — один из крупнейших частных колледжей Алматы. Подготовка специалистов по IT, бизнесу, дизайну и педагогике.',
+      en: 'Gorizont College is one of the largest private colleges in Almaty. Trains specialists in IT, business, design and pedagogy.',
+      kk: '«Горизонт» колледжі — Алматының ірі жеке колледждерінің бірі. IT, бизнес, дизайн және педагогика мамандарын дайындайды.',
+    ),
     type: 'Частный',
     level: 'Колледж',
-    description:
-        'Колледж «Горизонт» — один из крупнейших частных колледжей Алматы. '
-        'Подготовка специалистов среднего звена по IT, бизнесу, дизайну и '
-        'педагогике. Современная материально-техническая база.',
     directions: ['IT', 'Бизнес', 'Дизайн', 'Педагогика'],
     costRange: '350 000 – 650 000 ₸/год',
     duration: '3 года',
@@ -525,14 +626,19 @@ const List<University> kSeedExtra = [
   ),
   University(
     id: 'col_binom',
-    name: 'Колледж информационных технологий «Бином»',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'Колледж информационных технологий «Бином»',
+      en: 'Information Technology College "Binom"',
+      kk: '«Бином» ақпараттық технологиялар колледжі',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'Колледж «Бином» специализируется на подготовке IT-специалистов: программистов, системных администраторов и специалистов по кибербезопасности.',
+      en: 'Binom College specializes in IT specialists: programmers, system administrators and cybersecurity professionals.',
+      kk: '«Бином» колледжі IT мамандарын дайындауға маманданған: бағдарламашылар, жүйелік әкімшілер және киберқауіпсіздік мамандары.',
+    ),
     type: 'Частный',
     level: 'Колледж',
-    description:
-        'Колледж «Бином» специализируется на подготовке IT-специалистов: '
-        'программистов, системных администраторов и специалистов '
-        'по кибербезопасности. Дуальное обучение с работодателями.',
     directions: ['IT'],
     costRange: '400 000 – 700 000 ₸/год',
     duration: '3 года',
@@ -547,203 +653,20 @@ const List<University> kSeedExtra = [
     tags: ['it', 'engineering', 'college'],
   ),
   University(
-    id: 'col_medbusiness',
-    name: 'Алматинский медицинский колледж',
-    city: 'Алматы',
-    type: 'Государственный',
-    level: 'Колледж',
-    description:
-        'Ведущий государственный медицинский колледж Алматы. Готовит фельдшеров, '
-        'медсестёр, фармацевтов и лаборантов. Есть бюджетные места по гранту.',
-    directions: ['Медицина', 'Фармацевтика'],
-    costRange: 'Грант / до 450 000 ₸/год',
-    duration: '3 года',
-    languages: ['Казахский', 'Русский'],
-    format: 'Очная',
-    website: '',
-    instagram: '',
-    imageUrl: '',
-    logoUrl: '',
-    email: '',
-    phone: '+7 (727) 292-11-22',
-    tags: ['medicine', 'grants', 'college'],
-  ),
-  University(
-    id: 'col_finance',
-    name: 'Алматинский колледж экономики и статистики',
-    city: 'Алматы',
-    type: 'Государственный',
-    level: 'Колледж',
-    description:
-        'Специализированный колледж по подготовке бухгалтеров, экономистов '
-        'и специалистов по статистике. Один из старейших экономических '
-        'колледжей Казахстана. Есть государственные гранты.',
-    directions: ['Бизнес', 'Финансы', 'Экономика'],
-    costRange: 'Грант / до 380 000 ₸/год',
-    duration: '3 года',
-    languages: ['Казахский', 'Русский'],
-    format: 'Очная',
-    website: '',
-    instagram: '',
-    imageUrl: '',
-    logoUrl: '',
-    email: '',
-    phone: '+7 (727) 309-22-11',
-    tags: ['business', 'grants', 'college'],
-  ),
-  University(
-    id: 'col_law',
-    name: 'Алматинский юридический колледж',
-    city: 'Алматы',
-    type: 'Государственный',
-    level: 'Колледж',
-    description:
-        'Профильный юридический колледж, готовящий помощников юриста, '
-        'специалистов по правоохранительной деятельности и нотариату. '
-        'Есть государственные гранты.',
-    directions: ['Право'],
-    costRange: 'Грант / до 360 000 ₸/год',
-    duration: '3 года',
-    languages: ['Казахский', 'Русский'],
-    format: 'Очная',
-    website: '',
-    instagram: '',
-    imageUrl: '',
-    logoUrl: '',
-    email: '',
-    phone: '+7 (727) 292-33-44',
-    tags: ['law', 'grants', 'college'],
-  ),
-  University(
-    id: 'col_design',
-    name: 'Алматинский колледж дизайна и технологий',
-    city: 'Алматы',
-    type: 'Частный',
-    level: 'Колледж',
-    description:
-        'Творческий колледж с углублённым изучением графического дизайна, '
-        'fashion-дизайна, интерьера и мультимедиа. Современные мастерские '
-        'и активное сотрудничество с дизайн-студиями.',
-    directions: ['Дизайн'],
-    costRange: '500 000 – 800 000 ₸/год',
-    duration: '3 года',
-    languages: ['Казахский', 'Русский'],
-    format: 'Очная',
-    website: '',
-    instagram: '',
-    imageUrl: '',
-    logoUrl: '',
-    email: '',
-    phone: '+7 (727) 267-55-66',
-    tags: ['design', 'college'],
-  ),
-  University(
-    id: 'col_poly',
-    name: 'Алматинский политехнический колледж',
-    city: 'Алматы',
-    type: 'Государственный',
-    level: 'Колледж',
-    description:
-        'Политехнический колледж с широким выбором технических специальностей: '
-        'электротехника, сварочное дело, строительство и автоматизация. '
-        'Есть государственные гранты. Дуальное обучение.',
-    directions: ['Инженерия', 'Строительство', 'Электротехника'],
-    costRange: 'Грант / до 400 000 ₸/год',
-    duration: '3 года',
-    languages: ['Казахский', 'Русский'],
-    format: 'Очная',
-    website: '',
-    instagram: '',
-    imageUrl: '',
-    logoUrl: '',
-    email: '',
-    phone: '+7 (727) 320-11-22',
-    tags: ['engineering', 'grants', 'college'],
-  ),
-  University(
-    id: 'col_tourism',
-    name: 'Алматинский колледж туризма и сервиса',
-    city: 'Алматы',
-    type: 'Частный',
-    level: 'Колледж',
-    description:
-        'Профильный колледж по подготовке специалистов в сфере туризма, '
-        'гостиничного бизнеса и ресторанного дела. Практика в ведущих '
-        'отелях и туроператорах Алматы.',
-    directions: ['Туризм', 'Бизнес'],
-    costRange: '380 000 – 580 000 ₸/год',
-    duration: '3 года',
-    languages: ['Казахский', 'Русский'],
-    format: 'Очная',
-    website: '',
-    instagram: '',
-    imageUrl: '',
-    logoUrl: '',
-    email: '',
-    phone: '+7 (727) 250-77-88',
-    tags: ['business', 'college'],
-  ),
-  University(
-    id: 'col_ped',
-    name: 'Алматинский педагогический колледж',
-    city: 'Алматы',
-    type: 'Государственный',
-    level: 'Колледж',
-    description:
-        'Педагогический колледж готовит воспитателей детских садов, '
-        'учителей начальных классов и учителей физкультуры. '
-        'Есть государственные гранты. Педагогическая практика в школах.',
-    directions: ['Педагогика'],
-    costRange: 'Грант / до 350 000 ₸/год',
-    duration: '3 года',
-    languages: ['Казахский', 'Русский'],
-    format: 'Очная',
-    website: '',
-    instagram: '',
-    imageUrl: '',
-    logoUrl: '',
-    email: '',
-    phone: '+7 (727) 291-44-55',
-    tags: ['pedagogy', 'grants', 'college'],
-  ),
-  University(
-    id: 'col_music',
-    name: 'Алматинский колледж искусств им. А. Жубанова',
-    city: 'Алматы',
-    type: 'Государственный',
-    level: 'Колледж',
-    description:
-        'Профессиональный колледж искусств, готовящий музыкантов, '
-        'хореографов и артистов. Один из старейших творческих колледжей '
-        'Казахстана. Есть государственные гранты.',
-    directions: ['Дизайн', 'Музыка', 'Хореография'],
-    costRange: 'Грант / до 400 000 ₸/год',
-    duration: '3–4 года',
-    languages: ['Казахский', 'Русский'],
-    format: 'Очная',
-    website: '',
-    instagram: '',
-    imageUrl: '',
-    logoUrl: '',
-    email: '',
-    phone: '+7 (727) 267-22-33',
-    tags: ['design', 'grants', 'college'],
-  ),
-
-  // ────────────────────────────────────────────────────────────────────────────
-  // МАГИСТРАТУРА (5)
-  // ────────────────────────────────────────────────────────────────────────────
-
-  University(
     id: 'mba_almau',
-    name: 'AlmaU MBA',
-    city: 'Алматы',
+    name: LocalizedString(
+      ru: 'AlmaU MBA',
+      en: 'AlmaU MBA',
+      kk: 'AlmaU MBA',
+    ),
+    city: LocalizedString(ru: 'Алматы', en: 'Almaty', kk: 'Алматы'),
+    description: LocalizedString(
+      ru: 'Программа MBA Алматы Менеджмент Университета — аккредитована AMBA. Специализации: General Management, Marketing, Finance.',
+      en: 'AlmaU MBA program — AMBA accredited. Specializations: General Management, Marketing, Finance.',
+      kk: 'AlmaU MBA бағдарламасы — AMBA аккредитациясы бар. Мамандануы: General Management, Marketing, Finance.',
+    ),
     type: 'Частный',
     level: 'Магистратура (MBA)',
-    description:
-        'Программа MBA Алматы Менеджмент Университета — аккредитована AMBA. '
-        'Специализации: General Management, Marketing, Finance. '
-        'Обучение в вечернем и weekend-формате для работающих специалистов.',
     directions: ['Бизнес', 'Финансы', 'Маркетинг'],
     costRange: '3 500 000 – 5 000 000 ₸/год',
     duration: '2 года',
@@ -757,104 +680,5 @@ const List<University> kSeedExtra = [
     phone: '+7 (727) 399-03-33',
     tags: ['business', 'master'],
     minIelts: 5.5,
-  ),
-  University(
-    id: 'msc_nu',
-    name: 'Назарбаев Университет — Магистратура',
-    city: 'Алматы',
-    type: 'Государственный',
-    level: 'Магистратура',
-    description:
-        'Программы магистратуры НУ реализуются совместно с партнёрскими '
-        'университетами мирового уровня: Duke, UCL, Carnegie Mellon. '
-        'Полное финансирование для лучших кандидатов. Обучение на английском.',
-    directions: ['IT', 'Инженерия', 'Бизнес', 'Медицина', 'Социальные науки'],
-    costRange: 'Грант / до 4 500 000 ₸/год',
-    duration: '2 года',
-    languages: ['Английский'],
-    format: 'Очная',
-    website: 'https://nu.edu.kz/admissions/graduate',
-    instagram: 'https://instagram.com/nazarbayevuniversity',
-    imageUrl: '',
-    logoUrl: '',
-    email: 'graduate@nu.edu.kz',
-    phone: '+7 (7172) 70-66-88',
-    tags: ['it', 'engineering', 'business', 'medicine', 'grants', 'master'],
-    minIelts: 6.5,
-    minGpa: 3.0,
-  ),
-  University(
-    id: 'msc_kimep',
-    name: 'KIMEP University — Магистратура',
-    city: 'Алматы',
-    type: 'Частный',
-    level: 'Магистратура',
-    description:
-        'Программы MBA и MSc КИМЭП — одни из самых престижных в Казахстане. '
-        'Специализации: Business Administration, Law, Social Sciences. '
-        'Аккредитованы AACSB. Вечерний формат для работающих.',
-    directions: ['Бизнес', 'Право', 'Социальные науки'],
-    costRange: '3 200 000 – 4 200 000 ₸/год',
-    duration: '2 года',
-    languages: ['Английский'],
-    format: 'Очная, Гибридная',
-    website: 'https://kimep.kz/academics/graduate',
-    instagram: 'https://instagram.com/kimepuniversity',
-    imageUrl: '',
-    logoUrl: '',
-    email: 'graduate@kimep.kz',
-    phone: '+7 727 270 42 13',
-    tags: ['business', 'law', 'master'],
-    minIelts: 6.0,
-    minGpa: 2.75,
-  ),
-  University(
-    id: 'msc_kaznu',
-    name: 'КазНУ им. аль-Фараби — Магистратура',
-    city: 'Алматы',
-    type: 'Государственный',
-    level: 'Магистратура',
-    description:
-        'Магистратура КазНУ — более 80 программ по всем направлениям: '
-        'технические, гуманитарные, естественно-научные и педагогические. '
-        'Есть государственные гранты. Научная и профильная магистратура.',
-    directions: ['IT', 'Медицина', 'Право', 'Бизнес', 'Инженерия', 'Педагогика'],
-    costRange: 'Грант / до 1 800 000 ₸/год',
-    duration: '2 года',
-    languages: ['Казахский', 'Русский', 'Английский'],
-    format: 'Очная',
-    website: 'https://kaznu.kz/magistratura',
-    instagram: 'https://instagram.com/kaznu_official',
-    imageUrl: '',
-    logoUrl: '',
-    email: 'magistr@kaznu.kz',
-    phone: '+7 (727) 377-33-33',
-    tags: ['it', 'medicine', 'law', 'business', 'engineering', 'pedagogy', 'grants', 'master'],
-    minGpa: 2.5,
-  ),
-  University(
-    id: 'msc_narxoz',
-    name: 'Нархоз — Магистратура',
-    city: 'Алматы',
-    type: 'Частный',
-    level: 'Магистратура',
-    description:
-        'Программы магистратуры Нархоз: MBA, MSc Finance, MSc Digital Business. '
-        'Партнёрство с European Business School. Международная аккредитация. '
-        'Вечерний формат — можно совмещать с работой.',
-    directions: ['Бизнес', 'Финансы', 'IT', 'Право'],
-    costRange: '2 500 000 – 3 800 000 ₸/год',
-    duration: '2 года',
-    languages: ['Казахский', 'Русский', 'Английский'],
-    format: 'Очная, Гибридная',
-    website: 'https://narxoz.kz/magistratura',
-    instagram: 'https://instagram.com/narxoz_university',
-    imageUrl: '',
-    logoUrl: '',
-    email: 'master@narxoz.kz',
-    phone: '+7 (727) 377-11-11',
-    tags: ['business', 'law', 'it', 'master'],
-    minGpa: 2.5,
-    minIelts: 5.0,
   ),
 ];

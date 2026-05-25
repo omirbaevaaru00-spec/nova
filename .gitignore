@@ -51,3 +51,6 @@ app.*.map.json
 
 # oh-my-claudecode local state
 .omc/
+
+telegram_bot/.env
+venv/

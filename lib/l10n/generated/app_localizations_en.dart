@@ -678,8 +678,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportTitle => 'Support';
 
   @override
-  String get supportDescription =>
-      'Here you can get help. Our team usually responds within a few hours.';
+  String get supportDescription => 'Here you can get help.';
 
   @override
   String get supportTelegramButton => 'Write on Telegram';
@@ -691,22 +690,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportFaq1Question => 'How do I find the right university?';
 
   @override
-  String get supportFaq1Answer =>
-      'Use the filters on the home screen: choose a field of study, city and format — the list updates automatically.';
+  String get supportFaq1Answer => 'Use the filters on the search screen.';
 
   @override
   String get supportFaq2Question => 'How do I add a university to favourites?';
 
   @override
-  String get supportFaq2Answer =>
-      'Tap the heart icon on the university card. You need to be signed in to do this.';
+  String get supportFaq2Answer => 'Tap the heart icon. You need an account.';
 
   @override
-  String get supportFaq3Question => 'How do I change the app language?';
+  String get supportFaq3Question => 'How do I change the language?';
 
   @override
-  String get supportFaq3Answer =>
-      'Go to Settings → Language and choose from three available options: Russian, English, Kazakh.';
+  String get supportFaq3Answer => 'Settings → Language.';
 
   @override
   String get settingsDeleteAccount => 'Delete account';
@@ -716,7 +712,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsDeleteAccountConfirmBody =>
-      'This action is irreversible. All your data, reviews and favourites will be permanently deleted.';
+      'All data will be permanently deleted.';
 
   @override
   String get settingsDeleteAccountCancel => 'Cancel';
@@ -726,4 +722,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsDeleteAccountSuccess => 'Account deleted';
+
+  @override
+  String get registerSubtitle => 'Enter your email to create an account';
+
+  @override
+  String get validationEmailRequired => 'Please enter your email';
+
+  @override
+  String get validationEmailInvalid => 'Invalid email format';
+
+  @override
+  String get reviewDeleteTitle => 'Delete review?';
+
+  @override
+  String get reviewDeleteBody => 'This action cannot be undone.';
+
+  @override
+  String get reviewDeleteConfirm => 'Delete';
+
+  @override
+  String get reviewThanksTitle => 'Thank you for your review!';
+
+  @override
+  String get reviewThanksSubtitle => 'Your review will help other applicants.';
+
+  @override
+  String get profileScoresEnt => 'UNT';
+
+  @override
+  String get profileEntLabel => 'UNT';
 }

@@ -9,8 +9,7 @@ import '../../../data/university/university_model.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../favorites/global_favorites_notifier.dart';
 
-/// Карточка университета в ленте. Лайк работает через глобальный
-/// [GlobalFavoritesNotifier], для незалогиненных открывает auth-bottom-sheet.
+/// Карточка университета в ленте.
 class UniversityFeedCard extends StatelessWidget {
   const UniversityFeedCard({
     super.key,
@@ -33,7 +32,7 @@ class UniversityFeedCard extends StatelessWidget {
 
   void _showAuthSheet(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.backgroundLight,
       shape: const RoundedRectangleBorder(
@@ -53,11 +52,8 @@ class UniversityFeedCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Icon(
-              Icons.favorite_rounded,
-              color: AppColors.danger,
-              size: 44,
-            ),
+            const Icon(Icons.favorite_rounded,
+                color: AppColors.danger, size: 44),
             const SizedBox(height: 16),
             Text(
               l10n.favoriteAuthRequired,
@@ -125,6 +121,9 @@ class UniversityFeedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // Берём язык интерфейса для локализации полей вуза
+    final locale = Localizations.localeOf(context).languageCode;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -143,11 +142,14 @@ class UniversityFeedCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _Header(university: university, l10n: l10n),
+            _Header(university: university, l10n: l10n, locale: locale),
             _HeroImage(imageUrl: university.imageUrl),
             if (university.directions.isNotEmpty)
               _DirectionsRow(directions: university.directions),
-            _Footer(university: university, onLikeTap: () => _handleLike(context)),
+            _Footer(
+              university: university,
+              onLikeTap: () => _handleLike(context),
+            ),
           ],
         ),
       ),
@@ -155,11 +157,18 @@ class UniversityFeedCard extends StatelessWidget {
   }
 }
 
+// ─── Header ───────────────────────────────────────────────────────────────────
+
 class _Header extends StatelessWidget {
-  const _Header({required this.university, required this.l10n});
+  const _Header({
+    required this.university,
+    required this.l10n,
+    required this.locale,
+  });
 
   final University university;
   final AppLocalizations l10n;
+  final String locale;
 
   @override
   Widget build(BuildContext context) {
@@ -167,14 +176,15 @@ class _Header extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
       child: Row(
         children: [
-          _LogoCircle(university: university),
+          _LogoCircle(university: university, locale: locale),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  university.name,
+                  // Правильное использование LocalizedString
+                  university.name.localized(locale),
                   style: const TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 15,
@@ -189,7 +199,7 @@ class _Header extends StatelessWidget {
                     _TypeChip(university: university, l10n: l10n),
                     const SizedBox(width: 6),
                     Text(
-                      university.city,
+                      university.city.localized(locale),
                       style: const TextStyle(
                         color: AppColors.textSecondary,
                         fontSize: 12,
@@ -206,10 +216,13 @@ class _Header extends StatelessWidget {
   }
 }
 
+// ─── Logo ─────────────────────────────────────────────────────────────────────
+
 class _LogoCircle extends StatelessWidget {
-  const _LogoCircle({required this.university});
+  const _LogoCircle({required this.university, required this.locale});
 
   final University university;
+  final String locale;
 
   @override
   Widget build(BuildContext context) {
@@ -226,9 +239,10 @@ class _LogoCircle extends StatelessWidget {
             ? Image.network(
                 university.logoUrl,
                 fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => _Initials(name: university.name),
+                errorBuilder: (_, __, ___) =>
+                    _Initials(name: university.name.localized(locale)),
               )
-            : _Initials(name: university.name),
+            : _Initials(name: university.name.localized(locale)),
       ),
     );
   }
@@ -236,12 +250,12 @@ class _LogoCircle extends StatelessWidget {
 
 class _Initials extends StatelessWidget {
   const _Initials({required this.name});
-
   final String name;
 
   @override
   Widget build(BuildContext context) {
-    final initial = name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : 'U';
+    final initial =
+        name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : 'U';
     return Container(
       color: AppColors.authPrimaryLight,
       child: Center(
@@ -257,6 +271,8 @@ class _Initials extends StatelessWidget {
     );
   }
 }
+
+// ─── Type chip ────────────────────────────────────────────────────────────────
 
 class _TypeChip extends StatelessWidget {
   const _TypeChip({required this.university, required this.l10n});
@@ -274,7 +290,9 @@ class _TypeChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
-        isState ? l10n.universityTypeStateShort : l10n.universityTypePrivateShort,
+        isState
+            ? l10n.universityTypeStateShort
+            : l10n.universityTypePrivateShort,
         style: TextStyle(
           color: isState ? AppColors.success : AppColors.warning,
           fontSize: 11,
@@ -285,13 +303,30 @@ class _TypeChip extends StatelessWidget {
   }
 }
 
+// ─── Hero image ───────────────────────────────────────────────────────────────
+
 class _HeroImage extends StatelessWidget {
   const _HeroImage({required this.imageUrl});
-
   final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
+    if (imageUrl.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(14),
+          child: Container(
+            height: 190,
+            color: AppColors.surfaceMuted,
+            child: const Center(
+              child: Icon(Icons.school_outlined,
+                  color: AppColors.authPrimaryLight, size: 48),
+            ),
+          ),
+        ),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ClipRRect(
@@ -314,14 +349,11 @@ class _HeroImage extends StatelessWidget {
               ),
             );
           },
-          errorBuilder: (_, _, _) => Container(
+          errorBuilder: (_, __, ___) => Container(
             height: 190,
             color: AppColors.surfaceMuted,
-            child: const Icon(
-              Icons.school_outlined,
-              color: AppColors.authPrimaryLight,
-              size: 48,
-            ),
+            child: const Icon(Icons.school_outlined,
+                color: AppColors.authPrimaryLight, size: 48),
           ),
         ),
       ),
@@ -329,9 +361,10 @@ class _HeroImage extends StatelessWidget {
   }
 }
 
+// ─── Directions ───────────────────────────────────────────────────────────────
+
 class _DirectionsRow extends StatelessWidget {
   const _DirectionsRow({required this.directions});
-
   final List<String> directions;
 
   @override
@@ -364,6 +397,8 @@ class _DirectionsRow extends StatelessWidget {
   }
 }
 
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
 class _Footer extends StatelessWidget {
   const _Footer({required this.university, required this.onLikeTap});
 
@@ -386,7 +421,7 @@ class _Footer extends StatelessWidget {
           ),
           ValueListenableBuilder<Set<String>>(
             valueListenable: GlobalFavoritesNotifier.instance,
-            builder: (_, favorites, _) {
+            builder: (_, favorites, __) {
               final isFav = favorites.contains(university.id);
               return GestureDetector(
                 onTap: onLikeTap,
@@ -397,7 +432,8 @@ class _Footer extends StatelessWidget {
                         ? Icons.favorite_rounded
                         : Icons.favorite_border_rounded,
                     key: ValueKey(isFav),
-                    color: isFav ? AppColors.danger : AppColors.textMuted,
+                    color:
+                        isFav ? AppColors.danger : AppColors.textMuted,
                     size: 26,
                   ),
                 ),

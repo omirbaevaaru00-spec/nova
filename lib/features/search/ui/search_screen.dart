@@ -1002,6 +1002,7 @@ class _LiveResultTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
     return ListTile(
       onTap: onTap,
       leading: Container(
@@ -1017,13 +1018,13 @@ class _LiveResultTile extends StatelessWidget {
                   university.logoUrl,
                   fit: BoxFit.cover,
                   errorBuilder: (_, __, ___) =>
-                      _Initial(name: university.name),
+                      _Initial(name: university.name.localized(locale)),
                 )
-              : _Initial(name: university.name),
+              : _Initial(name: university.name.localized(locale)),
         ),
       ),
       title: Text(
-        university.name,
+        university.name.localized(locale),
         style: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w600,
@@ -1031,7 +1032,7 @@ class _LiveResultTile extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        university.city,
+        university.city.localized(locale),
         style: const TextStyle(
           fontSize: 13,
           color: AppColors.textSecondary,
@@ -1090,6 +1091,7 @@ class _MainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
     final l10n = AppLocalizations.of(context);
     final cubit = context.read<SearchCubit>();
 
@@ -1237,6 +1239,7 @@ class _MainContent extends StatelessWidget {
 
         // ── Результаты ────────────────────────────────────────────
         for (final uni in state.filteredResults)
+        
           ListTile(
             onTap: () =>
                 context.push('/university/${uni.id}', extra: uni),
@@ -1255,13 +1258,13 @@ class _MainContent extends StatelessWidget {
                         uni.logoUrl,
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) =>
-                            _Initial(name: uni.name),
+                            _Initial(name: uni.name.localized(locale)),
                       )
-                    : _Initial(name: uni.name),
+                    : _Initial(name: uni.name.localized(locale)),
               ),
             ),
             title: Text(
-              uni.name,
+              uni.name.localized(locale),
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,

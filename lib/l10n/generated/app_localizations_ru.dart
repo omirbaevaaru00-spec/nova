@@ -682,8 +682,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get supportTitle => 'Поддержка';
 
   @override
-  String get supportDescription =>
-      'Здесь вы можете обратиться за помощью. Наша команда отвечает в течение нескольких часов.';
+  String get supportDescription => 'Здесь вы можете обратиться за помощью.';
 
   @override
   String get supportTelegramButton => 'Написать в Telegram';
@@ -695,22 +694,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get supportFaq1Question => 'Как найти подходящий вуз?';
 
   @override
-  String get supportFaq1Answer =>
-      'Используйте фильтры на главном экране: выберите направление, город и форму обучения — список автоматически обновится.';
+  String get supportFaq1Answer => 'Используйте фильтры на экране поиска.';
 
   @override
   String get supportFaq2Question => 'Как добавить вуз в избранное?';
 
   @override
-  String get supportFaq2Answer =>
-      'Нажмите на иконку сердца на карточке университета. Для этого нужно войти в аккаунт.';
+  String get supportFaq2Answer => 'Нажмите на иконку сердца. Нужен аккаунт.';
 
   @override
-  String get supportFaq3Question => 'Как сменить язык приложения?';
+  String get supportFaq3Question => 'Как сменить язык?';
 
   @override
-  String get supportFaq3Answer =>
-      'Перейдите в Настройки → Язык и выберите нужный из трёх доступных: русский, английский, казахский.';
+  String get supportFaq3Answer => 'Настройки → Язык.';
 
   @override
   String get settingsDeleteAccount => 'Удалить аккаунт';
@@ -720,7 +716,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsDeleteAccountConfirmBody =>
-      'Это действие необратимо. Все ваши данные, отзывы и избранное будут удалены навсегда.';
+      'Все данные будут удалены навсегда.';
 
   @override
   String get settingsDeleteAccountCancel => 'Отмена';
@@ -730,4 +726,34 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsDeleteAccountSuccess => 'Аккаунт удалён';
+
+  @override
+  String get registerSubtitle => 'Введите email для создания аккаунта';
+
+  @override
+  String get validationEmailRequired => 'Введите email';
+
+  @override
+  String get validationEmailInvalid => 'Некорректный формат email';
+
+  @override
+  String get reviewDeleteTitle => 'Удалить отзыв?';
+
+  @override
+  String get reviewDeleteBody => 'Это действие нельзя отменить.';
+
+  @override
+  String get reviewDeleteConfirm => 'Удалить';
+
+  @override
+  String get reviewThanksTitle => 'Спасибо за ваш отзыв!';
+
+  @override
+  String get reviewThanksSubtitle => 'Ваш отзыв поможет другим абитуриентам.';
+
+  @override
+  String get profileScoresEnt => 'ЕНТ';
+
+  @override
+  String get profileEntLabel => 'ЕНТ';
 }

@@ -133,6 +133,7 @@ class UniversityFeedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -173,9 +174,9 @@ class UniversityFeedCard extends StatelessWidget {
                               university.logoUrl,
                               fit: BoxFit.cover,
                               errorBuilder: (_, __, ___) =>
-                                  _InitialsAvatar(name: university.name),
+                                  _InitialsAvatar(name: university.name.localized(locale)),
                             )
-                          : _InitialsAvatar(name: university.name),
+                          : _InitialsAvatar(name: university.name.localized(locale)),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -184,7 +185,7 @@ class UniversityFeedCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          university.name,
+                          university.name.localized(locale),
                           style: const TextStyle(
                             color: Color(0xFF1A1A1A),
                             fontSize: 15,
@@ -218,7 +219,7 @@ class UniversityFeedCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              university.city,
+                              university.city.localized(locale),
                               style: const TextStyle(
                                 color: Color(0xFF888888),
                                 fontSize: 12,

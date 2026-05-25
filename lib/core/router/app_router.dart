@@ -19,6 +19,7 @@
 // import '../../features/profile_entry/ui/profile_entry_screen.dart';
 // import '../../features/saved_searches/ui/saved_searches_screen.dart';
 // import '../../features/splash/ui/splash_page.dart';
+// import '../../features/support/ui/support_screen.dart';
 // import '../../features/university_detail/ui/reviews_screen.dart';
 // import '../../features/university_detail/ui/university_detail_screen.dart';
 // import '../../features/welcome/ui/welcome_screen.dart';
@@ -28,7 +29,6 @@
 //   static GoRouter createRouter() => GoRouter(
 //         initialLocation: RouteNames.splash,
 //         routes: [
-//           // ── Splash ──────────────────────────────────────────
 //           GoRoute(
 //             path: RouteNames.splash,
 //             pageBuilder: (context, state) => NoTransitionPage(
@@ -36,8 +36,6 @@
 //               child: const SplashPage(),
 //             ),
 //           ),
-
-//           // ── Welcome ─────────────────────────────────────────
 //           GoRoute(
 //             path: RouteNames.welcome,
 //             pageBuilder: (context, state) => NoTransitionPage(
@@ -45,8 +43,6 @@
 //               child: const WelcomeScreen(),
 //             ),
 //           ),
-
-//           // ── Onboarding ──────────────────────────────────────
 //           GoRoute(
 //             path: RouteNames.onboarding,
 //             pageBuilder: (context, state) => NoTransitionPage(
@@ -54,8 +50,6 @@
 //               child: const OnboardingScreen(),
 //             ),
 //           ),
-
-//           // ── Auth ─────────────────────────────────────────────
 //           GoRoute(
 //             path: RouteNames.login,
 //             pageBuilder: (context, state) => MaterialPage(
@@ -85,8 +79,7 @@
 //                 key: state.pageKey,
 //                 child: PhoneOtpScreen(
 //                   phone: (extra['phone'] as String?) ?? '',
-//                   verificationId:
-//                       (extra['verificationId'] as String?) ?? '',
+//                   verificationId: (extra['verificationId'] as String?) ?? '',
 //                 ),
 //               );
 //             },
@@ -104,8 +97,6 @@
 //               );
 //             },
 //           ),
-
-//           // ── Main shell (с нижним навбаром) ──────────────────
 //           ShellRoute(
 //             builder: (context, state, child) =>
 //                 MainNavigationScreen(child: child),
@@ -133,8 +124,6 @@
 //               ),
 //             ],
 //           ),
-
-//           // ── Университет + отзывы ─────────────────────────────
 //           GoRoute(
 //             path: '/university/:id',
 //             pageBuilder: (context, state) {
@@ -163,8 +152,13 @@
 //               ),
 //             ],
 //           ),
-
-//           // ── Прочие экраны ────────────────────────────────────
+//           GoRoute(
+//             path: RouteNames.support,
+//             pageBuilder: (context, state) => MaterialPage(
+//               key: state.pageKey,
+//               child: const SupportScreen(),
+//             ),
+//           ),
 //           GoRoute(
 //             path: RouteNames.favorites,
 //             pageBuilder: (context, state) => MaterialPage(
@@ -235,6 +229,7 @@ import '../../features/main_navigation/ui/main_navigation_screen.dart';
 import '../../features/news/ui/news_screen.dart';
 import '../../features/notifications/ui/notifications_screen.dart';
 import '../../features/onboarding/ui/onboarding_screen.dart';
+import '../../features/privacy_policy/ui/privacy_policy_screen.dart';
 import '../../features/profile/ui/profile_screen.dart';
 import '../../features/profile_settings/ui/profile_settings_screen.dart';
 import '../../features/profile_entry/ui/profile_entry_screen.dart';
@@ -253,44 +248,37 @@ abstract final class AppRouter {
           GoRoute(
             path: RouteNames.splash,
             pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              child: const SplashPage(),
-            ),
+              key: state.pageKey, child: const SplashPage()),
           ),
           GoRoute(
             path: RouteNames.welcome,
             pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              child: const WelcomeScreen(),
-            ),
+              key: state.pageKey, child: const WelcomeScreen()),
           ),
           GoRoute(
             path: RouteNames.onboarding,
             pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              child: const OnboardingScreen(),
-            ),
+              key: state.pageKey, child: const OnboardingScreen()),
           ),
           GoRoute(
             path: RouteNames.login,
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const LoginScreen(),
-            ),
+              key: state.pageKey, child: const LoginScreen()),
           ),
           GoRoute(
             path: RouteNames.register,
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const RegisterScreen(),
-            ),
+              key: state.pageKey, child: const RegisterScreen()),
           ),
           GoRoute(
             path: RouteNames.forgotPassword,
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const ForgotPasswordScreen(),
-            ),
+              key: state.pageKey, child: const ForgotPasswordScreen()),
+          ),
+          GoRoute(
+            path: RouteNames.privacyPolicy,
+            pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey, child: const PrivacyPolicyScreen()),
           ),
           GoRoute(
             path: RouteNames.phoneOtp,
@@ -325,23 +313,17 @@ abstract final class AppRouter {
               GoRoute(
                 path: RouteNames.home,
                 pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: const HomeScreen(),
-                ),
+                  key: state.pageKey, child: const HomeScreen()),
               ),
               GoRoute(
                 path: RouteNames.notifications,
                 pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: const NotificationsScreen(),
-                ),
+                  key: state.pageKey, child: const NotificationsScreen()),
               ),
               GoRoute(
                 path: RouteNames.profile,
                 pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: const ProfileScreen(),
-                ),
+                  key: state.pageKey, child: const ProfileScreen()),
               ),
             ],
           ),
@@ -376,60 +358,44 @@ abstract final class AppRouter {
           GoRoute(
             path: RouteNames.support,
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const SupportScreen(),
-            ),
+              key: state.pageKey, child: const SupportScreen()),
           ),
           GoRoute(
             path: RouteNames.favorites,
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const FavoritesScreen(),
-            ),
+              key: state.pageKey, child: const FavoritesScreen()),
           ),
           GoRoute(
             path: RouteNames.savedSearches,
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const SavedSearchesScreen(),
-            ),
+              key: state.pageKey, child: const SavedSearchesScreen()),
           ),
           GoRoute(
             path: RouteNames.newsFeed,
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const NewsScreen(),
-            ),
+              key: state.pageKey, child: const NewsScreen()),
           ),
           GoRoute(
             path: RouteNames.helpCenter,
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const ProfileEntryScreen(),
-            ),
+              key: state.pageKey, child: const ProfileEntryScreen()),
           ),
           GoRoute(
             path: RouteNames.search,
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const SearchScreen(),
-            ),
+              key: state.pageKey, child: const SearchScreen()),
           ),
           GoRoute(
             path: RouteNames.profileSettings,
             name: 'profile-settings',
             pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: const SettingsScreen(),
-            ),
+              key: state.pageKey, child: const SettingsScreen()),
           ),
         ],
         errorBuilder: (context, state) => Scaffold(
           body: Center(
-            child: Text(
-              'Page not found: ${state.uri}',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+            child: Text('Page not found: ${state.uri}',
+                style: Theme.of(context).textTheme.bodyLarge),
           ),
         ),
       );

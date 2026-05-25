@@ -10,28 +10,57 @@ import '../../../l10n/generated/app_localizations.dart';
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
 
-  static const _telegramBotUrl = 'https://t.me/sticky_support_bot';
+  static const _telegramBotUrl = 'https://t.me/sticky_university_faq_bot';
 
-  Future<void> _openTelegram(BuildContext context) async {
-    final uri = Uri.parse(_telegramBotUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Не удалось открыть Telegram'),
-          backgroundColor: AppColors.danger,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          margin: const EdgeInsets.all(16),
-        ),
+  // Future<void> _openTelegram(BuildContext context) async {
+  //   final uri = Uri.parse(_telegramBotUrl);
+  //   if (await canLaunchUrl(uri)) {
+  //     await launchUrl(uri, mode: LaunchMode.externalApplication);
+  //   } else {
+  //     if (!context.mounted) return;
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: const Text('Не удалось открыть Telegram'),
+  //         backgroundColor: AppColors.danger,
+  //         behavior: SnackBarBehavior.floating,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(12),
+  //         ),
+  //         margin: const EdgeInsets.all(16),
+  //       ),
+  //     );
+  //   }
+  // }
+Future<void> _openTelegram(BuildContext context) async {
+  final telegramApp = Uri.parse("tg://resolve?domain=sticky_university_bot");
+  final telegramWeb = Uri.parse("https://t.me/sticky_university_bot");
+
+  try {
+    // Сначала пытаемся открыть Telegram app
+    if (await canLaunchUrl(telegramApp)) {
+      await launchUrl(
+        telegramApp,
+        mode: LaunchMode.externalApplication,
       );
+      return;
     }
-  }
 
+    // Если Telegram app нет — открываем web
+    await launchUrl(
+      telegramWeb,
+      mode: LaunchMode.externalApplication,
+    );
+  } catch (e) {
+    if (!context.mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Не удалось открыть Telegram'),
+        backgroundColor: AppColors.danger,
+      ),
+    );
+  }
+}
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);

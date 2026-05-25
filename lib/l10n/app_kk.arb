@@ -263,7 +263,50 @@
   "settingsDeleteAccountConfirmBody": "Бұл әрекетті қайтару мүмкін емес. Барлық деректеріңіз, пікірлеріңіз және таңдаулыларыңыз мәңгілікке жойылады.",
   "settingsDeleteAccountCancel": "Болдырмау",
   "settingsDeleteAccountConfirm": "Жою",
-  "settingsDeleteAccountSuccess": "Аккаунт жойылды"
+  "settingsDeleteAccountSuccess": "Аккаунт жойылды",
+
+  "registerSubtitle": "Аккаунт жасау үшін email енгізіңіз",
+  "validationEmailRequired": "Email енгізіңіз",
+  "validationEmailInvalid": "Email форматы қате",
+
+  "reviewDeleteTitle": "Пікірді жою керек пе?",
+  "reviewDeleteBody": "Бұл әрекетті болдырмау мүмкін емес. Пікір мәңгілікке жойылады.",
+  "reviewDeleteConfirm": "Жою",
+  "reviewThanksTitle": "Пікіріңіз үшін рахмет!",
+  "reviewThanksSubtitle": "Сіздің пікіріңіз басқа оқушыларға көмектеседі.",
+
+  "profileScoresEnt": "ҰБТ",
+  "universityTypeStateShort": "Мем",
+  "universityTypePrivateShort": "Жеке",
+  "profileEntLabel": "ҰБТ",
+ 
+  "reviewThanksTitle": "Пікіріңіз үшін рахмет!",
+  "reviewThanksSubtitle": "Сіздің пікіріңіз басқа оқушыларға көмектеседі.",
+  "reviewDeleteTitle": "Пікірді жою керек пе?",
+  "reviewDeleteBody": "Бұл әрекетті болдырмау мүмкін емес.",
+  "reviewDeleteConfirm": "Жою",
+ 
+  "settingsDeleteAccount": "Аккаунтты жою",
+  "settingsDeleteAccountConfirmTitle": "Аккаунтты жою керек пе?",
+  "settingsDeleteAccountConfirmBody": "Барлық деректер мәңгілікке жойылады.",
+  "settingsDeleteAccountCancel": "Болдырмау",
+  "settingsDeleteAccountConfirm": "Жою",
+  "settingsDeleteAccountSuccess": "Аккаунт жойылды",
+ 
+  "supportTitle": "Қолдау",
+  "supportDescription": "Мұнда сіз көмек сұрай аласыз.",
+  "supportTelegramButton": "Telegram-ға жазу",
+  "supportResponseTime": "Біз әдетте 2–4 сағат ішінде жауап береміз",
+  "supportFaq1Question": "Қалай сәйкес университет табуға болады?",
+  "supportFaq1Answer": "Іздеу экранындағы сүзгілерді пайдаланыңыз.",
+  "supportFaq2Question": "Университетті таңдаулыларға қалай қосуға болады?",
+  "supportFaq2Answer": "Жүрек белгішесін басыңыз. Аккаунт қажет.",
+  "supportFaq3Question": "Тілді қалай өзгертуге болады?",
+  "supportFaq3Answer": "Параметрлер → Тіл.",
+ 
+  "registerSubtitle": "Аккаунт жасау үшін email енгізіңіз",
+  "validationEmailRequired": "Email енгізіңіз",
+  "validationEmailInvalid": "Email форматы қате"
 }
  
 

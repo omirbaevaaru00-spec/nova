@@ -1,9 +1,13 @@
 /// Мультиязычная строка. Хранит текст на трёх языках.
-/// Используется для полей университета (name, description, slogan и т.д.)
+/// Используется для полей университета (name, description, city и т.д.)
 ///
-/// Структура в Firestore:
+/// Структура в Firestore (новая):
 /// ```json
 /// "name": { "ru": "...", "en": "...", "kk": "..." }
+/// ```
+/// Структура в Firestore (старая — поддерживается):
+/// ```json
+/// { "name": "Назарбаев Университет" }
 /// ```
 class LocalizedString {
   final String ru;
@@ -26,7 +30,7 @@ class LocalizedString {
     );
   }
 
-  /// Создаёт из обычной строки (для обратной совместимости со старыми данными).
+  /// Создаёт из обычной строки (обратная совместимость со старыми данными).
   factory LocalizedString.fromString(String value) => LocalizedString(
         ru: value,
         en: value,
@@ -46,6 +50,21 @@ class LocalizedString {
     }
   }
 
+  /// Проверяет содержит ли хотя бы один перевод подстроку [query].
+  /// Поиск регистронезависимый.
+  bool containsQuery(String query) {
+    if (query.isEmpty) return true;
+    final q = query.toLowerCase();
+    return ru.toLowerCase().contains(q) ||
+        en.toLowerCase().contains(q) ||
+        kk.toLowerCase().contains(q);
+  }
+
+  /// Возвращает нижний регистр для нужного языка.
+  /// Используется вместо .toLowerCase() на LocalizedString.
+  String localizedLower(String languageCode) =>
+      localized(languageCode).toLowerCase();
+
   /// Конвертирует в Map для сохранения в Firestore.
   Map<String, dynamic> toMap() => {'ru': ru, 'en': en, 'kk': kk};
 
@@ -53,6 +72,7 @@ class LocalizedString {
   bool get isEmpty => ru.isEmpty && en.isEmpty && kk.isEmpty;
   bool get isNotEmpty => !isEmpty;
 
+  /// toString() возвращает русскую версию — для отладки и fallback.
   @override
   String toString() => ru;
 }

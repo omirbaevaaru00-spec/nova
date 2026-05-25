@@ -1399,7 +1399,7 @@ abstract class AppLocalizations {
   /// No description provided for @supportDescription.
   ///
   /// In ru, this message translates to:
-  /// **'Здесь вы можете обратиться за помощью. Наша команда отвечает в течение нескольких часов.'**
+  /// **'Здесь вы можете обратиться за помощью.'**
   String get supportDescription;
 
   /// No description provided for @supportTelegramButton.
@@ -1423,7 +1423,7 @@ abstract class AppLocalizations {
   /// No description provided for @supportFaq1Answer.
   ///
   /// In ru, this message translates to:
-  /// **'Используйте фильтры на главном экране: выберите направление, город и форму обучения — список автоматически обновится.'**
+  /// **'Используйте фильтры на экране поиска.'**
   String get supportFaq1Answer;
 
   /// No description provided for @supportFaq2Question.
@@ -1435,19 +1435,19 @@ abstract class AppLocalizations {
   /// No description provided for @supportFaq2Answer.
   ///
   /// In ru, this message translates to:
-  /// **'Нажмите на иконку сердца на карточке университета. Для этого нужно войти в аккаунт.'**
+  /// **'Нажмите на иконку сердца. Нужен аккаунт.'**
   String get supportFaq2Answer;
 
   /// No description provided for @supportFaq3Question.
   ///
   /// In ru, this message translates to:
-  /// **'Как сменить язык приложения?'**
+  /// **'Как сменить язык?'**
   String get supportFaq3Question;
 
   /// No description provided for @supportFaq3Answer.
   ///
   /// In ru, this message translates to:
-  /// **'Перейдите в Настройки → Язык и выберите нужный из трёх доступных: русский, английский, казахский.'**
+  /// **'Настройки → Язык.'**
   String get supportFaq3Answer;
 
   /// No description provided for @settingsDeleteAccount.
@@ -1465,7 +1465,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsDeleteAccountConfirmBody.
   ///
   /// In ru, this message translates to:
-  /// **'Это действие необратимо. Все ваши данные, отзывы и избранное будут удалены навсегда.'**
+  /// **'Все данные будут удалены навсегда.'**
   String get settingsDeleteAccountConfirmBody;
 
   /// No description provided for @settingsDeleteAccountCancel.
@@ -1485,6 +1485,66 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Аккаунт удалён'**
   String get settingsDeleteAccountSuccess;
+
+  /// No description provided for @registerSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите email для создания аккаунта'**
+  String get registerSubtitle;
+
+  /// No description provided for @validationEmailRequired.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите email'**
+  String get validationEmailRequired;
+
+  /// No description provided for @validationEmailInvalid.
+  ///
+  /// In ru, this message translates to:
+  /// **'Некорректный формат email'**
+  String get validationEmailInvalid;
+
+  /// No description provided for @reviewDeleteTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить отзыв?'**
+  String get reviewDeleteTitle;
+
+  /// No description provided for @reviewDeleteBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Это действие нельзя отменить.'**
+  String get reviewDeleteBody;
+
+  /// No description provided for @reviewDeleteConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить'**
+  String get reviewDeleteConfirm;
+
+  /// No description provided for @reviewThanksTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Спасибо за ваш отзыв!'**
+  String get reviewThanksTitle;
+
+  /// No description provided for @reviewThanksSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ваш отзыв поможет другим абитуриентам.'**
+  String get reviewThanksSubtitle;
+
+  /// No description provided for @profileScoresEnt.
+  ///
+  /// In ru, this message translates to:
+  /// **'ЕНТ'**
+  String get profileScoresEnt;
+
+  /// No description provided for @profileEntLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'ЕНТ'**
+  String get profileEntLabel;
 }
 
 class _AppLocalizationsDelegate

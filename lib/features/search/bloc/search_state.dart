@@ -4,7 +4,14 @@ import '../../../data/university/university_model.dart';
 
 enum SearchStatus { initial, loading, ready, failure }
 
+/// Фильтры поиска.
 class SearchFilters extends Equatable {
+  final Set<String> types;
+  final Set<String> languages;
+  final Set<String> directions;
+  final Set<String> formats;
+  final Set<String> costs;
+
   const SearchFilters({
     this.types = const {},
     this.languages = const {},
@@ -13,12 +20,6 @@ class SearchFilters extends Equatable {
     this.costs = const {},
   });
 
-  final Set<String> types;
-  final Set<String> languages;
-  final Set<String> directions;
-  final Set<String> formats;
-  final Set<String> costs;
-
   bool get isEmpty =>
       types.isEmpty &&
       languages.isEmpty &&
@@ -26,128 +27,141 @@ class SearchFilters extends Equatable {
       formats.isEmpty &&
       costs.isEmpty;
 
-  Map<String, List<String>> toMap() => {
-        'types': types.toList(),
-        'langs': languages.toList(),
-        'dirs': directions.toList(),
-        'formats': formats.toList(),
-        'costs': costs.toList(),
-      };
-
-  factory SearchFilters.fromMap(Map<String, List<String>> map) {
-    return SearchFilters(
-      types: (map['types'] ?? const []).toSet(),
-      languages: (map['langs'] ?? const []).toSet(),
-      directions: (map['dirs'] ?? const []).toSet(),
-      formats: (map['formats'] ?? const []).toSet(),
-      costs: (map['costs'] ?? const []).toSet(),
-    );
-  }
-
   SearchFilters copyWith({
     Set<String>? types,
     Set<String>? languages,
     Set<String>? directions,
     Set<String>? formats,
     Set<String>? costs,
-  }) {
-    return SearchFilters(
-      types: types ?? this.types,
-      languages: languages ?? this.languages,
-      directions: directions ?? this.directions,
-      formats: formats ?? this.formats,
-      costs: costs ?? this.costs,
-    );
-  }
+  }) =>
+      SearchFilters(
+        types: types ?? this.types,
+        languages: languages ?? this.languages,
+        directions: directions ?? this.directions,
+        formats: formats ?? this.formats,
+        costs: costs ?? this.costs,
+      );
+
+  Map<String, dynamic> toMap() => {
+        'types': types.toList(),
+        'languages': languages.toList(),
+        'directions': directions.toList(),
+        'formats': formats.toList(),
+        'costs': costs.toList(),
+      };
+
+  factory SearchFilters.fromMap(Map<String, dynamic> map) => SearchFilters(
+        types: Set<String>.from((map['types'] as List?) ?? []),
+        languages: Set<String>.from((map['languages'] as List?) ?? []),
+        directions: Set<String>.from((map['directions'] as List?) ?? []),
+        formats: Set<String>.from((map['formats'] as List?) ?? []),
+        costs: Set<String>.from((map['costs'] as List?) ?? []),
+      );
 
   @override
-  List<Object?> get props => [types, languages, directions, formats, costs];
+  List<Object?> get props =>
+      [types, languages, directions, formats, costs];
 }
 
+/// Состояние экрана поиска.
 class SearchState extends Equatable {
-  const SearchState({
-    this.status = SearchStatus.initial,
-    this.query = '',
-    this.allUniversities = const [],
-    this.history = const [],
-    this.filters = const SearchFilters(),
-    this.savedFilter,
-    this.isSearching = false,
-  });
-
   final SearchStatus status;
-  final String query;
   final List<University> allUniversities;
+  final String query;
+  final bool isSearching;
   final List<String> history;
   final SearchFilters filters;
   final SearchFilters? savedFilter;
-  final bool isSearching;
+
+  const SearchState({
+    this.status = SearchStatus.initial,
+    this.allUniversities = const [],
+    this.query = '',
+    this.isSearching = false,
+    this.history = const [],
+    this.filters = const SearchFilters(),
+    this.savedFilter,
+  });
+
+  // ── Живой поиск (по всем трём языкам через containsQuery) ────────────
 
   List<University> get liveResults {
+    if (query.trim().isEmpty) return [];
     final q = query.trim().toLowerCase();
-    if (q.isEmpty) return const [];
     return allUniversities.where((u) {
-      return u.name.toLowerCase().contains(q) ||
-          u.city.toLowerCase().contains(q) ||
-          u.directions.any((d) => d.toLowerCase().contains(q)) ||
-          u.description.toLowerCase().contains(q);
+      // Ищем по name, city, directions — по всем языкам сразу
+      return u.name.containsQuery(q) ||
+          u.city.containsQuery(q) ||
+          u.directions.any((d) => d.toLowerCase().contains(q));
     }).toList();
   }
 
+  // ── Результаты с фильтрами (OR-логика внутри группы) ─────────────────
+
   List<University> get filteredResults {
-    return allUniversities.where((u) => _matches(u)).toList();
+    if (filters.isEmpty) return allUniversities;
+    return allUniversities.where((u) {
+      // Тип — OR внутри группы, пропускаем если группа пуста
+      final typeOk = filters.types.isEmpty ||
+          filters.types.contains(u.type);
+
+      // Язык — OR внутри группы
+      final langOk = filters.languages.isEmpty ||
+          filters.languages.any((l) => u.languages.contains(l));
+
+      // Направление — OR внутри группы
+      final dirOk = filters.directions.isEmpty ||
+          filters.directions.any((d) => u.directions.contains(d));
+
+      // Формат — OR внутри группы
+      final formatOk = filters.formats.isEmpty ||
+          filters.formats.any((f) => u.format.contains(f));
+
+      // Стоимость — проверяем по тегам (бюджет/платное)
+      final costOk = filters.costs.isEmpty || _matchesCost(u);
+
+      // AND между группами
+      return typeOk && langOk && dirOk && formatOk && costOk;
+    }).toList();
   }
 
-  bool _matches(University u) {
-    final q = query.trim().toLowerCase();
-    final matchText = q.isEmpty ||
-        u.name.toLowerCase().contains(q) ||
-        u.city.toLowerCase().contains(q) ||
-        u.directions.any((d) => d.toLowerCase().contains(q));
-    final matchType = filters.types.isEmpty ||
-        filters.types.any((t) => u.level.toLowerCase().contains(t.toLowerCase()));
-    final matchLang = filters.languages.isEmpty ||
-        filters.languages.any((l) => u.languages.contains(l));
-    final matchDir = filters.directions.isEmpty ||
-        filters.directions.any((d) =>
-            u.directions.any((ud) => ud.toLowerCase().contains(d.toLowerCase())));
-    final matchFormat = filters.formats.isEmpty ||
-        filters.formats.any((f) => u.format.toLowerCase().contains(f.toLowerCase()));
-    final matchCost = filters.costs.isEmpty ||
-        (filters.costs.contains('Бюджет') && u.type == 'гос') ||
-        (filters.costs.contains('Платное') && u.type == 'частный');
-    return matchText && matchType && matchLang && matchDir && matchFormat && matchCost;
+  bool _matchesCost(University u) {
+    for (final cost in filters.costs) {
+      if (cost == 'Бюджет' && u.tags.contains('grants')) return true;
+      if (cost == 'Платное' && !u.tags.contains('grants')) return true;
+    }
+    return false;
   }
 
   SearchState copyWith({
     SearchStatus? status,
-    String? query,
     List<University>? allUniversities,
+    String? query,
+    bool? isSearching,
     List<String>? history,
     SearchFilters? filters,
     SearchFilters? savedFilter,
-    bool? isSearching,
     bool clearSavedFilter = false,
-  }) {
-    return SearchState(
-      status: status ?? this.status,
-      query: query ?? this.query,
-      allUniversities: allUniversities ?? this.allUniversities,
-      history: history ?? this.history,
-      filters: filters ?? this.filters,
-      savedFilter: clearSavedFilter ? null : (savedFilter ?? this.savedFilter),
-      isSearching: isSearching ?? this.isSearching,
-    );
-  }
+  }) =>
+      SearchState(
+        status: status ?? this.status,
+        allUniversities: allUniversities ?? this.allUniversities,
+        query: query ?? this.query,
+        isSearching: isSearching ?? this.isSearching,
+        history: history ?? this.history,
+        filters: filters ?? this.filters,
+        savedFilter:
+            clearSavedFilter ? null : (savedFilter ?? this.savedFilter),
+      );
 
   @override
   List<Object?> get props => [
         status,
-        query,
         allUniversities,
+        query,
+        isSearching,
         history,
         filters,
         savedFilter,
-        isSearching,
       ];
 }

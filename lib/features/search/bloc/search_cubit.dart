@@ -25,7 +25,8 @@ class SearchCubit extends Cubit<SearchState> {
     emit(state.copyWith(status: SearchStatus.loading));
     try {
       final all = await _universities.getAll();
-      final history = isAuthenticated ? await _history.load() : <String>[];
+      final history =
+          isAuthenticated ? await _history.load() : <String>[];
       final savedRaw =
           isAuthenticated ? await _history.loadSavedFilter() : null;
       emit(
@@ -48,7 +49,8 @@ class SearchCubit extends Cubit<SearchState> {
   void focusChanged(bool isFocused) =>
       emit(state.copyWith(isSearching: isFocused));
 
-  void clearQuery() => emit(state.copyWith(query: '', isSearching: state.isSearching));
+  void clearQuery() =>
+      emit(state.copyWith(query: '', isSearching: state.isSearching));
 
   void cancelSearch() =>
       emit(state.copyWith(query: '', isSearching: false));
@@ -72,11 +74,35 @@ class SearchCubit extends Cubit<SearchState> {
   void selectHistory(String query) =>
       emit(state.copyWith(query: query));
 
-  void toggleType(String value) => _toggle(state.filters.types, value, (s) => state.filters.copyWith(types: s));
-  void toggleLanguage(String value) => _toggle(state.filters.languages, value, (s) => state.filters.copyWith(languages: s));
-  void toggleDirection(String value) => _toggle(state.filters.directions, value, (s) => state.filters.copyWith(directions: s));
-  void toggleFormat(String value) => _toggle(state.filters.formats, value, (s) => state.filters.copyWith(formats: s));
-  void toggleCost(String value) => _toggle(state.filters.costs, value, (s) => state.filters.copyWith(costs: s));
+  void toggleType(String value) => _toggle(
+        state.filters.types,
+        value,
+        (s) => state.filters.copyWith(types: s),
+      );
+
+  void toggleLanguage(String value) => _toggle(
+        state.filters.languages,
+        value,
+        (s) => state.filters.copyWith(languages: s),
+      );
+
+  void toggleDirection(String value) => _toggle(
+        state.filters.directions,
+        value,
+        (s) => state.filters.copyWith(directions: s),
+      );
+
+  void toggleFormat(String value) => _toggle(
+        state.filters.formats,
+        value,
+        (s) => state.filters.copyWith(formats: s),
+      );
+
+  void toggleCost(String value) => _toggle(
+        state.filters.costs,
+        value,
+        (s) => state.filters.copyWith(costs: s),
+      );
 
   void _toggle(
     Set<String> set,
@@ -97,7 +123,17 @@ class SearchCubit extends Cubit<SearchState> {
 
   Future<bool> saveCurrentFilter() async {
     if (state.filters.isEmpty) return false;
-    await _history.saveFilter(state.filters.toMap());
+    // await _history.saveFilter(state.filters.toMap());
+    await _history.saveFilter(
+  Map<String, List<String>>.from(
+    state.filters.toMap().map(
+      (key, value) => MapEntry(
+        key,
+        List<String>.from(value),
+      ),
+    ),
+  ),
+);
     emit(state.copyWith(savedFilter: state.filters));
     return true;
   }
