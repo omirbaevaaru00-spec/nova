@@ -349,7 +349,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginSubtitle.
   ///
   /// In ru, this message translates to:
-  /// **'Мы скучали — классно, что ты вернулся!'**
+  /// **'Мы скучали — классно, что ты снова с нами!'**
   String get loginSubtitle;
 
   /// No description provided for @loginIdHint.

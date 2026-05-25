@@ -135,7 +135,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginTitle => 'Welcome back!';
 
   @override
-  String get loginSubtitle => 'We missed you — great to see you again!';
+  String get loginSubtitle =>
+      'We missed you — it\'s great to have you back with us!';
 
   @override
   String get loginIdHint => 'Email or phone';

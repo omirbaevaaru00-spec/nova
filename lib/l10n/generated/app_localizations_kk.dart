@@ -135,7 +135,8 @@ class AppLocalizationsKk extends AppLocalizations {
   String get loginTitle => 'Қайта кездестік!';
 
   @override
-  String get loginSubtitle => 'Сені сағындық — қайта оралғаныңа қуаныштымыз!';
+  String get loginSubtitle =>
+      'Сені сағындық — қайтадан ортамызға қосылғаныңға қуаныштымыз!';
 
   @override
   String get loginIdHint => 'Email немесе телефон';
