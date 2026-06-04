@@ -32,8 +32,8 @@ class SupportScreen extends StatelessWidget {
   //   }
   // }
 Future<void> _openTelegram(BuildContext context) async {
-  final telegramApp = Uri.parse("tg://resolve?domain=sticky_university_bot");
-  final telegramWeb = Uri.parse("https://t.me/sticky_university_bot");
+  final telegramApp = Uri.parse("tg://resolve?domain=sticky_university_faq_bot");
+  final telegramWeb = Uri.parse("https://t.me/sticky_university_faq_bot");
 
   try {
     // Сначала пытаемся открыть Telegram app

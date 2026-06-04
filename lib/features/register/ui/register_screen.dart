@@ -556,8 +556,20 @@ class _RegisterViewState extends State<_RegisterView> {
   final _emailController = TextEditingController();
   final _emailFocus = FocusNode();
 
-  // Показывать ли ошибку валидации email
   bool _emailTouched = false;
+  bool _emailFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailFocus.addListener(() {
+      setState(() => _emailFocused = _emailFocus.hasFocus);
+      // При потере фокуса помечаем как тронутое
+      if (!_emailFocus.hasFocus && _emailController.text.isNotEmpty) {
+        setState(() => _emailTouched = true);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -566,10 +578,10 @@ class _RegisterViewState extends State<_RegisterView> {
     super.dispose();
   }
 
-  bool _isValidEmail(String email) {
-    return RegExp(r'^[\w\-.]+@[\w\-]+\.[a-zA-Z]{2,}$').hasMatch(email.trim());
-  }
+  bool _isValidEmail(String email) =>
+      RegExp(r'^[\w\-.]+@[\w\-]+\.[a-zA-Z]{2,}$').hasMatch(email.trim());
 
+  // Показываем ошибку только если поле тронуто
   String? _emailError(AppLocalizations l10n) {
     if (!_emailTouched) return null;
     final email = _emailController.text.trim();
@@ -578,18 +590,20 @@ class _RegisterViewState extends State<_RegisterView> {
     return null;
   }
 
+  bool get _isEmailValid =>
+      _isValidEmail(_emailController.text);
+
   void _handleStateChange(BuildContext context, RegisterState state) {
     switch (state.status) {
       case RegisterStatus.needsProfileSetup:
-        context.go(
-          RouteNames.profileSetup,
-          extra: {'email': state.currentInput},
-        );
+        context.go(RouteNames.profileSetup,
+            extra: {'email': state.currentInput});
       case RegisterStatus.needsLogin:
-        context.push(RouteNames.login, extra: {'email': state.currentInput});
+        // Email уже занят — переходим на логин с предзаполненным email
+        context.push(RouteNames.login,
+            extra: {'email': state.currentInput});
       case RegisterStatus.authenticated:
         context.go(RouteNames.home);
-      case RegisterStatus.smsSent:
       case RegisterStatus.idle:
       case RegisterStatus.loading:
       case RegisterStatus.failure:
@@ -602,25 +616,13 @@ class _RegisterViewState extends State<_RegisterView> {
     final l10n = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Цвета адаптированы под тему
-    final bgColor =
-        isDark ? AppColors.backgroundDark : AppColors.surfaceMuted;
-    final cardColor =
-        isDark ? AppColors.surfaceMutedDark : AppColors.backgroundLight;
-    final labelColor =
-        isDark ? AppColors.textInverse : AppColors.textPrimary;
-    final hintColor = AppColors.textSecondary;
-    final inputFillColor =
-        isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
-    final borderColor =
-        isDark ? const Color(0xFF2C2F36) : AppColors.border;
-    final titleColor =
-        isDark ? AppColors.brandAccent : AppColors.brandPrimary;
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+      value: isDark
+          ? SystemUiOverlayStyle.light
+          : SystemUiOverlayStyle.dark,
       child: Scaffold(
-        backgroundColor: bgColor,
+        backgroundColor:
+            isDark ? AppColors.backgroundDark : AppColors.surfaceMuted,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -629,6 +631,7 @@ class _RegisterViewState extends State<_RegisterView> {
               listener: _handleStateChange,
               builder: (context, state) {
                 final emailErr = _emailError(l10n);
+                final isLoading = state.status == RegisterStatus.loading;
 
                 return SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -638,48 +641,36 @@ class _RegisterViewState extends State<_RegisterView> {
                       const SizedBox(height: 16),
 
                       // ── Кнопка назад ─────────────────────────────────
-                      GestureDetector(
-                        onTap: () => context.canPop()
-                            ? context.pop()
-                            : context.go(RouteNames.welcome),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: cardColor,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: borderColor),
-                          ),
-                          child: Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            size: 18,
-                            color: labelColor,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
+                      _BackButton(isDark: isDark, onTap: () {
+                        if (context.canPop()) {
+                          context.pop();
+                        } else {
+                          context.go(RouteNames.welcome);
+                        }
+                      }),
+                      const SizedBox(height: 28),
 
-                      // ── Логотип ──────────────────────────────────────
+                      // ── Логотип ───────────────────────────────────────
                       Center(
                         child: Image.asset(
                           'assets/images/sticky_logo.png',
-                          height: 48,
+                          height: 52,
                           color: isDark ? AppColors.brandAccent : null,
                         ),
                       ),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 32),
 
                       // ── Заголовок ─────────────────────────────────────
                       Center(
                         child: Text(
-                          l10n.registerTitle,
-                          textAlign: TextAlign.center,
+                          'Создать аккаунт',
                           style: TextStyle(
-                            color: titleColor,
-                            fontSize: 22,
+                            color: isDark
+                                ? AppColors.brandAccent
+                                : AppColors.brandPrimary,
+                            fontSize: 28,
                             fontWeight: FontWeight.w800,
-                            height: 1.2,
-                            letterSpacing: -0.3,
+                            letterSpacing: -0.5,
                           ),
                         ),
                       ),
@@ -688,164 +679,64 @@ class _RegisterViewState extends State<_RegisterView> {
                         child: Text(
                           l10n.registerSubtitle,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: hintColor,
-                            fontSize: 14,
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 15,
                             height: 1.4,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 36),
 
-                      // ── Email поле ────────────────────────────────────
+                      // ── Лейбл поля ────────────────────────────────────
                       Text(
                         l10n.registerEmailLabel,
                         style: TextStyle(
-                          color: labelColor,
-                          fontSize: 14,
+                          color: isDark
+                              ? AppColors.textInverse
+                              : AppColors.textPrimary,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
+                          letterSpacing: 0.3,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: inputFillColor,
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: emailErr != null
-                                ? AppColors.danger.withValues(alpha: 0.6)
-                                : _emailTouched &&
-                                        _isValidEmail(
-                                            _emailController.text)
-                                    ? AppColors.brandAccent
-                                        .withValues(alpha: 0.6)
-                                    : borderColor,
-                            width: 1.5,
-                          ),
-                        ),
-                        child: TextField(
-                          controller: _emailController,
-                          focusNode: _emailFocus,
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.done,
-                          // Текст всегда виден — явно задаём цвет
-                          style: TextStyle(
-                            color: isDark
-                                ? AppColors.textInverse
-                                : AppColors.textPrimary,
-                            fontSize: 15,
-                          ),
-                          onChanged: (v) {
-                            setState(() => _emailTouched = true);
-                            context.read<RegisterCubit>().emailChanged(v);
-                          },
-                          onSubmitted: (_) {
-                            setState(() => _emailTouched = true);
-                            if (_isValidEmail(_emailController.text)) {
-                              context.read<RegisterCubit>().proceed();
-                            }
-                          },
-                          decoration: InputDecoration(
-                            hintText: l10n.registerEmailHint,
-                            hintStyle: TextStyle(
-                              color: hintColor,
-                              fontSize: 15,
-                            ),
-                            prefixIcon: Icon(
-                              Icons.email_outlined,
-                              color: _emailTouched &&
-                                      _isValidEmail(_emailController.text)
-                                  ? AppColors.brandAccent
-                                  : hintColor,
-                              size: 20,
-                            ),
-                            // Галочка если email валиден
-                            suffixIcon: _emailTouched &&
-                                    _isValidEmail(_emailController.text)
-                                ? const Icon(
-                                    Icons.check_circle_rounded,
-                                    color: AppColors.success,
-                                    size: 20,
-                                  )
-                                : null,
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 16,
-                            ),
-                          ),
-                        ),
+
+                      // ── Email поле ────────────────────────────────────
+                      _EmailField(
+                        controller: _emailController,
+                        focusNode: _emailFocus,
+                        isDark: isDark,
+                        isFocused: _emailFocused,
+                        hasError: emailErr != null,
+                        isValid: _emailTouched && _isEmailValid,
+                        hint: l10n.registerEmailHint,
+                        onChanged: (v) {
+                          setState(() => _emailTouched = true);
+                          context.read<RegisterCubit>().emailChanged(v);
+                        },
+                        onSubmitted: (_) {
+                          setState(() => _emailTouched = true);
+                          if (_isEmailValid) {
+                            context.read<RegisterCubit>().proceed();
+                          }
+                        },
                       ),
 
-                      // ── Ошибка валидации ──────────────────────────────
+                      // ── Ошибки ────────────────────────────────────────
                       AnimatedSize(
                         duration: const Duration(milliseconds: 200),
-                        child: emailErr != null
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 6, left: 4),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.error_outline_rounded,
-                                      size: 14,
-                                      color: AppColors.danger,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      emailErr,
-                                      style: const TextStyle(
-                                        color: AppColors.danger,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox.shrink(),
+                        child: _buildErrorWidget(
+                            emailErr, state, l10n, isDark),
                       ),
 
-                      // ── Ошибка от сервера ─────────────────────────────
-                      if (state.failure != null) ...[
-                        const SizedBox(height: 10),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: AppColors.danger.withValues(alpha: 0.08),
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: AppColors.danger.withValues(alpha: 0.2),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.error_outline_rounded,
-                                  size: 16, color: AppColors.danger),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  localizeAuthFailure(state.failure!, l10n),
-                                  style: const TextStyle(
-                                    color: AppColors.danger,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      const SizedBox(height: 16),
 
-                      const SizedBox(height: 14),
-
-                      // ── Политика конфиденциальности ───────────────────
+                      // ── Политика ─────────────────────────────────────
                       GestureDetector(
-                        onTap: () =>
-                            context.push(RouteNames.privacyPolicy),
+                        onTap: () => context.push(RouteNames.privacyPolicy),
                         child: Text(
                           l10n.registerPolicy,
-                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: isDark
                                 ? AppColors.brandAccent
@@ -863,38 +754,34 @@ class _RegisterViewState extends State<_RegisterView> {
                       // ── Кнопка «Далее» ────────────────────────────────
                       PrimaryButton(
                         label: l10n.registerProceed,
-                        loading: state.status == RegisterStatus.loading,
-                        // Активна только если email валиден
-                        enabled: state.canProceed &&
-                            _isValidEmail(_emailController.text),
+                        loading: isLoading,
+                        enabled: _isEmailValid && !isLoading,
                         onTap: () {
                           setState(() => _emailTouched = true);
-                          if (_isValidEmail(_emailController.text)) {
+                          if (_isEmailValid) {
                             HapticFeedback.lightImpact();
                             context.read<RegisterCubit>().proceed();
                           }
                         },
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 24),
 
                       // ── Разделитель ───────────────────────────────────
                       _OrDivider(
-                        label: l10n.orDivider,
-                        isDark: isDark,
-                      ),
+                          label: l10n.orDivider, isDark: isDark),
                       const SizedBox(height: 16),
 
                       // ── Google ────────────────────────────────────────
                       GoogleSignInButton(
                         label: l10n.googleContinue,
-                        loading: state.status == RegisterStatus.loading,
+                        loading: isLoading,
                         onTap: () async {
                           await context
                               .read<RegisterCubit>()
                               .signInWithGoogle();
                         },
                       ),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 32),
 
                       // ── Уже есть аккаунт ──────────────────────────────
                       Center(
@@ -903,8 +790,8 @@ class _RegisterViewState extends State<_RegisterView> {
                           children: [
                             Text(
                               l10n.registerHasAccountPrefix,
-                              style: TextStyle(
-                                color: hintColor,
+                              style: const TextStyle(
+                                color: AppColors.textSecondary,
                                 fontSize: 14,
                               ),
                             ),
@@ -935,23 +822,331 @@ class _RegisterViewState extends State<_RegisterView> {
       ),
     );
   }
+
+  Widget _buildErrorWidget(
+    String? emailErr,
+    RegisterState state,
+    AppLocalizations l10n,
+    bool isDark,
+  ) {
+    // Ошибка валидации email
+    if (emailErr != null) {
+      return _ErrorBanner(
+        message: emailErr,
+        color: AppColors.danger,
+      );
+    }
+
+    // Ошибка «email уже занят» — показываем сразу с кнопкой войти
+    if (state.status == RegisterStatus.needsLogin) {
+      return _ExistingEmailBanner(
+        isDark: isDark,
+        email: _emailController.text.trim(),
+        onLogin: () => context.push(
+          RouteNames.login,
+          extra: {'email': _emailController.text.trim()},
+        ),
+      );
+    }
+
+    // Другие ошибки от сервера
+    if (state.failure != null) {
+      return _ErrorBanner(
+        message: localizeAuthFailure(state.failure!, l10n),
+        color: AppColors.danger,
+      );
+    }
+
+    // Email валиден и не занят — зелёная подсказка
+    if (_emailTouched && _isEmailValid &&
+        state.status != RegisterStatus.needsLogin) {
+      return const _ErrorBanner(
+        message: 'Отлично! Нажмите «Далее» для продолжения',
+        color: AppColors.success,
+        icon: Icons.check_circle_outline_rounded,
+      );
+    }
+
+    return const SizedBox.shrink();
+  }
 }
 
-// ─── Разделитель «или» ────────────────────────────────────────────────────────
+// ─── Email поле ───────────────────────────────────────────────────────────────
+
+class _EmailField extends StatelessWidget {
+  const _EmailField({
+    required this.controller,
+    required this.focusNode,
+    required this.isDark,
+    required this.isFocused,
+    required this.hasError,
+    required this.isValid,
+    required this.hint,
+    required this.onChanged,
+    required this.onSubmitted,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final bool isDark;
+  final bool isFocused;
+  final bool hasError;
+  final bool isValid;
+  final String hint;
+  final ValueChanged<String> onChanged;
+  final ValueChanged<String> onSubmitted;
+
+  Color get _borderColor {
+    if (hasError) return AppColors.danger;
+    if (isValid) return AppColors.success;
+    if (isFocused) return AppColors.brandAccent;
+    return isDark ? const Color(0xFF3A3D44) : AppColors.border;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      decoration: BoxDecoration(
+        color: isDark
+            ? const Color(0xFF1E2025)
+            : AppColors.backgroundLight,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: _borderColor,
+          width: isFocused || hasError || isValid ? 2 : 1.5,
+        ),
+        boxShadow: isFocused
+            ? [
+                BoxShadow(
+                  color: (hasError ? AppColors.danger : AppColors.brandAccent)
+                      .withValues(alpha: 0.15),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ]
+            : null,
+      ),
+      child: TextField(
+        controller: controller,
+        focusNode: focusNode,
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.done,
+        // Явно задаём цвет — чтобы был виден в тёмной теме
+        style: TextStyle(
+          color: isDark ? Colors.white : AppColors.textPrimary,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+        cursorColor: AppColors.brandAccent,
+        onChanged: onChanged,
+        onSubmitted: onSubmitted,
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(
+            color: isDark
+                ? const Color(0xFF6B7280)
+                : AppColors.textMuted,
+            fontSize: 15,
+          ),
+          prefixIcon: Icon(
+            Icons.email_outlined,
+            color: isFocused
+                ? AppColors.brandAccent
+                : (isDark
+                    ? const Color(0xFF6B7280)
+                    : AppColors.textMuted),
+            size: 20,
+          ),
+          suffixIcon: controller.text.isNotEmpty
+              ? Icon(
+                  isValid
+                      ? Icons.check_circle_rounded
+                      : (hasError ? Icons.error_outline_rounded : null),
+                  color: isValid ? AppColors.success : AppColors.danger,
+                  size: 20,
+                )
+              : null,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 18,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Баннер «email уже занят» ─────────────────────────────────────────────────
+
+class _ExistingEmailBanner extends StatelessWidget {
+  const _ExistingEmailBanner({
+    required this.isDark,
+    required this.email,
+    required this.onLogin,
+  });
+
+  final bool isDark;
+  final String email;
+  final VoidCallback onLogin;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppColors.brandAccent.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: AppColors.brandAccent.withValues(alpha: 0.3),
+          ),
+        ),
+        child: Row(
+          children: [
+            const Icon(
+              Icons.person_outline_rounded,
+              color: AppColors.brandAccent,
+              size: 20,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Аккаунт с таким email уже существует',
+                    style: TextStyle(
+                      color: AppColors.brandAccent,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Войдите в существующий аккаунт',
+                    style: TextStyle(
+                      color: AppColors.brandAccent.withValues(alpha: 0.7),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: onLogin,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.brandAccent,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Text(
+                  'Войти',
+                  style: TextStyle(
+                    color: AppColors.backgroundDark,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Общий баннер ошибки/успеха ───────────────────────────────────────────────
+
+class _ErrorBanner extends StatelessWidget {
+  const _ErrorBanner({
+    required this.message,
+    required this.color,
+    this.icon = Icons.error_outline_rounded,
+  });
+
+  final String message;
+  final Color color;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Row(
+        children: [
+          Icon(icon, size: 15, color: color),
+          const SizedBox(width: 6),
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(
+                color: color,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Кнопка назад ────────────────────────────────────────────────────────────
+
+class _BackButton extends StatelessWidget {
+  const _BackButton({required this.isDark, required this.onTap});
+  final bool isDark;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: isDark
+              ? const Color(0xFF1E2025)
+              : AppColors.backgroundLight,
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: isDark
+                ? const Color(0xFF3A3D44)
+                : AppColors.border,
+          ),
+        ),
+        child: Icon(
+          Icons.arrow_back_ios_new_rounded,
+          size: 18,
+          color: isDark ? Colors.white : AppColors.textPrimary,
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Разделитель ─────────────────────────────────────────────────────────────
 
 class _OrDivider extends StatelessWidget {
   const _OrDivider({required this.label, required this.isDark});
-
   final String label;
   final bool isDark;
 
   @override
   Widget build(BuildContext context) {
-    final dividerColor =
-        isDark ? const Color(0xFF2C2F36) : AppColors.divider;
+    final color =
+        isDark ? const Color(0xFF3A3D44) : AppColors.divider;
     return Row(
       children: [
-        Expanded(child: Divider(color: dividerColor)),
+        Expanded(child: Divider(color: color)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
@@ -964,7 +1159,7 @@ class _OrDivider extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(child: Divider(color: dividerColor)),
+        Expanded(child: Divider(color: color)),
       ],
     );
   }

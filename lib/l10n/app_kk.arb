@@ -51,7 +51,7 @@
 
   "loginTitle": "Қайта кездестік!",
   "loginSubtitle": "Сені сағындық — қайтадан ортамызға қосылғаныңға қуаныштымыз!",
-  "loginIdHint": "Email немесе телефон",
+  "loginIdHint": "Email",
   "passwordHint": "Құпиясөз",
   "loginForgotPassword": "Құпиясөзді ұмыттың ба?",
   "loginAction": "Кіру",

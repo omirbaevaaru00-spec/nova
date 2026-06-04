@@ -139,7 +139,7 @@ class AppLocalizationsKk extends AppLocalizations {
       'Сені сағындық — қайтадан ортамызға қосылғаныңға қуаныштымыз!';
 
   @override
-  String get loginIdHint => 'Email немесе телефон';
+  String get loginIdHint => 'Email';
 
   @override
   String get passwordHint => 'Құпиясөз';

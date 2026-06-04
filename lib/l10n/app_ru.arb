@@ -51,7 +51,7 @@
 
   "loginTitle": "Снова вместе!",
   "loginSubtitle": "Мы скучали — классно, что ты снова с нами!",
-  "loginIdHint": "Эл. почта или номер",
+  "loginIdHint": "Эл. почта",
   "passwordHint": "Пароль",
   "loginForgotPassword": "Забыли пароль?",
   "loginAction": "Войти",

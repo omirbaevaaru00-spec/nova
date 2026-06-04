@@ -355,7 +355,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginIdHint.
   ///
   /// In ru, this message translates to:
-  /// **'Эл. почта или номер'**
+  /// **'Эл. почта'**
   String get loginIdHint;
 
   /// No description provided for @passwordHint.

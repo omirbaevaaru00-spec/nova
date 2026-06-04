@@ -138,7 +138,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get loginSubtitle => 'Мы скучали — классно, что ты снова с нами!';
 
   @override
-  String get loginIdHint => 'Эл. почта или номер';
+  String get loginIdHint => 'Эл. почта';
 
   @override
   String get passwordHint => 'Пароль';

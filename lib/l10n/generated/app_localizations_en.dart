@@ -139,7 +139,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'We missed you — it\'s great to have you back with us!';
 
   @override
-  String get loginIdHint => 'Email or phone';
+  String get loginIdHint => 'Email';
 
   @override
   String get passwordHint => 'Password';

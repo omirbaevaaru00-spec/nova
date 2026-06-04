@@ -51,7 +51,7 @@
 
   "loginTitle": "Welcome back!",
   "loginSubtitle": "We missed you — it's great to have you back with us!",
-  "loginIdHint": "Email or phone",
+  "loginIdHint": "Email",
   "passwordHint": "Password",
   "loginForgotPassword": "Forgot password?",
   "loginAction": "Sign in",
