@@ -16,7 +16,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Удобный сервис для абитуриентов —\nсравнивай вузы, узнавай проходные\nбаллы, выбирай специальность\nи подавай документы в один клик.';
 
   @override
-  String get welcomeSkip => 'Пропустить';
+  String get welcomeSkip => 'Продолжить';
 
   @override
   String get continueText => 'Продолжить';

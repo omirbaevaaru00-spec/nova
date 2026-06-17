@@ -1,36 +1,60 @@
+// import 'package:logger/logger.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:stiky/data/onboarding/onboarding_repository.dart';
 
+// import 'onboarding_repository.dart';
 
+// /// Реализация [OnboardingRepository] через SharedPreferences.
+// ///
+// /// Ключи SharedPreferences:
+// /// - `onboarding_completed` — bool, пройден ли квиз (или нажата "Пропустить")
+// /// - `interests` — List<String>, выбранные интересы
 // class OnboardingRepositoryImpl implements OnboardingRepository {
-//   static const String _kOnboardingCompletedKey = 'onboarding_completed';
-//   static const String _kInterestsKey = 'user_interests';
+//   static const _keyCompleted = 'onboarding_completed';
+//   static const _keyInterests = 'interests';
+//   final _log = Logger();
 
-//   final SharedPreferences _prefs;
-
-//   OnboardingRepositoryImpl(this._prefs);
+//   OnboardingRepositoryImpl(SharedPreferences prefs);
 
 //   @override
 //   Future<bool> isOnboardingCompleted() async {
-//     return _prefs.getBool(_kOnboardingCompletedKey) ?? false;
+//     final prefs = await SharedPreferences.getInstance();
+//     final value = prefs.getBool(_keyCompleted) ?? false;
+//     _log.i('isOnboardingCompleted: $value');
+//     return value;
 //   }
 
 //   @override
 //   Future<void> completeOnboarding() async {
-//     await _prefs.setBool(_kOnboardingCompletedKey, true);
+//     final prefs = await SharedPreferences.getInstance();
+//     final ok = await prefs.setBool(_keyCompleted, true);
+//     _log.i('completeOnboarding: записано = $ok');
 //   }
 
 //   @override
 //   Future<List<String>> getSavedInterests() async {
-//     return _prefs.getStringList(_kInterestsKey) ?? const [];
+//     final prefs = await SharedPreferences.getInstance();
+//     return prefs.getStringList(_keyInterests) ?? [];
 //   }
 
 //   @override
 //   Future<void> saveInterests(List<String> interestKeys) async {
-//     await _prefs.setStringList(_kInterestsKey, interestKeys);
+//     final prefs = await SharedPreferences.getInstance();
+//     await prefs.setStringList(_keyInterests, interestKeys);
+//   }
+
+//   /// Удаляет все локальные данные онбординга.
+//   /// Вызывается при удалении аккаунта — пользователь
+//   /// пройдёт квиз заново при следующей регистрации.
+//   @override
+//   Future<void> clearAll() async {
+//     final prefs = await SharedPreferences.getInstance();
+//     await prefs.remove(_keyCompleted);
+//     await prefs.remove(_keyInterests);
+//     _log.i('clearAll: onboarding-данные удалены');
 //   }
 // }
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'onboarding_repository.dart';
@@ -38,7 +62,7 @@ import 'onboarding_repository.dart';
 /// Реализация [OnboardingRepository] через SharedPreferences.
 ///
 /// Ключи SharedPreferences:
-/// - `onboarding_completed` — bool, пройден ли квиз
+/// - `onboarding_completed` — bool, пройден ли квиз (или нажата "Пропустить")
 /// - `interests` — List<String>, выбранные интересы
 class OnboardingRepositoryImpl implements OnboardingRepository {
   static const _keyCompleted = 'onboarding_completed';
@@ -49,13 +73,16 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
   @override
   Future<bool> isOnboardingCompleted() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyCompleted) ?? false;
+    final value = prefs.getBool(_keyCompleted) ?? false;
+    debugPrint('🟢🟢🟢 isOnboardingCompleted: $value 🟢🟢🟢');
+    return value;
   }
 
   @override
   Future<void> completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_keyCompleted, true);
+    final ok = await prefs.setBool(_keyCompleted, true);
+    debugPrint('🔵🔵🔵 completeOnboarding: записано = $ok 🔵🔵🔵');
   }
 
   @override
@@ -78,5 +105,6 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_keyCompleted);
     await prefs.remove(_keyInterests);
+    debugPrint('🔴🔴🔴 clearAll: onboarding-данные удалены 🔴🔴🔴');
   }
 }

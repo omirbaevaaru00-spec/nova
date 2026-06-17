@@ -4,7 +4,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../l10n/generated/app_localizations.dart';
 
 /// Блок баллов пользователя: GPA / IELTS / ЕНТ.
-/// Адаптирован под светлую и тёмную тему.
+/// Всегда отображается — если балл не заполнен, показывает «—».
 class ScoresPill extends StatelessWidget {
   const ScoresPill({
     super.key,
@@ -17,12 +17,8 @@ class ScoresPill extends StatelessWidget {
   final String ielts;
   final String ent;
 
-  bool get _isEmpty => gpa.isEmpty && ielts.isEmpty && ent.isEmpty;
-
   @override
   Widget build(BuildContext context) {
-    if (_isEmpty) return const SizedBox.shrink();
-
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context);
 
@@ -35,8 +31,7 @@ class ScoresPill extends StatelessWidget {
             : AppColors.backgroundLight,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color:
-              isDark ? const Color(0xFF2C2F36) : AppColors.border,
+          color: isDark ? const Color(0xFF2C2F36) : AppColors.border,
         ),
         boxShadow: isDark
             ? []
@@ -51,32 +46,32 @@ class ScoresPill extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          if (gpa.isNotEmpty)
-            _ScoreItem(
-              label: 'GPA',
-              value: gpa,
-              color: AppColors.brandAccent,
-              isDark: isDark,
-            ),
-          if (gpa.isNotEmpty && (ielts.isNotEmpty || ent.isNotEmpty))
-            _Separator(isDark: isDark),
-          if (ielts.isNotEmpty)
-            _ScoreItem(
-              label: 'IELTS',
-              value: ielts,
-              color: AppColors.brandPrimary,
-              isDark: isDark,
-            ),
-          if (ielts.isNotEmpty && ent.isNotEmpty)
-            _Separator(isDark: isDark),
-          if (ent.isNotEmpty)
-            _ScoreItem(
-              // Используем ARB ключ для «ЕНТ»
-              label: l10n.profileScoresEnt,
-              value: ent,
-              color: AppColors.warning,
-              isDark: isDark,
-            ),
+          _ScoreItem(
+            label: 'GPA',
+            value: gpa.isNotEmpty ? gpa : '—',
+            color: gpa.isNotEmpty
+                ? AppColors.brandAccent
+                : AppColors.textMuted,
+            isDark: isDark,
+          ),
+          _Separator(isDark: isDark),
+          _ScoreItem(
+            label: 'IELTS',
+            value: ielts.isNotEmpty ? ielts : '—',
+            color: ielts.isNotEmpty
+                ? AppColors.brandPrimary
+                : AppColors.textMuted,
+            isDark: isDark,
+          ),
+          _Separator(isDark: isDark),
+          _ScoreItem(
+            label: l10n.profileScoresEnt,
+            value: ent.isNotEmpty ? ent : '—',
+            color: ent.isNotEmpty
+                ? AppColors.warning
+                : AppColors.textMuted,
+            isDark: isDark,
+          ),
         ],
       ),
     );
@@ -136,9 +131,7 @@ class _Separator extends StatelessWidget {
     return Container(
       width: 1,
       height: 32,
-      color: isDark
-          ? const Color(0xFF2C2F36)
-          : AppColors.border,
+      color: isDark ? const Color(0xFF2C2F36) : AppColors.border,
     );
   }
 }

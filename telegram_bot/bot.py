@@ -18,7 +18,7 @@ bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 # Инициализируем асинхронный клиент Gemini
-client = genai.Client(api_key="AIzaSyAH-vfFprdNgQdFc3PwWgRvYrBpqhpqMpY").aio
+client = genai.Client(api_key=GEMINI_API_KEY).aio
 
 
 @dp.message(CommandStart())

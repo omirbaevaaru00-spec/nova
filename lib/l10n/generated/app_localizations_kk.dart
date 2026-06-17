@@ -16,7 +16,7 @@ class AppLocalizationsKk extends AppLocalizations {
       'Түлектерге арналған ыңғайлы қызмет —\nуниверситеттерді салыстырып, өту\nбалдарын біліп, мамандық таңда\nжәне құжаттарды бір рет басып тапсыр.';
 
   @override
-  String get welcomeSkip => 'Өткізіп жіберу';
+  String get welcomeSkip => 'Жалғастыру';
 
   @override
   String get continueText => 'Жалғастыру';
@@ -43,7 +43,7 @@ class AppLocalizationsKk extends AppLocalizations {
   String get localeShortKk => 'ҚАЗ';
 
   @override
-  String get quizTitle => 'Не қызықтыратыныңды\nтаңда';
+  String get quizTitle => 'Не қызықтыратының\nтаңда';
 
   @override
   String get quizSubtitle =>

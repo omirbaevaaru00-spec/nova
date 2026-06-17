@@ -16,7 +16,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'A handy service for applicants —\ncompare universities, check passing\nscores, choose a major\nand submit documents in one tap.';
 
   @override
-  String get welcomeSkip => 'Skip';
+  String get welcomeSkip => 'Continue';
 
   @override
   String get continueText => 'Continue';

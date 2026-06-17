@@ -114,15 +114,28 @@ class _WelcomeContent extends StatelessWidget {
   }
 }
 
+// ─── Переключатель языка: ru → kk → en → ru ──────────────────────────────────
+
 class _LocaleSwitcher extends StatelessWidget {
   const _LocaleSwitcher();
+
+  /// Короткая метка языка для отображения в переключателе.
+  /// l10n содержит готовые ru/kk варианты — для en добавляем своё значение,
+  /// так как localeShortEn может быть не определён в .arb файлах.
+  String _shortLabel(String languageCode, AppLocalizations l10n) {
+    return switch (languageCode) {
+      'kk' => l10n.localeShortKk,
+      'en' => 'EN',
+      _ => l10n.localeShortRu,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return BlocBuilder<WelcomeCubit, WelcomeState>(
       builder: (context, state) {
-        final isRu = state.locale.languageCode == 'ru';
+        final label = _shortLabel(state.locale.languageCode, l10n);
         return GestureDetector(
           onTap: () {
             HapticFeedback.selectionClick();
@@ -145,13 +158,22 @@ class _LocaleSwitcher extends StatelessWidget {
                   painter: GlobePainter(color: AppColors.textInverse),
                 ),
                 const SizedBox(width: 6),
-                Text(
-                  isRu ? l10n.localeShortRu : l10n.localeShortKk,
-                  style: const TextStyle(
-                    color: AppColors.textInverse,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.3,
+                // AnimatedSwitcher для плавной смены метки языка
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 180),
+                  transitionBuilder: (child, animation) => FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  ),
+                  child: Text(
+                    label,
+                    key: ValueKey(label),
+                    style: const TextStyle(
+                      color: AppColors.textInverse,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.3,
+                    ),
                   ),
                 ),
               ],
@@ -162,6 +184,8 @@ class _LocaleSwitcher extends StatelessWidget {
     );
   }
 }
+
+// ─── Кнопка "Пропустить" ──────────────────────────────────────────────────────
 
 class _SkipButton extends StatefulWidget {
   const _SkipButton({required this.onTap});
@@ -213,4 +237,3 @@ class _SkipButtonState extends State<_SkipButton> {
     );
   }
 }
-

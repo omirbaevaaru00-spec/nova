@@ -14,30 +14,34 @@ class LocaleController extends ChangeNotifier {
   }
 
   static const _key = 'app_language';
-  static const _supportedCodes = ['ru', 'kk'];
+
+  /// Поддерживаемые языки приложения: русский, казахский, английский.
+  static const _supportedCodes = ['ru', 'kk', 'en'];
 
   Locale _locale = const Locale('ru');
   Locale get locale => _locale;
 
   /// Инициализация: определяет язык при старте приложения.
-Future<void> init() async {
-  final prefs = await SharedPreferences.getInstance();
-  final saved = prefs.getString(_key);
+  Future<void> init() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getString(_key);
 
-  if (saved != null && _supportedCodes.contains(saved)) {
-    _locale = Locale(saved);
-  } else {
-    // Безопасное получение языка устройства
-    final deviceCode = PlatformDispatcher.instance.locale.languageCode;
-    _locale = _supportedCodes.contains(deviceCode)
-        ? Locale(deviceCode)
-        : const Locale('ru');
-    await prefs.setString(_key, _locale.languageCode);
+    if (saved != null && _supportedCodes.contains(saved)) {
+      _locale = Locale(saved);
+    } else {
+      // Безопасное получение языка устройства
+      final deviceCode = PlatformDispatcher.instance.locale.languageCode;
+      _locale = _supportedCodes.contains(deviceCode)
+          ? Locale(deviceCode)
+          : const Locale('ru');
+      await prefs.setString(_key, _locale.languageCode);
+    }
+    notifyListeners();
   }
-  notifyListeners();
-}
+
   /// Смена языка пользователем.
   Future<void> setLocale(Locale locale) async {
+    if (!_supportedCodes.contains(locale.languageCode)) return;
     if (_locale == locale) return;
     _locale = locale;
     notifyListeners();

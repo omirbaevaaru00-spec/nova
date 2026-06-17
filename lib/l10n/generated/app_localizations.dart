@@ -115,7 +115,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeSkip.
   ///
   /// In ru, this message translates to:
-  /// **'Пропустить'**
+  /// **'Продолжить'**
   String get welcomeSkip;
 
   /// No description provided for @continueText.

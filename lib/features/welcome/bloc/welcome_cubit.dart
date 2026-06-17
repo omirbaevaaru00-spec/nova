@@ -8,10 +8,13 @@ class WelcomeCubit extends Cubit<WelcomeState> {
   WelcomeCubit()
       : super(WelcomeState(locale: LocaleController.instance.locale));
 
+  /// Циклическое переключение языка: ru → kk → en → ru → ...
   void toggleLocale() {
-    final next = state.locale.languageCode == 'ru'
-        ? const Locale('kk')
-        : const Locale('ru');
+    final next = switch (state.locale.languageCode) {
+      'ru' => const Locale('kk'),
+      'kk' => const Locale('en'),
+      _ => const Locale('ru'),
+    };
     LocaleController.instance.setLocale(next);
     emit(state.copyWith(locale: next));
   }
